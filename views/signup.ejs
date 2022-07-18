@@ -1,0 +1,112 @@
+             
+<%- include('./layouts/user-header.ejs') %>
+
+
+<section class="vh-100 gradient-custom ">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" >
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Registration Form</h3>
+            <form method="post" action="register">
+            
+                <div class="form-outline">
+                    <input name="name" type="text" id="name" class="form-control form-control-lg" />
+                    <label class="form-label" for="name">Name</label>
+                </div>
+                <div class="form-outline">
+                    <input name="email" type="email" id="email" class="form-control form-control-lg" />
+                    <label class="form-label" for="email"> Email</label>
+                </div>
+                <!-- <div class="form-outline">
+                    <input name="address" type="text" id="address" class="form-control form-control-lg" />
+                    <label class="form-label" for="address">Address</label>
+                </div> -->
+                <div class="form-outline">
+                  <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                  <label class="form-label" for="phoneNumber">Phone Number</label>
+              </div>
+            
+                <!-- <div class="row">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+            
+                            <select class="form-select form-select-lg">
+                                <option class="" value="1">State</option>
+                                <option value="2">Kerala</option>
+                            </select>
+            
+                        </div>
+                        <div class="col-md-6 mb-4">
+            
+                            <select class="form-select form-select-lg">
+                                <option value="1">City</option>
+                                <option value="2">Calicut</option>
+                                <option value="3">Malappuram</option>
+                            </select>
+            
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-6 mb-4 pb-2">
+            
+                        <div class="form-outline">
+                            <input name="pincode" type="text" id="pincode" class="form-control form-control-lg" />
+                            <label class="form-label" for="pincode">Pin Code</label>
+                        </div>
+            
+                    </div>
+                    <div class="col-md-6 mb-4 pb-2">
+            
+                        <div class="form-outline">
+                            <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                            <label class="form-label" for="phoneNumber">Phone Number</label>
+                        </div>
+            
+                    </div>
+                    
+                </div> -->
+                <div class="row">
+                    <div class="col-md-6 mb-4 pb-2">
+            
+                        <div class="form-outline">
+                            <input name="password" type="password" id="password" class="form-control form-control-lg" />
+                            <label class="form-label" for="password">Password</label>
+                        </div>
+            
+                    </div>
+                    <div class="col-md-6 mb-4 pb-2">
+            
+                        <div class="form-outline">
+                            <input name="cpassword" type="cpassword" id="cpassword" class="form-control form-control-lg" />
+                            <label class="form-label" for="cpassword">Confirm Password</label>
+                        </div>
+            
+                    </div>
+                    
+                </div>
+                
+            
+                
+            
+                <button class="btn main-btn m-auto" type="submit"> Register</button>
+                <div class="text-center">
+                    <p>Already a member? <a href="/login">Sign in</a></p>
+                </div>
+            
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<%- include('./layouts/user-footer.ejs') %>
+
+
+
+
+        
