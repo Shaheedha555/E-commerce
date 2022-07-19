@@ -18,6 +18,10 @@
           <div class="card shadow-2-strong card-registration" >
             <div class="card-body p-4 p-md-5">
               <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Registration Form</h3>
+              <% if(message != ''){%>
+                <p style="color: green;"> <%= message.message %> </p>
+                
+            <%}%>
             <form method="post" action="register">
             
                 <div class="form-outline">

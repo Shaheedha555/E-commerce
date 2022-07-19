@@ -17,7 +17,7 @@ userRouter.get('/', (req, res) => {
 
 });
 userRouter.get('/register', (req, res) => {
-
+    const message = req.flash('message')
     res.render('user/signup')
 
 
@@ -57,6 +57,7 @@ userRouter.post('/register', [
         let user = await User.findOne({ email })
 
         if (user) {
+            req.flash('message',`This Email is already registered  in the name '${user.name}'`)
             return res.redirect('/register')
         }
         const spassword = await securePassword(req.body.password)
@@ -87,7 +88,13 @@ userRouter.get('/login', (req, res) => {
 
     if (req.session.user) { res.redirect('/home') }
 
-    else { res.render('user/login') }
+    else {
+
+        const message = req.flash('message')
+
+        res.render('user/login') 
+
+        }
 
 
 
@@ -117,12 +124,15 @@ userRouter.post('/login', [
 
         if (!userData) {
 
+            req.flash('message','No User found!')
             return res.redirect('/login')
 
 
         }
         const passwordMatch = await bcrypt.compare(password, userData.password)
         if (!passwordMatch) {
+
+            req.flash('message','Your Password is wrong!')
 
             return res.redirect('/login')
 
@@ -131,7 +141,6 @@ userRouter.post('/login', [
 
         req.session.user = userData
 
-        console.log(req.session.user);
 
         res.redirect('/home')
     }
@@ -143,9 +152,9 @@ userRouter.get('/home', (req, res) => {
 
     if (req.session.user) {
         const user = req.session.user
-        console.log("home route")
         res.render('user/homepage', { user: user.name })
     } else {
+        
         res.redirect('/login')
 
     }
@@ -155,9 +164,9 @@ userRouter.get('/logout', (req, res) => {
     req.session.destroy((err) => {
 
         if (err) throw err;
-
-        res.redirect("/");
     })
+
+        res.redirect("/login");
 })
 
 

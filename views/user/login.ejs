@@ -37,6 +37,10 @@
         <div class="card shadow-2-strong card-registration " >
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Login</h3>
+            <% if(message != ''){%>
+              <p style="color: red;"> <%= message.message %> </p>
+              
+          <%}%>
           <form method="post" action="login">
           
               

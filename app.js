@@ -6,23 +6,11 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const cookie = require('cookie-parser')
 // const { check, validationResult } = require('express-validator');
-
 const flash = require('connect-flash');
 const nocache = require("nocache");
-
-
-
-app.use(nocache());
-app.use(session({
-    secret : "mysecret",
-    resave : false,
-    saveUninitialized : false,
-    cookie:{ maxAge:60*1000,secure:false}
-}))
-
 const userRouter = require('./routes/user-router')
-
 const adminRouter = require('./routes/admin-router')
 
 mongoose.connect(config.database)
@@ -31,8 +19,16 @@ mongoose.connect(config.database)
 
 console.log(mongoose.connection.readyState);
 
-
 app.set('view engine','ejs');
+
+app.use(nocache());
+app.use(cookie('cookieSecret'))
+app.use(session({
+    secret : "sessionSecret",
+    resave : true,
+    saveUninitialized : true,
+    cookie:{ maxAge:60*1000,secure:false}
+}))
 
 app.use('/views',express.static(path.join(__dirname,'views')));
 app.use('/public',express.static(path.join(__dirname,'public')));
@@ -40,9 +36,6 @@ app.use('/public',express.static(path.join(__dirname,'public/styles/')));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-
-
 
 app.use(flash());
 app.use(function(req, res, next){
