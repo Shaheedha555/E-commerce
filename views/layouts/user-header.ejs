@@ -25,7 +25,6 @@
 
 <body>
     <!-- Navbar Section Start -->
-    <header id="full_nav">
         <div class="header">
             <div class="container">
                 <nav class="navbar navbar-expand-lg">
@@ -64,11 +63,17 @@
                             <div class="text-lg-end">
                                 <a href="" ><i class="fa fa-heart"></i></a>
                                 <a href="" ><i class="fas fa-shopping-cart"></i></a>
-                                <a  href="/login" ><i class="fa fa-user"> Login</i></a>
+                                <a  href="/login" ><i class="fa fa-user"> 
+                                    <%= locals.user ? user:'Login' %>
+                                    </i></a>
+                                <% if (locals.user){
+                                    %>
+                                    <a href="/logout" >Logout</i></a>
+
+                                <%}%>
                             </div>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
-    </header>

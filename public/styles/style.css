@@ -41,7 +41,11 @@ html {
     font-family: var(--primary-font);
     scroll-behavior: smooth;
     line-height: 1.5;
-    padding-top: 65px;
+    background-color: rgb(238, 195, 203);
+
+}
+html{
+    padding-top: 100px;
 
 }
 

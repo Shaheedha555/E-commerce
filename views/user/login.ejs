@@ -1,6 +1,5 @@
-<%- include('./layouts/admin-header.ejs') %>
-
             
+<%- include('../layouts/user-header.ejs') %>
 
 <!-- <main class="form-signin w-25 mt-5 pt-5 m-auto text-center">
   <h1 class="h1 mb-3 fw-normal text-center">Sign In</h1>
@@ -23,27 +22,37 @@
   </form>
   
 </main> -->
-<section class="vh-100 gradient-custom ">
-  <div class="container py-5 h-100">
-    <div class="row justify-content-center align-items-center h-100">
+<section class="vh-80 gradient-custom ">
+  <div class="container py-5 h-80">
+    <div class="row justify-content-center align-items-center h-80">
       <div class="col-12 col-lg-9 col-xl-7 w-50">
-        <div class="card shadow-2-strong card-registration" >
-          <div class="card-body p-4 p-md-5 ">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Admin Login</h3>
-          <form method="post" action="admin/login">
+        <% if (typeof alert != 'undefined'){ %>
+          <% alert.forEach(function(error){ %>
+           <div class="alert alert-warning h-1" role="alert">
+                  <p><%= error.msg %></p>                    
+             </div>
+       <% })%>
+           <% } %>
+           
+        <div class="card shadow-2-strong card-registration " >
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Login</h3>
+          <form method="post" action="login">
           
               
               <div class="form-outline">
+                <label class="form-label" for="email"> Email</label>
                   <input name="email" type="email" id="email" class="form-control form-control-lg" />
-                  <label class="form-label" for="email"> Email</label>
               </div>
               <div class="form-outline">
-                <input name="password" type="password" id="password" class="form-control form-control-lg" />
                 <label class="form-label" for="password">Password</label>
+                <input name="password" type="password" id="password" class="form-control form-control-lg" />
             </div>
               
               <button class="btn main-btn m-auto" type="submit">Log in</button>
-              
+              <div class="text-center">
+                  <p>Not a member? <a href="/register">Register</a></p>
+              </div>
           
           </form>
           </div>
@@ -53,11 +62,9 @@
   </div>
 </section>
 
-<%- include('./layouts/user-footer.ejs') %>
+<%- include('../layouts/user-footer.ejs') %>
 
 
 
 
         
-
-<%- include('./layouts/admin-footer.ejs') %>
