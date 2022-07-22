@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 4000 ;
+const port = process.env.PORT || 5000 ;
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const bodyParser = require('body-parser')
@@ -12,6 +12,7 @@ const flash = require('connect-flash');
 const nocache = require("nocache");
 const userRouter = require('./routes/user-router')
 const adminRouter = require('./routes/admin-router')
+const categoryRouter = require('./routes/category-router')
 
 mongoose.connect(config.database)
     .then(()=>{console.log('Database Connected')})
@@ -45,6 +46,7 @@ app.use(function(req, res, next){
 
 app.use('/',userRouter);
 app.use('/admin',adminRouter);
+app.use('/admin/category',categoryRouter);
 
 
 app.listen(port,()=>{

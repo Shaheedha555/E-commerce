@@ -14,6 +14,9 @@ const userSchema = new mongoose.Schema({
     },
     cpassword : {
         type : String
+    },
+    verified : {
+        type : Boolean
     }
 });
 const User = mongoose.model('User', userSchema);

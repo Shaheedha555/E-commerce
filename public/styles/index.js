@@ -18,3 +18,6 @@ navBar.forEach(function(a){
 })
 console.log('hh')
 
+$(document).ready(function () {
+    $('#example').DataTable();
+});

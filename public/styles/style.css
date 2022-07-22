@@ -117,6 +117,9 @@ ul {
     padding: 0;
     list-style: none;
 }
+table {
+    font-size: 25px;
+}
 
 a,
 a:active,
