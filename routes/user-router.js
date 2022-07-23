@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const User = require('../models/userModel');
 const EmailVerification = require('../models/userEmailverification')
 const nodemailer = require("nodemailer");
+const auth = require('../config/auth')
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const securePassword = async (password) => {
@@ -18,8 +19,8 @@ const { Router } = require('express');
 const transporter = nodemailer.createTransport({
     service : 'gmail',
     auth: {
-      user: 'shaheedhamolshahi@gmail.com' , // generated ethereal user
-      pass: 'thkgpudocbmdymjh', // generated ethereal password
+      user: 'shaheedhamolshahi@gmail.com' , 
+      pass: 'thkgpudocbmdymjh', 
     },
 });
 
@@ -38,8 +39,12 @@ userRouter.get('/', (req, res) => {
 
 });
 userRouter.get('/register', (req, res) => {
-    const message = req.flash('message')
-    res.render('user/signup')
+    if(req.session.user) res.redirect('/home');
+    else{
+        const message = req.flash('message')
+        res.render('user/signup')
+    }
+    
 
 
 });

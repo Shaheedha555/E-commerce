@@ -16,8 +16,12 @@ navBar.forEach(function(a){
         navCollapse.classList.toggle("show");
     })
 })
-console.log('hh')
 
 $(document).ready(function () {
     $('#example').DataTable();
+});
+
+$('a.confirmDeletion').on('click',function(){
+    if(!confirm('Confirm deletion'))
+    return false
 });

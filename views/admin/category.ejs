@@ -7,7 +7,12 @@
     <a href="/admin/category/add-category" ><button class="btn btn-primary">Add a new category</button> </a>
 
     <table id="example" class="table table-striped" style="width:100%">
-        
+        <% if(message !='' ){%>
+            <p style="color: green;">
+              <%= message.message %>
+            </p>
+
+            <%}%>
         <thead>
             <tr>
                 <th>Title</th>
@@ -19,9 +24,9 @@
         <% categories.forEach(function(cat){ %>
             <tr>
                 <td><%= cat.title %></td>
-                <td>image</td>
-                <td><a href="/admin/categories/edit-category/<%= cat._id %>">Edit</a>
-                <a class="confirmDeletion" href="/admin/categories/delete-category/<%= cat._id %>">Delete</a></td>
+                <td><%= cat.image %></td>
+                <td><a href="/admin/category/edit-category/<%= cat._id %>">Edit</a>
+                <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>">Delete</a></td>
             </tr>
             <% }); %>
         
