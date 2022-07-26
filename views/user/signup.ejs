@@ -1,7 +1,87 @@
 <%- include('../layouts/user-header.ejs') %>
 
 
-  <section class="vh-80 gradient-custom ">
+
+
+
+
+
+
+<!-- header section  -->
+
+<!-- <section class="heading">
+    <h1>account</h1>
+    <p> <a href="">home</a> >> register </p>
+</section> -->
+
+
+
+<!-- register form section starts -->
+
+<section class="register-form">
+
+    <form id="user-signup-form" method="post" action="/register">
+        <h3>Register Now</h3>
+        <div class="inputBox">
+            <span class="fas fa-user"></span>
+            <input type="text" name="name" placeholder="Enter your name" id="name">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-envelope"></span>
+            <input type="email" name="email" placeholder="Enter your email" id="email">
+        </div>
+        <div class="inputBox">
+          <span class="fas fa-phone"></span>
+          <input type="number" name="contact" placeholder="Enter your contact no." id="contact">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-lock"></span>
+            <input type="password" name="password" placeholder="Enter your password" id="password">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-lock"></span>
+            <input type="password" name="cpassword" placeholder="Confirm your password" id="cpassword">
+        </div>
+        <input type="submit" value="sign up" class="btn">
+        <a href="/login" class="btn">Already have an account</a>
+    </form>
+
+</section>
+
+<!-- register form section ends -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- footer section starts  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <section class="vh-80 gradient-custom ">
     <div class="container py-5 h-80">
       <div class="row justify-content-center align-items-center h-80">
         <div class="col-12 col-lg-9 col-xl-7">
@@ -79,6 +159,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
+  <!-- <%- include('../layouts/user-footer-section.ejs') %> -->
   
   <%- include('../layouts/user-footer.ejs') %>

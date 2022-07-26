@@ -1,28 +1,73 @@
             
 <%- include('../layouts/user-header.ejs') %>
 
-<!-- <main class="form-signin w-25 mt-5 pt-5 m-auto text-center">
-  <h1 class="h1 mb-3 fw-normal text-center">Sign In</h1>
-  <form action="login" method="post">
-    
+<!-- <section class="heading">
+    <h1>account</h1>
+    <p> <a href="">home</a> >> login </p>
+</section> -->
 
-    <div class="form-floating">
-      <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
-      <label for="floatingPassword">Password</label>
-    </div>
 
-    <button class="btn main-btn text-left" type="submit">Log In</button>
-    <div class="text-center">
-      <p>Not a member? <a href="#!">Register</a></p>
-    </div>
-  </form>
-  
-</main> -->
-<section class="vh-80 gradient-custom ">
+<!-- login form section starts -->
+
+<section class="login-form">
+
+    <form id="user-login-form" action="/login" method="post">
+        <h3>user login</h3>
+        <div class="inputBox">
+            <span class="fas fa-user"></span>
+            <input type="email" name="email" placeholder="Enter your email" id="email">
+        </div>
+        <div class="inputBox">
+            <span class="fas fa-lock"></span>
+            <input type="password" name="password" placeholder="Enter your password" id="password">
+        </div>
+        <input type="submit" value="sign in" class="btn">
+        <div class="flex">
+            <input type="checkbox" name="" id="remember-me">
+            <label for="remember-me">remember me</label>
+            <a href="#">forgot password?</a>
+        </div>
+        <a href="/register" class="btn">create an account</a>
+    </form>
+
+</section>
+
+<!-- login form section ends -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- footer section starts  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <section class="vh-80 gradient-custom ">
   <div class="container py-5 h-80">
     <div class="row justify-content-center align-items-center h-80">
       <div class="col-12 col-lg-9 col-xl-7 w-50">
@@ -64,7 +109,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <%- include('../layouts/user-footer.ejs') %>
 

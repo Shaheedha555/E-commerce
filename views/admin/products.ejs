@@ -1,0 +1,48 @@
+<%- include('../layouts/admin-header.ejs') %>
+
+
+<h2 class="text-center mt-5 h1">All Products</h2>
+
+<section class="products container"> 
+    <br>
+    
+    <a href="/admin/product/add-product" ><button class="btn btn-primary">Add new Product</button> </a>
+
+    <table id="example" class="table data-table" style="width:100%">
+        <% if(message !='' ){%>
+            <p style="color: green;">
+              <%= message.message %>
+            </p>
+
+            <%}%>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach(function(pro){ %>
+            <tr>
+                <td><%= pro.title %></td>
+                <td><%= pro.description %></td>
+                <td><%= pro.category %></td>
+                <td> <img width="80px" height="80px" src="/public/images/product-img/<%= pro.image %>" alt="<%=pro.title%> img"></td>
+                <td><%= pro.price %></td>
+                <td><a href="/admin/product/edit-product/<%= pro._id %>"><i class="fa fa-pen pe-5"></i></a>
+                <a class="confirmDeletion" href="/admin/product/delete-product/<%= pro._id %>"><i class="fa fa-trash"></i> </a></td>
+            </tr>
+            <% }); %>
+        
+        
+    </tbody>
+    
+</table>
+</section>
+
+
+<%- include('../layouts/admin-footer.ejs') %>

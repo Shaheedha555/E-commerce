@@ -1,12 +1,14 @@
 <%- include('../layouts/admin-header.ejs') %>
 
+
+<h2 class="text-center mt-5 h1">All Categories</h2>
+
 <section class="category container"> 
-    <h2 class="page-title">Categories</h2>
     <br>
     
     <a href="/admin/category/add-category" ><button class="btn btn-primary">Add a new category</button> </a>
 
-    <table id="example" class="table table-striped" style="width:100%">
+    <table id="example" class="table data-table" style="width:100%">
         <% if(message !='' ){%>
             <p style="color: green;">
               <%= message.message %>
@@ -24,9 +26,9 @@
         <% categories.forEach(function(cat){ %>
             <tr>
                 <td><%= cat.title %></td>
-                <td><%= cat.image %></td>
-                <td><a href="/admin/category/edit-category/<%= cat._id %>">Edit</a>
-                <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>">Delete</a></td>
+                <td> <img width="80px" src="/public/images/category-img/<%= cat.image %>" alt="<%=cat.title%> img"></td>
+                <td><a href="/admin/category/edit-category/<%= cat._id %>"><i class="fa fa-pen pe-5"></i></a>
+                <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>"><i class="fa fa-trash"></i> </a></td>
             </tr>
             <% }); %>
         

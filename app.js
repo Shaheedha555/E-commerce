@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 5000 ;
+const port = process.env.PORT || 3000 ;
 const mongoose = require('mongoose');
 const config = require('./config/database');
 const bodyParser = require('body-parser')
@@ -13,6 +13,8 @@ const nocache = require("nocache");
 const userRouter = require('./routes/user-router')
 const adminRouter = require('./routes/admin-router')
 const categoryRouter = require('./routes/category-router')
+const productRouter = require('./routes/product-router')
+
 
 mongoose.connect(config.database)
     .then(()=>{console.log('Database Connected')})
@@ -28,16 +30,17 @@ app.use(session({
     secret : "sessionSecret",
     resave : true,
     saveUninitialized : true,
-    cookie:{ maxAge:60*1000,secure:false}
+    cookie:{ maxAge:60*1000*60,secure:false}
 }))
 
 app.use('/views',express.static(path.join(__dirname,'views')));
 app.use('/public',express.static(path.join(__dirname,'public')));
-app.use('/public',express.static(path.join(__dirname,'public/styles/')));
+// app.use('/public',express.static(path.join(__dirname,'public/styles/')));
+// app.use('/public',express.static(path.join(__dirname,'public/images/')));
+
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
 app.use(flash());
 app.use(function(req, res, next){
     res.locals.message = req.flash();
@@ -47,6 +50,7 @@ app.use(function(req, res, next){
 app.use('/',userRouter);
 app.use('/admin',adminRouter);
 app.use('/admin/category',categoryRouter);
+app.use('/admin/product',productRouter);
 
 
 app.listen(port,()=>{

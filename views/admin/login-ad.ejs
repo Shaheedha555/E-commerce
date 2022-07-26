@@ -1,9 +1,32 @@
 <%- include('../layouts/admin-header.ejs') %>
 
             
+<section class="login-form login-admin">
+
+  <form id="admin-login-form" action="/admin" method="post">
+      <h3>Admin login</h3>
+      <div class="inputBox">
+          <span class="fas fa-user"></span>
+          <input type="email" name="email" placeholder="Enter Admin's email" id="email">
+      </div>
+      <div class="inputBox">
+          <span class="fas fa-lock"></span>
+          <input type="password" name="password" placeholder="Enter Admin's password" id="password">
+      </div>
+      <input type="submit" value="sign in" class="btn">
+      <!-- <div class="flex">
+          <input type="checkbox" name="" id="remember-me">
+          <label for="remember-me">remember me</label>
+          <a href="#">forgot password?</a>
+      </div>
+      <a href="/register" class="btn">create an account</a> -->
+  </form>
+
+</section>
 
 
-<section class="vh-100 gradient-custom ">
+
+<!-- <section class="vh-100 gradient-custom ">
   <div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
       <div class="col-12 col-lg-9 col-xl-7 w-50">
@@ -31,7 +54,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 
 

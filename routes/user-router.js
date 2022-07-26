@@ -1,6 +1,8 @@
 const express = require('express');
 const userRouter = express.Router();
 const User = require('../models/userModel');
+const Banner = require('../models/bannerModel');
+
 const EmailVerification = require('../models/userEmailverification')
 const nodemailer = require("nodemailer");
 const auth = require('../config/auth')
@@ -33,11 +35,30 @@ transporter.verify((err , success)=>{
 })
 
 userRouter.get('/', (req, res) => {
-    if (req.session.user) res.redirect('/home')
-    else res.render('user/homepage');
+    // if (req.session.user) res.redirect('/home')
+    // else res.render('user/homepage');
+    Banner.find((err,banners)=>{
+        if(err) console.log(err);
+        const user = req.session.user
+        res.render('user/homepage', { user , banners})
+    })
+    
 
 
 });
+// userRouter.get('/home', (req, res) => {
+
+//     if (req.session.user) {
+        
+//     } else {
+        
+//         res.redirect('/login')
+
+//     }
+
+// })
+ 
+
 userRouter.get('/register', (req, res) => {
     if(req.session.user) res.redirect('/home');
     else{
@@ -49,36 +70,8 @@ userRouter.get('/register', (req, res) => {
 
 });
 
-userRouter.post('/register', [
-    check('name', 'Enter a name with minimum of 4 letters')
-        .exists()
-        .isLength({ min: 4 }),
-    check('email', 'Enter a valid email')
-        .exists()
-        .isEmail(),
-    check('contact', 'Enter a 10 digit Mobile No.')
-        .exists()
-        .isNumeric()
-        .isLength({ min: 10, max: 10 }),
-    check('password', 'Password at least should be 6 characters')
-        .exists()
-        .isLength({ min: 6 }),
-    check('cpassword', 'Password is not matching')
-        .custom(async (cpassword, { req }) => {
-            const password = req.body.password
-
-
-            if (password !== cpassword) {
-                throw new Error('Passwords must be same')
-            }
-        }),
-
-], async (req, res) => {
-    errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        const alert = errors.array();
-        res.render('user/signup', { alert })
-    } else {
+userRouter.post('/register', async (req, res) => {
+    
         const { name, email, contact, password, cpassword } = req.body;
         let user = await User.findOne({ email })
 
@@ -105,7 +98,7 @@ userRouter.post('/register', [
         })
         // req.session.user = user
 
-    }
+    
 
 
 });
@@ -189,7 +182,7 @@ userRouter.get('/verify',async (req,res)=>{
 
 userRouter.get('/login', (req, res) => {
 
-    if (req.session.user) { res.redirect('/home') }
+    if (req.session.user) { res.redirect('/') }
 
     else {
 
@@ -202,24 +195,8 @@ userRouter.get('/login', (req, res) => {
 
 
 })
-userRouter.post('/login', [
-    check('email', 'Enter valid email')
-        .exists()
-        .isEmail(),
-    check('password', 'Enter your password')
-        .exists()
-        .isLength({ min: 6 })
-], async (req, res) => {
+userRouter.post('/login', async (req, res) => {
 
-    errors = validationResult(req)
-
-    if (!errors.isEmpty()) {
-
-        const alert = errors.array();
-
-        res.render('user/login', { alert })
-
-    } else {
 
         const { email, password } = req.body
 
@@ -249,25 +226,11 @@ userRouter.post('/login', [
         req.session.user = userData
 
 
-        res.redirect('/home')
-    }
+        res.redirect('/')
+    
 
 })
-userRouter.get('/home', (req, res) => {
 
-    console.log(req.session.user)
-
-    if (req.session.user) {
-        const user = req.session.user
-        res.render('user/homepage', { user: user.name })
-    } else {
-        
-        res.redirect('/login')
-
-    }
-
-})
- 
 userRouter.get('/logout', (req, res) => {
     req.session.destroy((err) => {
 

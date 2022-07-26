@@ -1,0 +1,21 @@
+<%- include('../layouts/admin-header.ejs') %>
+
+<div class="container">
+<form method="post" action="admin/banner" enctype="multipart/form-data">
+    <div class="row">
+        <% banners.forEach(function(img){ %>
+            <div class="col">
+            <img width="100px" height="100px" src="public/images/admin-img/<%= img.image%>" alt=""> <br>
+            <a class="confirmDeletion" href="/admin/banner/delete/<%=img._id%>">Delete</a>
+        </div>
+        <%})%>
+    </div>
+    <label for="bnr-img">banner images</label>
+    <input id="bnr-img" type="file" name="banner">
+    <input type="submit">
+</form>
+
+</div>
+ 
+
+<%- include('../layouts/admin-footer.ejs') %>
