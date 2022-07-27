@@ -59,7 +59,7 @@ userRouter.get('/', (req, res) => {
 // })
  
 
-userRouter.get('/register', (req, res) => {
+userRouter.get('/register',auth.isUser, (req, res) => {
     if(req.session.user) res.redirect('/home');
     else{
         const message = req.flash('message')

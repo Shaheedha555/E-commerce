@@ -3,39 +3,42 @@
 
 <h2 class="text-center mt-5 h1">All Categories</h2>
 
-<section class="category container"> 
+<section class="category container "> 
     <br>
     
     <a href="/admin/category/add-category" ><button class="btn btn-primary">Add a new category</button> </a>
-
-    <table id="example" class="table data-table" style="width:100%">
-        <% if(message !='' ){%>
-            <p style="color: green;">
-              <%= message.message %>
-            </p>
-
-            <%}%>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Image</th>
-                <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% categories.forEach(function(cat){ %>
-            <tr>
-                <td><%= cat.title %></td>
-                <td> <img width="80px" src="/public/images/category-img/<%= cat.image %>" alt="<%=cat.title%> img"></td>
-                <td><a href="/admin/category/edit-category/<%= cat._id %>"><i class="fa fa-pen pe-5"></i></a>
-                <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>"><i class="fa fa-trash"></i> </a></td>
-            </tr>
-            <% }); %>
-        
-        
-    </tbody>
+    <div class="table-responsive-sm">
+        <table id="example" class="table data-table align-middle" style="width:100%">
+            <% if(message !='' ){%>
+                <p style="color: green;">
+                  <%= message.message %>
+                </p>
     
-</table>
+                <%}%>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                    
+            </tr>
+        </thead>
+        <tbody>
+            <% categories.forEach(function(cat){ %>
+                <tr>
+                    <td><%= cat.title %></td>
+                    <td> <img width="80px" src="/public/images/category-img/<%= cat.image %>" alt="<%=cat.title%> img"></td>
+                    <td><a href="/admin/category/edit-category/<%= cat._id %>"><i class="fa fa-pen pe-5"></i></a>
+                    <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>"><i class="fa fa-trash"></i> </a></td>
+                </tr>
+                <% }); %>
+            
+            
+        </tbody>
+        
+    </table>
+    </div>
+    
 </section>
 
 

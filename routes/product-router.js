@@ -25,8 +25,9 @@ productRouter.get('/',auth.isAdmin, (req,res)=>{
     Product.find(async (err,products)=>{
 
         if (err) return console.log(err);
+        const admin = req.session.admin;
 
-        res.render('admin/products',{products : products});
+        res.render('admin/products',{products : products,admin});
 
     });
 
@@ -37,8 +38,10 @@ productRouter.get('/add-product',auth.isAdmin,(req,res)=>{
     let description = "";
     let price = "";
     Category.find(function(err,categories){
-        res.render('admin/add-product',
-            {title:title,
+        const admin = req.session.admin;
+
+        res.render('admin/add-product',{admin,
+            title:title,
             description:description,
             categories:categories,
             price:price});
@@ -99,7 +102,7 @@ productRouter.post('/add-product',upload.single('image'), function (req, res) {
 });
 });
 
-productRouter.get('/edit-product/:id',(req,res)=>{
+productRouter.get('/edit-product/:id',auth.isAdmin,(req,res)=>{
     Category.find(function(err,categories){
         if(err){
             console.log(err);
@@ -109,8 +112,9 @@ productRouter.get('/edit-product/:id',(req,res)=>{
                 console.log(err);
                 res.redirect('/admin/product');
             } 
-    
-            res.render('admin/edit-product',{
+            const admin = req.session.admin;
+
+            res.render('admin/edit-product',{admin,
                 title: product.title,
                 description : product.description,
                 categories : categories,
@@ -152,7 +156,7 @@ productRouter.post('/edit-product/:id',(req,res)=>{
 
 
 
-productRouter.get('/delete-product/:id', (req, res) => {
+productRouter.get('/delete-product/:id',auth.isAdmin, (req, res) => {
     Product.findByIdAndRemove(req.params.id, (err) => {
         if (err) return console.log(err);
         res.redirect('/admin/product');

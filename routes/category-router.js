@@ -25,8 +25,9 @@ categoryRouter.get('/',auth.isAdmin, (req,res)=>{
     Category.find( (err,categories)=>{
         if (err) return console.log(err);
         // const message = req.flash('message')
+        const admin = req.session.admin;
 
-        res.render('admin/category',{categories : categories});
+        res.render('admin/category',{categories : categories,admin});
 
     });
 
@@ -34,8 +35,9 @@ categoryRouter.get('/',auth.isAdmin, (req,res)=>{
 
 categoryRouter.get('/add-category',auth.isAdmin,(req,res)=>{
 
-
-    res.render('admin/add-category');
+    const admin = req.session.admin;
+    const title = ""
+    res.render('admin/add-category',{admin,title});
 });
 
 categoryRouter.post('/add-category',upload.single('image'), function (req, res) {
@@ -88,10 +90,12 @@ categoryRouter.post('/add-category',upload.single('image'), function (req, res) 
 });
 });
 
-categoryRouter.get('/edit-category/:id',(req,res)=>{
+categoryRouter.get('/edit-category/:id',auth.isAdmin,(req,res)=>{
     Category.findById(req.params.id, (err,category)=>{
         if(err) return console.log(err);
-        res.render('admin/edit-category',{
+        const admin = req.session.admin;
+
+        res.render('admin/edit-category',{admin,
             title: category.title,
             image : category.image,
             id : category._id
@@ -122,7 +126,7 @@ categoryRouter.post('/edit-category/:id',(req,res)=>{
 
 
 
-categoryRouter.get('/delete-category/:id',(req,res)=>{
+categoryRouter.get('/delete-category/:id',auth.isAdmin,(req,res)=>{
     Category.findByIdAndRemove(req.params.id,(err)=>{
         if(err) return console.log(err);
         res.redirect('/admin/category');
@@ -131,4 +135,4 @@ categoryRouter.get('/delete-category/:id',(req,res)=>{
 
 
 
-module.exports = categoryRouter
+module.exports = categoryRouter 

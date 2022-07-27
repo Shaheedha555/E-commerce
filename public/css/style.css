@@ -955,10 +955,44 @@ a {
  
 
 /* admin styles */
-.data-table {
+.table {
     font-size: 20px;
+}
+.users {
+  text-transform: capitalize;
+
 }
 
 label.error.fail-alert {
 color: red;
+}
+
+.add .row form .box{
+  width: 100%;
+  border-bottom: 0.2rem solid #333;
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+  font-size: 1.6rem;
+  color: #666;
+  text-transform: none;
+
+
+}
+
+.add .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.add .row form {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 42rem;
+          flex: 1 1 42rem;
+  padding: 2rem;
+  border-radius: .5rem;
+  border: 0.2rem solid #333;
 }

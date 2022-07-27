@@ -57,10 +57,10 @@
 
     <nav class="navbar">
         <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
             <li><a href="/admin/category">Category</a></li>
             <li><a href="/admin/product">Products</a></li>
-            <li><a href="">Users</a></li>
+            <li><a href="/admin/users">Users</a></li>
             <li><a href="">Orders</a></li>
 
 
@@ -71,9 +71,18 @@
                     <li><a href="blogs.html">blogs</a></li>
                 </ul>
             </li> -->
+            <% if(locals.admin){%>
             
-                
+                <li><a href="/admin"><i class="fa fa-lock-open"></i> Admin</a>
+                    <ul>
+                        <li><a href="/admin/logout">Logout</a></li>
+                    </ul>
+                </li>
+
+            <%}else{%>
                 <li><a href="/admin"><i class="fa fa-lock"></i> Admin</a></li>
+                <%}%>
+                
 
             
         </ul>

@@ -3,6 +3,9 @@ const adminRouter = express.Router();
 const Admin = require('../models/adminModel');
 const bcrypt = require('bcrypt');
 const Banner = require('../models/bannerModel');
+const Users = require('../models/userModel');
+const auth = require('../config/auth');
+
 
 const multer = require('multer');
 
@@ -22,6 +25,7 @@ const upload = multer({storage : storage})
 
 adminRouter.get('/',(req,res)=>{
     if(req.session.admin) res.redirect('/admin/dashboard')
+    
     else res.render('admin/login-ad');
 });
 
@@ -48,24 +52,24 @@ adminRouter.get('/dashboard',(req,res)=>{
 
     if(req.session.admin){
 
-        const adminLoggedIn = true;
+        const admin = req.session.admin;
 
-        res.render('admin/homepage-ad');
+        res.render('admin/homepage-ad',{admin});
     }
     else return res.redirect('/admin')
 });
 
 adminRouter.get('/logout',(req,res)=>{
     req.session.destroy();
-    res.redirect('/');
+    res.redirect('/admin');
 });
 
 
-adminRouter.get('/banner',async (req,res)=>{
+adminRouter.get('/banner',auth.isAdmin,async (req,res)=>{
     Banner.find((err,banners)=>{
         if(err) console.log(err);
-        console.log(banners);
-        res.render('admin/banner',{banners})
+        const admin = req.session.admin;
+        res.render('admin/banner',{banners,admin})
  
     })
 })
@@ -103,7 +107,24 @@ adminRouter.get('/banner/delete/:id',(req,res)=>{
 });
 
 
+adminRouter.get('/users',auth.isAdmin, (req,res)=>{
+    Users.find( (err,users)=>{
+        if (err) return console.log(err);
+        // const message = req.flash('message')
+        const admin = req.session.admin;
 
+        res.render('admin/users',{users : users,admin});
+
+    });
+
+});
+
+adminRouter.get('/users/delete/:id',(req,res)=>{
+    Users.findByIdAndRemove(req.params.id,(err)=>{
+        if(err) return console.log(err);
+        res.redirect('/admin/users');
+    });
+});
 
 
  module.exports  =  adminRouter
