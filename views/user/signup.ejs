@@ -20,7 +20,19 @@
 
 <section class="register-form">
 
+  
     <form id="user-signup-form" method="post" action="/register">
+      <% success.forEach(function(msg){ %>
+        <div class="alert alert-success" role="alert">
+            <%= msg %>
+        </div>
+      <%})%>
+      
+      <% error.forEach(function(err){ %>
+        <div class="alert alert-danger" role="alert">
+            <%= err %>
+        </div>
+      <%})%>
         <h3>Register Now</h3>
         <div class="inputBox">
             <span class="fas fa-user"></span>
@@ -81,85 +93,5 @@
 
 
 
-  <!-- <section class="vh-80 gradient-custom ">
-    <div class="container py-5 h-80">
-      <div class="row justify-content-center align-items-center h-80">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <% if (typeof alert !='undefined' ){ %>
-            <% alert.forEach(function(error){ %>
-              <div class="alert alert-warning" role="alert">
-                <p>
-                  <%= error.msg %>
-                </p>
-              </div>
-              <% })%>
-                <% } %>
-
-
-                  <div class="card shadow-2-strong card-registration">
-                    <div class="card-body p-4 p-md-5">
-                      <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-black">Registration Form</h3>
-                      <% if(message !='' ){%>
-                        <p style="color: green;">
-                          <%= message.message %>
-                        </p>
-
-                        <%}%>
-                          <form method="post" action="register">
-
-                            <div class="form-outline">
-                              <label class="form-label" for="name">Name</label>
-                              <input name="name" type="text" id="name" class="form-control form-control-lg" />
-                            </div>
-                            <div class="form-outline">
-                              <label class="form-label" for="email"> Email</label>
-                              <input name="email" type="email" id="email" class="form-control form-control-lg" />
-                            </div>
-
-                            <div class="form-outline">
-                              <label class="form-label" for="phoneNumber">Phone Number</label>
-                              <input name="contact" type="tel" id="phoneNumber" class="form-control form-control-lg" />
-                            </div>
-
-
-                            <div class="row">
-                              <div class="col-md-6 mb-4 pb-2">
-
-                                <div class="form-outline">
-                                  <label class="form-label" for="password">Password</label>
-                                  <input name="password" type="password" id="password"
-                                    class="form-control form-control-lg" />
-                                </div>
-
-                              </div>
-                              <div class="col-md-6 mb-4 pb-2">
-
-                                <div class="form-outline">
-                                  <label class="form-label" for="cpassword">Confirm Password</label>
-                                  <input name="cpassword" type="password" id="cpassword"
-                                    class="form-control form-control-lg" />
-                                </div>
-
-                              </div>
-
-                            </div>
-                            
-                            
-
-
-                            <button class="btn main-btn m-auto" type="submit"> Register</button>
-                            <div class="text-center">
-                              <p>Already a member? <a href="/login">Sign in</a></p>
-                            </div>
-
-                          </form>
-                          
-                    </div>
-                  </div>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  <!-- <%- include('../layouts/user-footer-section.ejs') %> -->
   
   <%- include('../layouts/user-footer.ejs') %>

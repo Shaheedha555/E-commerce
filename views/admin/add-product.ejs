@@ -6,11 +6,12 @@
         
     <br><br>
     <div class="row">
-        <form id="add-cat" method="post" action="/admin/product/add-product" enctype="multipart/form-data">
-            <% if(message != ''){%>
-                <p class="text-<%= message.type%>"> <%= message.message %> </p>
-                
-            <%}%>
+        <form id="add-edit" method="post" action="/admin/product/add-product" enctype="multipart/form-data">
+            <% error.forEach(function(err){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
             <div class="form-group">
                 <input id="title" type="text" class="box" name="title" value="<%= title %>" placeholder="Title">
             </div> 
@@ -27,9 +28,10 @@
             </div>
             <div class="form-group">
                 <input id="image" type="file" class="box" name="image">
+                <img src="#" id="img-prvw" alt="">
             </div>
             <div class="form-group">
-                <input id="price" type="text" class="box" name="price" value="<%= price %>" placeholder="price in rupees">
+                <input id="price" type="number" class="box" name="price" value="<%= price %>" placeholder="price in rupees">
             </div>
             <br>
             <button type="submit" class="btn btn-default">Submit</button>

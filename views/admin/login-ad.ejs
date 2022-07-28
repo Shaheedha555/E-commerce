@@ -4,6 +4,12 @@
 <section class="login-form login-admin">
 
   <form id="admin-login-form" action="/admin" method="post">
+   
+    <% error.forEach(function(err){ %>
+      <div class="alert alert-danger" role="alert">
+          <%= err %>
+      </div>
+    <%})%>
       <h3>Admin login</h3>
       <div class="inputBox">
           <span class="fas fa-user"></span>

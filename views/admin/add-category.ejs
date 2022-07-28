@@ -6,11 +6,12 @@
    
     <br><br>
     <div class=" row">
-        <form id="add-cat" method="post" action="/admin/category/add-category" enctype="multipart/form-data">
-            <% if(message != ''){%>
-                <p class="text-<%= message.type%>"> <%= message.message %> </p>
-                
-            <%}%>
+        <form id="add-edit" method="post" action="/admin/category/add-category" enctype="multipart/form-data">
+            <% error.forEach(function(err){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
             <div class="form-group">
                 <!-- <label for="title">Title</label> -->
                 <input id="title" type="text" class="box" name="title" value="<%= title %>" placeholder="Title">
@@ -18,6 +19,8 @@
             <div class="form-group">
                 <!-- <label for="image">Image</label> -->
                 <input id="image" type="file" class="box" name="image">
+                <img src="#" id="img-prvw" alt="">
+
             </div>
             <br>
             <button type="submit" class="btn btn-default">Submit</button>

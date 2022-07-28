@@ -17,7 +17,7 @@
 //     })
 // })
 
-    $("#add-cat").validate({
+    $("#add-edit").validate({
         
         errorClass: "error fail-alert",
         // validClass: "valid success-alert"
@@ -27,18 +27,30 @@
           required: true,
           minlength: 5
         },
-        image: {
-          required: true
-          
+        category:{
+          required : true
+        } ,
+        price: {
+          required : true
+        },
+        description : {
+          required : true
         }
       },
       messages : {
         title: {
-          required: "This field is requied",
+          required: "Add a title",
           minlength: "Title should be at least 5 characters"
         },
-        image :{
-            required : "Image is required"
+       
+        category : {
+          required : "Select a category"
+        },
+        price : {
+          required : "Add its price"
+        },
+        description : {
+          required : "Add description"
         }
       },
       
@@ -95,7 +107,9 @@
                 },
                 cpassword: {
                   required: true,
-                  minlength : 6
+                  minlength : 6,
+                  equalTo: "#password"
+
                 }
               },
               messages : {
@@ -115,7 +129,8 @@
                   minlength: "Password should be at least 6 characters."
                 },
                 cpassword : {
-                  required : "Re-enter your Password."
+                  required : "Re-enter your Password.",
+                  equalTo : "Password is not matching!"
                 }
               }
             });
@@ -253,3 +268,17 @@ function prev(){
     slides[index].classList.add('active');
 }
 console.log('home');
+
+function readURL(input) {
+if(input.files && input.files[0]){
+  var reader = new FileReader();
+  reader.onload = function(e){
+    $('#img-prvw').attr('src',e.target.result).width(100).height(100);
+  }
+  reader.readAsDataURL(input.files[0])
+}
+}
+
+$("#image").change(function(){
+  readURL(this);
+})

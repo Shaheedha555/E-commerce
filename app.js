@@ -41,11 +41,13 @@ app.use('/public',express.static(path.join(__dirname,'public')));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(express.json())
+
 app.use(flash());
-app.use(function(req, res, next){
-    res.locals.message = req.flash();
-    next();
-});
+// app.use(function(req, res, next){
+//     res.locals.message = req.flash();
+//     next();
+// });
 
 app.use('/',userRouter);
 app.use('/admin',adminRouter);

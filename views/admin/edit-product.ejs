@@ -5,16 +5,17 @@
     <a href="/admin/product" class="btn btn-primary"><i class="fa fa-angle-left"></i></a>
     <br><br>
     <div class="row">
-        <form id="edit-pro" method="post" action="/admin/product/edit-product/<%= id %>">
-            <% if(message != ''){%>
-                <p class="text-<%= message.type%>"> <%= message.message %> </p>
-                
-            <%}%>
+        <form id="add-edit" method="post" action="/admin/product/edit-product/<%= id %>" enctype="multipart/form-data">
+            <% error.forEach(function(err){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
             <div class="form-group">
                 <input id="title" type="text" class="box" name="title" value="<%= title %>" placeholder="Title">
             </div> 
             <div class="form-group">
-                <textarea id="description" type="text" class="box" cols="30" rows="10" name="description" placeholder="description"><%= description %></textarea>
+                <textarea id="description" type="text" class="box" cols="30" rows="10" name="description"  placeholder="description"><%= description %></textarea>
             </div>
             <div class="form-group">
                 <select id="category" type="text" class="box" name="category" value="" placeholder="category">
@@ -27,7 +28,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <input id="image" type="file" class="box" name="image">
+                <input  id="image" type="file" class="box" name="image">
+                <img  width="100px" height="100px" src="/public/images/product-img/<%=image%>" id="img-prvw" alt="">
+                <input type="hidden" name="pimage" value="<%= image %>">
+
             </div>
             <div class="form-group">
                 <input id="price" type="text" class="box" name="price" value="<%= price %>" placeholder="price in rupees">

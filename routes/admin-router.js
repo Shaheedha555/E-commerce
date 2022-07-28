@@ -26,13 +26,16 @@ const upload = multer({storage : storage})
 adminRouter.get('/',(req,res)=>{
     if(req.session.admin) res.redirect('/admin/dashboard')
     
-    else res.render('admin/login-ad');
+    else{
+        const error = req.flash('error');
+        res.render('admin/login-ad',{error:error});
+    } 
 });
 
 adminRouter.post('/',async (req,res)=>{
     const {email,password} = req.body;
+    const adminData = await Admin.findOne({email: email , password : password});
 
-    const adminData = Admin.find({email: email , password : password});
     if (adminData) {
         console.log('admin dash');
         req.session.admin = true;
@@ -40,6 +43,7 @@ adminRouter.post('/',async (req,res)=>{
 
 
     }else{
+        req.flash('error','Incorrect email or password')
         return res.redirect('/admin')
 
     }

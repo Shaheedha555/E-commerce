@@ -59,11 +59,13 @@ userRouter.get('/', (req, res) => {
 // })
  
 
-userRouter.get('/register',auth.isUser, (req, res) => {
+userRouter.get('/register', (req, res) => {
     if(req.session.user) res.redirect('/home');
     else{
-        const message = req.flash('message')
-        res.render('user/signup')
+        const error = req.flash('error');
+        const success = req.flash('success');
+
+        res.render('user/signup',{error:error,success:success})
     }
     
 
@@ -76,7 +78,7 @@ userRouter.post('/register', async (req, res) => {
         let user = await User.findOne({ email })
 
         if (user) {
-            req.flash('message',`This Email is already registered  in the name '${user.name}'`)
+            req.flash('error',`This Email is already registered  in the name '${user.name}'`)
             return res.redirect('/register')
         }
         const spassword = await securePassword(req.body.password)
@@ -92,6 +94,7 @@ userRouter.post('/register', async (req, res) => {
         user.save().then((result)=>{
             sendVerificationEmail(result,res);
             console.log(result);
+            req.flash('success','Verification email hasbeen sent. please check your email')
         })
         .catch((err)=>{
             console.log(err);
@@ -124,7 +127,7 @@ userRouter.get('/verify',async (req,res)=>{
                     User.deleteOne({_id: userId})
                     .then(()=>{
                         console.log('signup again due to expired link');
-                        req.flash('message',`Your verification link has expired.Signup again`)
+                        req.flash('error',`Your verification link has expired.Signup again`)
 
                         res.redirect('/register')
                     })
@@ -135,7 +138,7 @@ userRouter.get('/verify',async (req,res)=>{
                 })
                 .catch((error)=>{
                     console.log(error);
-                    console.log('err in deletion');
+                    console.log('err in email deletion');
                 })
             }else{
                 bcrypt.compare(uniqueString,hashedString)
@@ -145,7 +148,7 @@ userRouter.get('/verify',async (req,res)=>{
                         .then(()=>{
                             EmailVerification.deleteOne({userId})
                             .then(()=>{
-                                req.flash('message','Your email has been verified.Go and Login now!')
+                                req.flash('success','Your email has been verified.Go and Login now!')
 
                                 res.redirect('/register')
                             })
@@ -157,7 +160,7 @@ userRouter.get('/verify',async (req,res)=>{
                             console.log(error);
                         })
                     }else{
-                        req.flash('message',`Verification link is not valid.Signup again.`)
+                        req.flash('error',`Verification link is not valid.Signup again.`)
 
                         res.redirect('/register')
                     }
@@ -167,7 +170,7 @@ userRouter.get('/verify',async (req,res)=>{
                 })
             }
         }else{
-            req.flash('message',`No registered User found`)
+            req.flash('error',`No registered User found`)
 
             res.redirect('/register')
         }
@@ -177,7 +180,7 @@ userRouter.get('/verify',async (req,res)=>{
         console.log('error in find');
 
     })
-
+ 
 });
 
 userRouter.get('/login', (req, res) => {
@@ -186,9 +189,9 @@ userRouter.get('/login', (req, res) => {
 
     else {
 
-        const message = req.flash('message')
-
-        res.render('user/login') 
+        const error = req.flash('error');
+        const success = req.flash('success');
+        res.render('user/login',{error:error,success:success}) 
 
         }
 
@@ -204,7 +207,7 @@ userRouter.post('/login', async (req, res) => {
 
         if (!userData) {
 
-            req.flash('message','No User found!')
+            req.flash('error','No User found!')
             return res.redirect('/login')
 
 
@@ -212,14 +215,14 @@ userRouter.post('/login', async (req, res) => {
         const passwordMatch = await bcrypt.compare(password, userData.password)
         if (!passwordMatch) {
 
-            req.flash('message','Your Password is wrong!')
+            req.flash('error','Your Password is wrong!')
 
             return res.redirect('/login')
 
 
         }
         if(userData.verified !== true){
-            req.flash('message','Your email is not verified! Go to your inbox and verify.')
+            req.flash('error','Your email is not verified! Go to your inbox and verify.')
 
             return res.redirect('/login')
         }
@@ -236,7 +239,7 @@ userRouter.get('/logout', (req, res) => {
 
         if (err) throw err;
     })
-
+        req.flash('success','yo have logged out successfully')
         res.redirect("/login");
 })
 
@@ -244,7 +247,7 @@ userRouter.get('/logout', (req, res) => {
         
 const sendVerificationEmail = async ({_id,email},res)=> {
     try {
-        const url = "http://localhost:5000/"
+        const url = "http://localhost:3000/"
         const uniqueString = uuidv4()
         const mailOptions = {
             from : 'shaheedhamolshahi@gmail.com',
@@ -264,10 +267,11 @@ const sendVerificationEmail = async ({_id,email},res)=> {
 
         await newEmailVerification.save();
         await transporter.sendMail(mailOptions);
-
+        // req.flash('success','Verification email is sent.Please verify your email')
         res.redirect('/register')
 
     } catch (error) {
+        console.log("email not sent");
      console.log(error);   
     }
 }

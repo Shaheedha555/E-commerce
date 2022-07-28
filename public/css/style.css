@@ -996,3 +996,7 @@ color: red;
   border-radius: .5rem;
   border: 0.2rem solid #333;
 }
+
+#img-prvw{
+  margin: 20px;
+}

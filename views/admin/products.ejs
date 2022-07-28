@@ -1,20 +1,21 @@
 <%- include('../layouts/admin-header.ejs') %>
 
 
-<h2 class="text-center mt-5 h1">All Products</h2>
 
 <section class="products container "> 
+    <h2 class=" mt-5 h1">All Products</h2>
+
     <br>
     
     <a href="/admin/product/add-product" ><button class="btn btn-primary">Add new Product</button> </a>
     <div class="table-responsive-sm">
+        <% if (count>0){%>
         <table id="example" class="table data-table align-middle" style="width:100%">
-            <% if(message !='' ){%>
-                <p style="color: green;">
-                  <%= message.message %>
-                </p>
-    
-                <%}%>
+            <% success.forEach(function(msg){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= msg %>
+                </div>
+              <%})%>
             <thead>
                 <tr>
                     <th>Title</th>
@@ -26,22 +27,38 @@
             </tr>
         </thead>
         <tbody>
-            <% products.forEach(function(pro){ %>
-                <tr>
-                    <td><%= pro.title %></td>
-                    <td><%= pro.description %></td>
-                    <td><%= pro.category %></td>
-                    <td> <img width="80px" height="80px" src="/public/images/product-img/<%= pro.image %>" alt="<%=pro.title%> img"></td>
-                    <td><%= pro.price %></td>
-                    <td><a href="/admin/product/edit-product/<%= pro._id %>"><i class="fa fa-pen pe-5"></i></a>
-                    <a class="confirmDeletion" href="/admin/product/delete-product/<%= pro._id %>"><i class="fa fa-trash"></i> </a></td>
-                </tr>
-                <% }); %>
+          
+
+
+                <% products.forEach(function(pro){ %>
+                    <tr>
+                        <td><%= pro.title %></td>
+                        <td><%= pro.description %></td>
+                        <td><%= pro.category %></td>
+                        <td>
+                        <% if (pro.image == ""){%>
+                        <img width="80px" height="80px" src="/public/images/no-image.jpg" alt="no-image">
+                        <%}else{%>
+                         <img width="80px" height="80px" src="/public/images/product-img/<%= pro.image %>" alt="<%=pro.title%> img">
+                         <%}%>
+                        </td>
+                        <td><%= pro.price %></td>
+                        <td><a href="/admin/product/edit-product/<%= pro._id %>"><i class="fa fa-pen pe-5"></i></a>
+                        <a class="confirmDeletion" href="/admin/product/delete-product/<%= pro._id %>"><i class="fa fa-trash"></i> </a></td>
+                    </tr>
+                    <% }); %>
+                
+
+            
             
             
         </tbody>
         
     </table>
+    <%}else{%>
+        <br><br>
+        <h3 class="text-center">No any products</h3>
+        <%}%>
     </div>
     
 </section>
