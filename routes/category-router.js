@@ -182,23 +182,26 @@ categoryRouter.get('/delete-category/:id',auth.isAdmin,(req,res)=>{
                 return res.redirect('/admin/category')
             }else{
                 console.log('products absent');
-                Category.findByIdAndRemove(req.params.id,(err)=>{
+                Category.findById(req.params.id,(err,cat)=>{
                         if(err) return console.log(err);
-                        req.flash('success', `Category deleted successfully!`);
+                        fs.unlink('public/images/category-img/'+cat.image ,(err)=>{
+                            if(err) console.log(err);
+                            console.log('old img deleted');
+                            
+                        });
+                        Category.deleteOne(cat,()=>{
+                            req.flash('success', `Category deleted successfully!`);
                 
-                        res.redirect('/admin/category');
+                            res.redirect('/admin/category');
+                        })
+                        
                             });
 
             }
 
         })
     })
-    // Category.findByIdAndRemove(req.params.id,(err)=>{
-    //     if(err) return console.log(err);
-    //     req.flash('success', `Category deleted successfully!`);
 
-    //     res.redirect('/admin/category');
-    // });
 });
 
 

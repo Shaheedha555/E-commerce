@@ -103,7 +103,7 @@ adminRouter.post('/banner',upload.single('banner'),(req,res)=>{
 })
 
 
-adminRouter.get('/banner/delete/:id',(req,res)=>{
+adminRouter.get('/banner/delete/:id',auth.isAdmin,(req,res)=>{
     Banner.findByIdAndRemove(req.params.id,(err)=>{
         if(err) return console.log(err);
         res.redirect('/admin/banner');
@@ -112,23 +112,43 @@ adminRouter.get('/banner/delete/:id',(req,res)=>{
 
 
 adminRouter.get('/users',auth.isAdmin, (req,res)=>{
+    let count;
+    Users.count((err,c)=>{
+        if(err) console.log(err);
+        count = c
+    })
     Users.find( (err,users)=>{
         if (err) return console.log(err);
         // const message = req.flash('message')
         const admin = req.session.admin;
 
-        res.render('admin/users',{users : users,admin});
+        res.render('admin/users',{users : users,admin,count});
 
     });
 
 });
 
-adminRouter.get('/users/delete/:id',(req,res)=>{
+adminRouter.get('/users/delete/:id',auth.isAdmin,(req,res)=>{
     Users.findByIdAndRemove(req.params.id,(err)=>{
         if(err) return console.log(err);
         res.redirect('/admin/users');
     });
 });
 
+adminRouter.get('/users/block/:id',auth.isAdmin,(req,res)=>{
+    
+    Users.findByIdAndUpdate(req.params.id,{status : "true"}).then((err)=>{
+        if (err) console.log(err);
+        res.redirect('/admin/users');
+    })
+    
+})
+adminRouter.get('/users/unblock/:id',auth.isAdmin,(req,res)=>{
+    Users.findByIdAndUpdate(req.params.id,{status : "false"}).then((err)=>{
+        if (err) console.log(err);
+        res.redirect('/admin/users');
+    })
+    
+})
 
  module.exports  =  adminRouter

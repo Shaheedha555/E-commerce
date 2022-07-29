@@ -1,11 +1,13 @@
 <%- include('../layouts/admin-header.ejs') %>
 
 
-<h2 class="text-center mt-5 h1">All Users</h2>
 
 <section class="users container " > 
-    
+    <h2 class="mt-5 h1">All Users</h2>
+
 <div class="table-responsive">
+    <% if (count>0){%>
+
     <table id="example" class="table data-table  align-middle" style="width:100%">
        
         <thead>
@@ -26,10 +28,26 @@
                 <td><%= user.name %></td>
                 <td><%= user.email %></td>
                 <td><%= user.contact %></td>
-                <td> <img width="100px" style="border-radius:50% ;" src="/public/images/user-img/<%= user.image %>" alt="<%=user.name%> img"></td>
+                <td>
+                    <% if (user.image == ""){%>
+                        <img width="80px" height="80px" src="/public/images/no-image.jpg" alt="no-image">
+                        <%}else{%>
+                         <img width="80px" height="80px" src="/public/images/user-img/<%= user.image %>" alt="<%=user.name%> img">
+                         <%}%>                
+                </td>
                 <td><%= user.verified %></td>
-                <td><a href="/admin/users/block/<%= user._id %>"><i class="fas fa-ban pe-5"></i></a>
-                <a class="confirmDeletion" href="/admin/users/delete/<%= user._id %>"><i class="fa fa-trash"></i> </a></td>
+                <td>
+                    <% if (!user.status){%>
+
+                    <a href="/admin/users/block/<%= user._id %>"><i class="fas fa-ban pe-5"></i></a>
+                    <%}else{%>
+                        <a href="/admin/users/unblock/<%= user._id %>"><i> Unblock</i></a>
+                        <%}%>                
+
+
+                <a class="confirmDeletion" href="/admin/users/delete/<%= user._id %>"><i class="fa fa-trash"></i> </a>
+                
+                </td>
             </tr>
             <% }); %>
         
@@ -37,6 +55,10 @@
     </tbody>
     
 </table>
+<%}else{%>
+    <br><br>
+    <h3 class="text-center">No any registered user.</h3>
+    <%}%>
 </div>
     
 </section>

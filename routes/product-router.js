@@ -59,7 +59,7 @@ productRouter.get('/add-product',auth.isAdmin,(req,res)=>{
 
 });
 
-productRouter.post('/add-product',upload.single('image'), function (req, res) {
+productRouter.post('/add-product',upload.array('images',4), function (req, res) {
  
     let {description,price,category} =  req.body;
     let title = req.body.title.replace(/\s+/g, '-').toUpperCase();
@@ -215,12 +215,21 @@ productRouter.post('/edit-product/:id',upload.single('image'), (req,res)=>{
 
 
 productRouter.get('/delete-product/:id',auth.isAdmin, (req, res) => {
-    Product.findByIdAndRemove(req.params.id, (err) => {
+    Product.findById(req.params.id, (err,product) => {
         if (err) return console.log(err);
         
-        req.flash('success','Product deleted successfully.')
+        let image = product.image;
+        fs.unlink('public/images/product-img/'+image ,(err)=>{
+            if(err) console.log(err);
+            console.log('old img deleted');
 
-        res.redirect('/admin/product');
+        })
+        Product.deleteOne(product,()=>{
+            req.flash('success','Product deleted successfully.')
+
+            res.redirect('/admin/product');
+        })
+        
     });
 });
 

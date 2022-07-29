@@ -74,20 +74,22 @@ userRouter.get('/register', (req, res) => {
 
 userRouter.post('/register', async (req, res) => {
     
-        const { name, email, contact, password, cpassword } = req.body;
+        const { name, email, contact, password,image } = req.body;
         let user = await User.findOne({ email })
 
         if (user) {
             req.flash('error',`This Email is already registered  in the name '${user.name}'`)
             return res.redirect('/register')
         }
-        const spassword = await securePassword(req.body.password)
+        const spassword = await securePassword(password)
         user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            contact: req.body.contact,
+            name: name,
+            email: email,
+            contact: contact,
             password: spassword,
             verified: false,
+            image : image,
+            status : false
 
         })
         
@@ -122,9 +124,9 @@ userRouter.get('/verify',async (req,res)=>{
             const hashedString = result[0].uniqueString;
             if(expiresAt < Date.now()){
                 console.log('expired');
-                EmailVerification.deleteOne({userId})
+                EmailVerification.findOneAndDelete({userId})
                 .then((result)=>{
-                    User.deleteOne({_id: userId})
+                    User.findByIdAndDelete({_id: userId})
                     .then(()=>{
                         console.log('signup again due to expired link');
                         req.flash('error',`Your verification link has expired.Signup again`)
@@ -223,6 +225,11 @@ userRouter.post('/login', async (req, res) => {
         }
         if(userData.verified !== true){
             req.flash('error','Your email is not verified! Go to your inbox and verify.')
+
+            return res.redirect('/login')
+        }
+        if(userData.status){
+            req.flash('error','Your account is blocked by admin.')
 
             return res.redirect('/login')
         }
