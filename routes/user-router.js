@@ -96,7 +96,7 @@ userRouter.post('/register', async (req, res) => {
         user.save().then((result)=>{
             sendVerificationEmail(result,res);
             console.log(result);
-            req.flash('success','Verification email hasbeen sent. please check your email')
+            req.flash('success','Verification email hasbeen sent. please check your email at https://mail.google.com/mail')
         })
         .catch((err)=>{
             console.log(err);
@@ -150,7 +150,7 @@ userRouter.get('/verify',async (req,res)=>{
                         .then(()=>{
                             EmailVerification.deleteOne({userId})
                             .then(()=>{
-                                req.flash('success','Your email has been verified.Go and Login now!')
+                                req.flash('success','Your email has been verified.Go and Login now !')
 
                                 res.redirect('/register')
                             })

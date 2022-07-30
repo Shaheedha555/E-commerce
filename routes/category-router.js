@@ -27,16 +27,17 @@ categoryRouter.get('/',auth.isAdmin, (req,res)=>{
     let count;
     Category.count((err,c)=>{
         count = c;
+        Category.find( (err,categories)=>{
+            if (err) return console.log(err);
+            const admin = req.session.admin;
+            const success = req.flash('success');
+            const error = req.flash('error');
+    
+            res.render('admin/category',{categories : categories,count:count,admin,success:success,error});
+    
+        });
     })
-    Category.find( (err,categories)=>{
-        if (err) return console.log(err);
-        const admin = req.session.admin;
-        const success = req.flash('success');
-        const error = req.flash('error');
-
-        res.render('admin/category',{categories : categories,count:count,admin,success:success,error});
-
-    });
+    
 
 });
 

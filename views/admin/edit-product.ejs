@@ -39,6 +39,26 @@
             <br>
             <button type="submit" class="btn btn-default">Save</button>
         </form>
+
+        <h3>Gallery Images</h3>
+        <form id="add-edit" method="post" action="/admin/product/edit-product/add-gallery/<%= id %>" enctype="multipart/form-data">
+            <% success.forEach(function(msg){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= msg %>
+                </div>
+              <%})%>
+            <input type="file" id="image" class="box" name="images" multiple>
+            
+            <% gallery.forEach(function(img){ %>
+                <img  width="100px" height="100px" src="/public/images/product-img/<%=img%>" id="img-prvw" alt="">
+                <a class="confirmDeletion" href="/admin/product/edit-product/delete-gallery/<%= id %>/<%= img %>"><i class="fa fa-trash"></i> </a>
+
+
+            <%})%>
+            <button type="submit" class="btn btn-default">Upload</button>
+
+        </form>
+
     </div>
     
 </section>

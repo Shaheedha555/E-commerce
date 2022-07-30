@@ -39,9 +39,9 @@
                 <td>
                     <% if (!user.status){%>
 
-                    <a href="/admin/users/block/<%= user._id %>"><i class="fas fa-ban pe-5"></i></a>
+                    <a class="me-2" href="/admin/users/block/<%= user._id %>">Block</a>
                     <%}else{%>
-                        <a href="/admin/users/unblock/<%= user._id %>"><i> Unblock</i></a>
+                        <a href="/admin/users/unblock/<%= user._id %>"> Unblock</a>
                         <%}%>                
 
 

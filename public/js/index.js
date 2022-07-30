@@ -35,10 +35,6 @@
         },
         description : {
           required : true
-        },
-        image:{
-          extension: "jpg|jpeg|png|ico|bmp"
-
         }
       },
       messages : {
@@ -55,9 +51,6 @@
         },
         description : {
           required : "Add description"
-        },
-        image : {
-          extension : "Please upload file in these format only (jpg, jpeg, png, ico, bmp)."
         }
       },
       
@@ -289,24 +282,3 @@ if(input.files && input.files[0]){
 $("#image").change(function(){
   readURL(this);
 })
-
-
-$(document).ready(function() {
-  let imagesPreview = function(input, placeToInsertImagePreview) {
-    if (input.files) {
-      let filesAmount = input.files.length;
-      for (i = 0; i < filesAmount; i++) {
-        let reader = new FileReader();
-        reader.onload = function(event) {
-          $($.parseHTML("<img>"))
-            .attr("src", event.target.result)
-            .appendTo(placeToInsertImagePreview);
-        };
-        reader.readAsDataURL(input.files[i]);
-      }
-    }
-  };
-  $("#input-images").on("change", function() {
-    imagesPreview(this, "div.preview-images");
-  });
-});
