@@ -1001,6 +1001,13 @@ color: red;
   margin: 20px;
 }
 
-form i {
-  height: 20px;
+.page404{
+  margin-top: 100px;
+}
+
+.page404 h1{
+  font-size: 150px;
+}
+.page404 h2{
+  font-size: 40px;
 }

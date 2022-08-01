@@ -35,6 +35,14 @@
         },
         description : {
           required : true
+        },
+        image: {
+          extension: "jpg|jpeg|png|ico|bmp"
+        },
+        banner : {
+          required : true,
+          extension: "jpg|jpeg|png|ico|bmp"
+
         }
       },
       messages : {
@@ -51,38 +59,19 @@
         },
         description : {
           required : "Add description"
+        },
+        image : {
+          extension :  "Please upload file in these format only (jpg, jpeg, png, ico, bmp)."
+
+        },
+        banner : {
+          required : "Select an image",
+          extension :  "Please upload file in these format only (jpg, jpeg, png, ico, bmp)."
         }
       },
       
     });
    
-
-  //   $("#edit-cat").validate({
-        
-  //     errorClass: "error fail-alert",
-        
-  //   rules: {
-  //     title : {
-  //       required: true,
-  //       minlength: 5
-  //     },
-  //     image: {
-  //       required: true
-        
-  //     }
-  //   },
-  //   messages : {
-  //     title: {
-  //       required: "This field is requied",
-  //       minlength: "Title should be at least 5 characters"
-  //     },
-  //     image :{
-  //         required : "Image is required"
-  //     }
-  //   },
-    
-  // });
- 
 
 
             $("#user-signup-form").validate({
@@ -183,51 +172,7 @@
               
               }
             });
-// $(document).ready(function() {
-//     $("#basic-form").validate({
-//       rules: {
-//         name : {
-//           required: true,
-//           minlength: 3
-//         },
-//         age: {
-//           required: true,
-//           number: true,
-//           min: 18
-//         },
-//         email: {
-//           required: true,
-//           email: true
-//         },
-//         weight: {
-//           required: {
-//             depends: function(elem) {
-//               return $("#age").val() > 50
-//             }
-//           },
-//           number: true,
-//           min: 0
-//         }
-//       },
-//       messages : {
-//         name: {
-//           minlength: "Name should be at least 3 characters"
-//         },
-//         age: {
-//           required: "Please enter your age",
-//           number: "Please enter your age as a numerical value",
-//           min: "You must be at least 18 years old"
-//         },
-//         email: {
-//           email: "The email should be in the format: abc@domain.tld"
-//         },
-//         weight: {
-//           required: "People with age over 50 have to enter their weight",
-//           number: "Please enter your weight as a numerical value"
-//         }
-//       }
-//     });
-//   });
+// 
 
 $('a.confirmDeletion').on('click',function(){
     if(!confirm('Confirm deletion'))
@@ -267,7 +212,6 @@ function prev(){
     index = (index - 1 + slides.length) % slides.length;
     slides[index].classList.add('active');
 }
-console.log('home');
 
 function readURL(input) {
 if(input.files && input.files[0]){
@@ -282,3 +226,4 @@ if(input.files && input.files[0]){
 $("#image").change(function(){
   readURL(this);
 })
+$('.carousel').carousel()

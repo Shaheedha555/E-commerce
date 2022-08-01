@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const Banner = require('../models/bannerModel');
 const Users = require('../models/userModel');
 const auth = require('../config/auth');
+const Category = require('../models/categoryModel');
+const fs = require('fs')
 
 
 const multer = require('multer');
@@ -73,15 +75,31 @@ adminRouter.get('/banner',auth.isAdmin,async (req,res)=>{
     Banner.find((err,banners)=>{
         if(err) console.log(err);
         const admin = req.session.admin;
-        res.render('admin/banner',{banners,admin})
+        const success = req.flash('success')
+        res.render('admin/banner',{banners,admin,success})
  
     })
 })
+adminRouter.get('/banner/add-banner',auth.isAdmin,(req,res)=>{
+    Category.find(function (err, categories) {
+        const admin = req.session.admin;
 
-adminRouter.post('/banner',upload.single('banner'),(req,res)=>{
+        res.render('admin/add-banner',
+            {
+                admin,
+                categories: categories            }
+        );
+
+    });
+})
+
+adminRouter.post('/banner/add-banner',upload.single('banner'),(req,res)=>{
     // let image = req.file.filename;
     let banner = new Banner({
-        image : req.file.filename
+        banner : req.file.filename,
+        title : req.body.title,
+        caption : req.body.caption,
+        category : req.body.category
     })
     banner.save(function (err) {
         if (err)
@@ -99,14 +117,71 @@ adminRouter.post('/banner',upload.single('banner'),(req,res)=>{
         });
 
        
-    });    res.redirect('/admin/banner')
+    }); 
+    req.flash('success', 'banner added successfully');
+    res.redirect('/admin/banner');
 })
 
+adminRouter.get('/banner/edit-banner/:id',auth.isAdmin,(req,res)=>{
+    const id = req.params.id
+    Banner.findById({_id:id},(err,bnr)=>{
+        
+        console.log(bnr  + '   bnr');
+        
+        const admin = req.session.admin;
+        res.render('admin/edit-banner',
+            {
+                admin,
+                id:id,
+                title : bnr.title,
+                caption: bnr.caption,
+                banner : bnr.banner
+                         
+            }
+        );
+        })
+    
+});
+
+adminRouter.post('/banner/edit-banner/:id',upload.single('banner'),(req,res)=>{
+    const id =req.params.id;
+    const {title,caption,pimage} = req.body;
+    const banner = req.file.filename;
+
+    Banner.findById({_id:id},async(err,bnr)=>{
+        if (err) console.log(err);
+        bnr.title =  title,
+        bnr.caption = caption,
+        bnr.banner = banner
+
+        await bnr.save((err)=>{
+
+            fs.unlink('public/images/admin-img/' + pimage, (err) => {
+                if (err) console.log(err);
+                console.log('old img deleted');
+
+            });
+            req.flash('success', 'banner edited successfully.')
+            res.redirect('/admin/banner');
+
+        })
+    })
+
+})
 
 adminRouter.get('/banner/delete/:id',auth.isAdmin,(req,res)=>{
-    Banner.findByIdAndRemove(req.params.id,(err)=>{
+    Banner.findById(req.params.id,(err,bnr)=>{
         if(err) return console.log(err);
-        res.redirect('/admin/banner');
+        const banner = bnr.banner;
+        fs.unlink('public/images/admin-img/' + banner, (err) => {
+            if (err) console.log(err);
+            console.log('old img deleted');
+
+        });
+        Banner.deleteOne(bnr,()=>{
+
+            res.redirect('/admin/banner');
+        });
     });
 });
 
@@ -151,4 +226,7 @@ adminRouter.get('/users/unblock/:id',auth.isAdmin,(req,res)=>{
     
 })
 
+adminRouter.get('/not',(req,res)=>{
+    res.render('admin/404');
+})
  module.exports  =  adminRouter

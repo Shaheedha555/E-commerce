@@ -19,7 +19,7 @@
                 <textarea id="description" type="text" class="box" cols="30" rows="10" name="description" value="<%= description %>" placeholder="description"></textarea>
             </div>
             <div class="form-group">
-                <select id="category" type="text" class="box" name="category" value="" placeholder="category">
+                <select id="category"  class="box" name="category" value="" placeholder="category">
                         <option value="">category</option>
                     <% categories.forEach(function(cat){%>
                         <option value="<%= cat.title %>"><%= cat.title %></option>
