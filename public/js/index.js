@@ -172,6 +172,93 @@
               
               }
             });
+
+            $('#password').validate({
+              errorClass: "error fail-alert",
+
+              rules:{
+                password: {
+                  required: true,
+                  minlength : 6
+                },
+                npassword: {
+                  required: true,
+                  minlength : 6,
+  
+                },
+                cpassword: {
+                  required: true,
+                  minlength : 6,
+                  equalTo: "#cpassword"
+  
+                }
+
+              },
+              messages:{
+                password: {
+                  required: "Please enter your Password.",
+                  minlength: "Password should be at least 6 characters."
+                },
+                npassword:{
+                  required: "Please enter your Password.",
+                  minlength: "Password should be at least 6 characters."
+                },
+                cpassword : {
+                  required : "Re-enter your Password.",
+                  equalTo : "Password is not matching!"
+                }
+              }
+            })
+
+            $('#add-address').validate({
+              errorClass: "error fail-alert",
+              rules:{
+                name:{
+                  required:true,
+                  minlength:4
+                },
+                housename:{
+                  required:true,
+                  minlength:4
+                },
+                pin:{
+                  required:true,
+                  minlength:6
+                },
+                contact:{
+                  required:true,
+                  minlength: 10,
+                  maxlength: 10
+
+                },
+                district:{
+                  required:true
+                }
+              },
+              messages:{
+                name:{
+                  required:'Enter a name',
+                  minlength: "Name should be at least 4 characters."
+                },
+                housename:{
+                  required:'Enter housename',
+                  minlength:"Housename should be at least 4 characters."
+                },
+                pin:{
+                  required:'Enter pincode',
+                  minlength:'Enter a valid pin'
+                },
+                contact:{
+                  required:'Enter contact number',
+                  minlength: 'Contact should be 10 digits',
+                  maxlength: 'Contact should be 10 digits'
+
+                },
+                district:{
+                  required:"Choose district"
+                }
+              }
+            })
 // 
 
 $('a.confirmDeletion').on('click',function(){
@@ -227,3 +314,15 @@ $("#image").change(function(){
   readURL(this);
 })
 $('.carousel').carousel()
+
+
+function editProfile(){
+
+  $('#edit-profile').toggleClass('hide');
+
+}
+function addAddress(){
+
+  $('#add-address').toggleClass('hide');
+  
+}

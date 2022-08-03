@@ -130,7 +130,7 @@ categoryRouter.post('/edit-category/:id',upload.single('image'),(req,res)=>{
        
         Category.findOne({title: title,_id: {$ne: id}},(err,category)=>{
             if (category){
-                fs.unlink('public/images/category-img/'+ pimage ,(err)=>{
+                fs.unlink('public/images/category-img/'+ image ,(err)=>{
                     if(err) console.log(err);
                     console.log('old img deleted');
                 });
@@ -138,29 +138,52 @@ categoryRouter.post('/edit-category/:id',upload.single('image'),(req,res)=>{
 
                 return res.redirect('/admin/category/edit-category/'+id)
             }else{
-                Category.findByIdAndUpdate({_id:id},{$set:{title:title , image:image}}).then((category)=>{
-                    category.save((err)=>{
-                        if(err) return console.log(err);
-                        if (image !== ""){
-                            console.log('image is already there');
+                if(image !== ""){
 
-                            if(category.image !== ""){
-                                console.log('image updated');
+                    Category.findByIdAndUpdate({_id:id},{$set:{title:title , image:image}}).then((cat)=>{
+                        cat.save((err)=>{
+                            if(err) return console.log(err);
+                            
+    
+                                
+    
+                                    fs.unlink('public/images/category-img/'+pimage ,(err)=>{
+                                        if(err) console.log(err);
+                                        console.log('old img deleted');
+    
+                                    })
+                                
+                            req.flash('success', `Category edited successfully!`);
+    
+                            res.redirect('/admin/category');
+                        })
+                    }).catch((err)=> console.log(err))
+                         
+                }else{
+                    Category.findByIdAndUpdate({_id:id},{$set:{title:title , image:pimage}}).then((cat)=>{
+                        cat.save((err)=>{
+                            // if(err) return console.log(err);
+                            // if (image !== ""){
+                            //     console.log('image is already there');
+    
+                            //     if(category.image !== ""){
+                            //         console.log('image updated');
+    
+                            //         // fs.unlink('public/images/category-img/'+category.image ,(err)=>{
+                            //         //     if(err) console.log(err);
+                            //         //     console.log('old img deleted');
+    
+                            //         // })
+                            //     }
+    
+                            // }
+                            req.flash('success', `Category edited successfully!`);
+    
+                            res.redirect('/admin/category');
+                        })
+                    }).catch((err)=> console.log(err))
+                }
 
-                                fs.unlink('public/images/category-img/'+category.image ,(err)=>{
-                                    if(err) console.log(err);
-                                    console.log('old img deleted');
-
-                                })
-                            }
-
-                        }
-                        req.flash('success', `Category edited successfully!`);
-
-                        res.redirect('/admin/category');
-                    })
-                }).catch((err)=> console.log(err))
-                     
                     
                 }
             })

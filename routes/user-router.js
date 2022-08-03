@@ -2,6 +2,7 @@ const express = require('express');
 const userRouter = express.Router();
 const User = require('../models/userModel');
 const Banner = require('../models/bannerModel');
+const Address = require('../models/addressModel');
 
 const EmailVerification = require('../models/userEmailverification')
 const nodemailer = require("nodemailer");
@@ -17,7 +18,7 @@ const secureString = async (uniqueString) => {
     return stringHash;
 }
 const {v4 : uuidv4} = require('uuid');
-const { Router } = require('express');
+// const { Router } = require('express');
 const transporter = nodemailer.createTransport({
     service : 'gmail',
     auth: {
@@ -94,9 +95,17 @@ userRouter.post('/register', async (req, res) => {
         })
         
         user.save().then((result)=>{
-            sendVerificationEmail(result,res);
-            console.log(result);
-            req.flash('success','Verification email hasbeen sent. please check your email at https://mail.google.com/mail')
+            let address = new Address({
+                userId : result._id,
+                details : []
+            })
+            address.save(()=>{
+
+                sendVerificationEmail(result,res);
+                console.log(result);
+    
+                req.flash('success','Verification email hasbeen sent. please check your email at https://mail.google.com/mail')
+            })
         })
         .catch((err)=>{
             console.log(err);
@@ -246,7 +255,6 @@ userRouter.get('/logout', (req, res) => {
 
         if (err) throw err;
     })
-        req.flash('success','yo have logged out successfully')
         res.redirect("/login");
 })
 

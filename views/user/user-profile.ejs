@@ -1,0 +1,264 @@
+<%- include('../layouts/user-header') %>
+
+
+
+
+
+
+    <div class="container">
+        <div class="main-body profile">
+            <div class="row gutters-sm">
+
+
+                <div class="col-md-4 mb-3">
+                    <div class="card profile-card">
+                        <div class="card-body">
+
+                            <h2 class="text-center">User Profile</h2>
+
+
+                            <div class="d-flex flex-column align-items-center text-center">
+
+
+                                <img src="/public/images/user-img/<% if(user.image== ''){%>prof-img.jpg<%}else{%><%=user.image%><%}%>"
+                                    alt="user-img" class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>
+                                        <%=user.name%>
+                                    </h4>
+
+                                </div>
+
+                                <div class="row p-5">
+                                    <hr>
+                                    <div class="col-sm-3 p-2">
+                                        <h6 class="">Email</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-start text-secondary ">
+                                        <%=user.email%>
+                                    </div>
+                                    <hr>
+                                    <div class="col-sm-3 p-2">
+                                        <h6 class="">Phone</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-start text-secondary">
+                                        <%=user.contact%>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <!-- <div class="row"> -->
+                                <!-- </div> -->
+                                <button onclick="editProfile()" class="btn btn-primary">Edit Profile</button>
+
+                                <form id="edit-profile" class="profile-form hide mt-5" method="post"
+                                    action="/profile/edit-profile" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                        <!-- <label for="password"> password</label> -->
+                                        <input type="text" class="box" name="name" value="<%=user.name%>">
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- <label for="npaassword">new password</label> -->
+                                        <input type="email" class="box" name="email" value="<%=user.email%>" disabled>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <!-- <label for="npaassword">new password</label> -->
+                                        <input type="number" class="box" name="contact" value="<%=user.contact%>">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="file" class="box" name="image" value="<%=user.image%>">
+                                        <input type="hidden" name="pimage" value="<%= user.image %>">
+
+
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-default">Save changes</button>
+                                    <a href="/profile"> <button class="btn">cancel</button></a>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-8">
+
+                    <div class="row">
+                        <div class="card address-card mb-3">
+                            <div class="card-body">
+                                <h2>Address Book</h2>
+                                <div class="row m-auto">
+                                    <% address.forEach(function(ad){%>
+                                        <div class="col-md-4 col-sm-6 mb-3 text-start">
+                                            <h4 class="mb-4">Address</h4>
+                                            <p>
+                                                <%=ad.name%>
+                                            </p>
+                                            <p>
+                                                <%=ad.housename%>
+                                            </p>
+                                            <p>
+                                                <%=ad.street%>
+                                            </p>
+                                            <p>
+                                                <%=ad.landmark%>
+                                            </p>
+                                            <p>
+                                                <%=ad.pin%>
+                                            </p>
+                                            <p>
+                                                <%=ad.district%>
+                                            </p>
+                                            <p>
+                                                <%=ad.state%>
+                                            </p>
+                                            <p>
+                                                <%=ad.country%>
+                                            </p>
+                                            <input id="default" type="checkbox">
+                                            <label for="default">make default</label>
+                                            <br>
+                                            <a href="">edit</a>
+                                            <a href="">delete</a>
+                                        </div>
+                                        <%})%>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <button onclick="addAddress()" class="btn ">Add new address</button>
+
+                                                    <form id="add-address" class="profile-form hide mt-5" method="post"
+                                                        action="/profile/add-address">
+
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="name"
+                                                                placeholder="name">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="housename"
+                                                                placeholder="housename">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="street"
+                                                                placeholder="Street">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="landmark"
+                                                                placeholder="Landmark">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="number" class="box" name="pin"
+                                                                placeholder="Pincode">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select name="district" class="box"  id="">
+                                                                <option value="">District</option>
+                                                                <option value="Malappuram">Malappuram</option>
+                                                                <option value="Kozhikkode">Kozhikkode</option>
+                                                                <option value="Palakkad">Palakkad</option>
+                                                                <option value="Trissur">Trissur</option>
+                                                            </select>
+                                                           
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="number" class="box" name="contact"
+                                                                placeholder="Contact">
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="state" value="Kerala"
+                                                                disabled>
+
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="box" name="country"
+                                                                placeholder="India" disabled>
+
+                                                        </div>
+
+                                                        <br>
+                                                        
+                                                        <input type="submit" class="btn btn-default"
+                                                            value="Add address">
+                                                            <a href="/profile"> <button class="btn">cancel</button></a>
+                                                        </form>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h2>Change password</h2>
+                                <form id="password" class="profile-form" method="post" action="profile/change-password">
+
+                                    <% error.forEach(function(err){ %>
+                                        <div class="alert alert-danger" role="alert">
+                                            <%= err %>
+                                        </div>
+                                      <%})%>
+
+                                    <% success.forEach(function(msg){ %>
+                                        <div class="alert alert-success" role="alert">
+                                            <%= msg %>
+                                        </div>
+                                    <%})%>
+                                    <div class="form-group">
+                                        <label for="password"> password</label>
+                                        <input id="password" type="password" class="box" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="npassword">new password</label>
+                                        <input id="npassword" type="password" class="box" name="npassword">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cpassword">re-type password</label>
+                                        <input id="cpassword" type="password" class="box" name="cpassword">
+
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <%- include('../layouts/user-footer.ejs') %>
+        <!-- <div class="row gutters-sm">
+                    <div class="col-sm-6 mb-3">
+                        
+                    </div>
+                    <div class="col-sm-6 mb-3">
+
+                    </div>
+                </div> -->

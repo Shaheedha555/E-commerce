@@ -186,12 +186,8 @@ adminRouter.get('/banner/delete/:id',auth.isAdmin,(req,res)=>{
 });
 
 
-adminRouter.get('/users',auth.isAdmin, (req,res)=>{
-    let count;
-    Users.count((err,c)=>{
-        if(err) console.log(err);
-        count = c
-    })
+adminRouter.get('/users',auth.isAdmin, async(req,res)=>{
+    let count = await Users.count();
     Users.find( (err,users)=>{
         if (err) return console.log(err);
         // const message = req.flash('message')

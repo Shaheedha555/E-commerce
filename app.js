@@ -14,6 +14,8 @@ const userRouter = require('./routes/user-router')
 const adminRouter = require('./routes/admin-router')
 const categoryRouter = require('./routes/category-router')
 const productRouter = require('./routes/product-router')
+const profileRouter = require('./routes/profile-router')
+
 
 
 mongoose.connect(config.database)
@@ -53,6 +55,7 @@ app.use('/',userRouter);
 app.use('/admin',adminRouter);
 app.use('/admin/category',categoryRouter);
 app.use('/admin/product',productRouter);
+app.use('/profile',profileRouter);
 
 
 app.listen(port,()=>{
