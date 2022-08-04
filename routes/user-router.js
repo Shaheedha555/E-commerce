@@ -3,6 +3,8 @@ const userRouter = express.Router();
 const User = require('../models/userModel');
 const Banner = require('../models/bannerModel');
 const Address = require('../models/addressModel');
+const Category = require('../models/categoryModel');
+const Product = require('../models/productModel');
 
 const EmailVerification = require('../models/userEmailverification')
 const nodemailer = require("nodemailer");
@@ -35,14 +37,15 @@ transporter.verify((err , success)=>{
     }
 })
 
-userRouter.get('/', (req, res) => {
+userRouter.get('/', async(req, res) => {
     // if (req.session.user) res.redirect('/home')
     // else res.render('user/homepage');
-    Banner.find((err,banners)=>{
-        if(err) console.log(err);
-        const user = req.session.user
-        res.render('user/homepage', { user , banners})
-    })
+    const banners = await Banner.find({});
+    const categories = await Category.find({});
+    const products = await Product.find({});
+    
+            const user = req.session.user
+            res.render('user/homepage', { user , banners,categories})
     
 
 

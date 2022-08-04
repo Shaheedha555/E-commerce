@@ -159,7 +159,6 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
 
 productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
     let title = req.body.title;
-    console.log(title + "  undefined");
     let slug = title.replace(/\s+/g, '-').toLowerCase();
     let pimage = req.body.pimage;
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
@@ -183,14 +182,24 @@ productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
         } else {
             console.log('updating pro');
 
-            Product.findById(id, async (err, product) => {
+            Product.findById((id), async (err, product) => {
                 if (err) console.log(err);
-                product.title = title,
+                if(image!==""){
+
+                    product.title = title,
+                        product.slug = slug,
+                        product.description = description,
+                        product.price = price2,
+                        product.category = category,
+                        product.image = image
+                }else{
+                    product.title = title,
                     product.slug = slug,
                     product.description = description,
                     product.price = price2,
                     product.category = category,
-                    product.image = image
+                    product.image = pimage
+                }
 
                 await product.save((err) => {
                     console.log('saving pro');
@@ -220,7 +229,7 @@ productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
     })
 })
 
-productRouter.post('/edit-product/add-gallery/:id', upload.array('images', 5), (req, res) => {
+productRouter.post('/edit-product/add-gallery/:id', upload.array('images', 5),async (req, res) => {
 
     let id = req.params.id;
     console.log(id);
@@ -231,7 +240,7 @@ productRouter.post('/edit-product/add-gallery/:id', upload.array('images', 5), (
             return img.filename;
         })
 
-        imageName.map((img) => {
+        await imageName.map((img) => {
             Product.findByIdAndUpdate({ _id: id }, { $push: { images: img } })
                 .then((pro) => {
                     pro.save(() => {
@@ -239,10 +248,10 @@ productRouter.post('/edit-product/add-gallery/:id', upload.array('images', 5), (
                     })
 
                 })
+                
+            })
             req.flash('success', 'gallery added!');
             res.redirect('/admin/product/edit-product/' + id);
-
-        })
     } else {
         res.redirect('/admin/product');
     }

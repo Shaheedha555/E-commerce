@@ -10,7 +10,7 @@
         <a href=""><div class="<%if(i==0){ %>
             slide active <% }else{%>
         slide
-        <% } %> " style="background: url(/public/images/admin-img/<%=banners[i].banner%>) no-repeat;">
+        <% } %> " style="background: url(/public/images/banner-img/<%=banners[i].banner%>) no-repeat;">
             <div class="content">
                 <h3><%= banners[i].title %></h3>
                 <span><%= banners[i].caption %></span>
@@ -27,37 +27,44 @@
 
 <!-- home section ends     -->
 
+<section class="week-specials">
+
+    <h2 class="text-center">Week specials</h2>
+    <div class="banner mt-5">
+    <%specials.forEach(function(sp){%>
+        <div class="box m-2">
+            <img src="/public//images/product-img/<%=sp.image%>" alt="">
+            <div class="content">
+                <!-- <span>special offer</span> -->
+                <h3> <%=sp.title%></h3>
+                <a href="#" class="btn">shop now</a>
+            </div>
+        </div>
+    <%})%>
+    
+    </div>
+</section>
+
+
+
+
 <!-- banner section starts  -->
+<section class="categories">
 
-<section class="banner">
-
-    <div class="box">
-        <img src="" alt="">
-        <div class="content">
-            <span>special offer</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
+    <h2 class="text-center">Categories</h2>
+    <div class="banner mt-5">
+    <%categories.forEach(function(cat){%>
+        <div class="box m-2">
+            <img src="/public//images/category-img/<%=cat.image%>" alt="">
+            <div class="content">
+                <!-- <span>special offer</span> -->
+                <h3> <%=cat.title%></h3>
+                <a href="#" class="btn">shop now</a>
+            </div>
         </div>
+    <%})%>
+    
     </div>
-
-    <div class="box">
-        <img src="" alt="">
-        <div class="content">
-            <span>special offer</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
-    <div class="box">
-        <img src="" alt="">
-        <div class="content">
-            <span>special offer</span>
-            <h3>upto 50% off</h3>
-            <a href="#" class="btn">shop now</a>
-        </div>
-    </div>
-
 </section>
 
 <!-- banner section ends -->

@@ -13,7 +13,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination : function(req,file,cb) {
-        cb(null,'public/images/admin-img');
+        cb(null,'public/images/banner-img');
     },
     filename : function (req,file,cb) {
         const name = Date.now() + '-' + file.originalname;
