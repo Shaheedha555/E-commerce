@@ -1,12 +1,11 @@
 const express = require('express');
 const productRouter = express.Router();
-const Product = require('../models/productModel');
-const fs = require('fs');
 const auth = require('../config/auth');
-
-const multer = require('multer');
+const fs = require('fs');
+const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 
+const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/images/product-img');
@@ -16,45 +15,51 @@ const storage = multer.diskStorage({
         cb(null, name);
     }
 })
-
 const upload = multer({ storage: storage })
 
 
+let admin;
 
 productRouter.get('/', auth.isAdmin, (req, res) => {
+
     let count;
+
     Product.count((err, c) => {
+
         count = c;
         Product.find(async (err, products) => {
 
             if (err) return console.log(err);
-            const admin = req.session.admin;
+            admin = req.session.admin;
             const success = req.flash('success')
 
             res.render('admin/products', { products: products, count: count, success: success, admin });
 
         });
-    })
+    });
 
 
 });
 
 productRouter.get('/add-product', auth.isAdmin, (req, res) => {
+
     let title = "";
     let description = "";
     let price = "";
+
     Category.find(function (err, categories) {
-        const admin = req.session.admin;
+
+        admin = req.session.admin;
         const error = req.flash('error')
 
         res.render('admin/add-product',
             {
                 admin,
-                error: error,
-                title: title,
-                description: description,
-                categories: categories,
-                price: price
+                error,
+                title,
+                description,
+                categories,
+                price,
             }
         );
 
@@ -64,7 +69,7 @@ productRouter.get('/add-product', auth.isAdmin, (req, res) => {
 
 productRouter.post('/add-product', upload.single('image'), function (req, res) {
 
-    let { description, price, category } = req.body;
+    let { description, price, category,special } = req.body;
     let title = req.body.title.replace(/\s+/g, '-').toUpperCase();
     let slug = req.body.title.replace(/\s+/g, '-').toLowerCase();
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
@@ -92,7 +97,9 @@ productRouter.post('/add-product', upload.single('image'), function (req, res) {
                 price: price2,
                 category: category,
                 image: image,
-                images: []
+                images: [],
+                special : special
+
 
             });
 
@@ -128,11 +135,9 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
             console.log(err);
         }
         Product.findById(req.params.id, (err, product) => {
-            if (err) {
-                req.flash('error', 'Something went wrong!');
-
-                console.log(err);
-                res.redirect('/admin/product');
+            if(err){
+                console.log(err)
+                return res.redirect('/admin/*');
             }
             const admin = req.session.admin;
             const error = req.flash('error')
@@ -147,9 +152,12 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
                 categories: categories,
                 category: product.category,
                 image: product.image,
+                special : product.special,
                 price: product.price,
                 id: product._id,
-                gallery: product.images
+                gallery: product.images,
+                // special : special
+
             })
         })
     })
@@ -158,14 +166,10 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
 })
 
 productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
-    let title = req.body.title;
+    let {title,pimage,description,price,category,special} = req.body;
     let slug = title.replace(/\s+/g, '-').toLowerCase();
-    let pimage = req.body.pimage;
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
     let id = req.params.id;
-    let description = req.body.description;
-    let price = req.body.price;
-    let category = req.body.category;
     let price2 = parseFloat(price).toFixed(2);
 
     Product.findOne({ slug: slug, category: category, _id: { $ne: id } }, (err, product) => {
@@ -191,14 +195,18 @@ productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
                         product.description = description,
                         product.price = price2,
                         product.category = category,
-                        product.image = image
+                        product.image = image,
+                        product.special = special
+
                 }else{
                     product.title = title,
                     product.slug = slug,
                     product.description = description,
                     product.price = price2,
                     product.category = category,
-                    product.image = pimage
+                    product.image = pimage,
+                    product.special = special
+
                 }
 
                 await product.save((err) => {
@@ -263,6 +271,10 @@ productRouter.get('/edit-product/delete-gallery/:id/:img', auth.isAdmin, (req, r
     let img = req.params.img;
 
     Product.findById((id), async (err, pro) => {
+        if(err){
+            console.log(err)
+            return res.redirect('/admin/*');
+        }
         pro.images.pull(img);
         await pro.save(() => {
             fs.unlink('public/images/product-img/' + img, (err) => {

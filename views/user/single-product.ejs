@@ -1,0 +1,58 @@
+<%- include('../layouts/user-header') %>
+
+
+<div class="super_container">
+   
+    <div class="single_product">
+        <div class="container-fluid" style=" background-color: #ffffff;">
+            <div class="row"style=" ">
+                <div class="col-lg-2 order-lg-1 order-2">
+                    <ul class="image_list">
+                        <%images.forEach(function(img){%>
+                        <li >
+                            <a data-fancybox="gallery" href="/public/images/product-img/<%=img%>">
+                            <img src="/public/images/product-img/<%=img%>"  alt="">
+                            </a>
+                        </li>
+
+                        <%})%>
+                    </ul>
+                    <!-- data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg" -->
+                </div>
+                <div class="col-lg-4 order-lg-2 order-1">
+                    <div class="image_selected"><img src="/public/images/product-img/<%=product.image%>" alt=""></div>
+                </div>
+                <div class="col-lg-5 order-3">
+                    <div class="product_description">
+                     
+                        <div class="product_name"><%= product.title%></div>
+                        <div> <span class="product_price"><%= product.price%></span> <strike class="product_discount"> <span>₹ 2,000<span> </strike> </div>
+                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'>₹ 2,000<span> </div>
+                        <hr class="singleline">
+                        <div> <span class="product_info"> <%= product.description%></div>
+                        <!-- <div>
+                            
+                            <div class="row" style="margin-top: 15px;">
+                                <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">Weight</span><br> <button class="btn btn-sm">0.5 kg</button> <button class="btn btn-sm">1kg</button> <button class="btn btn-sm">2 kg</button> </div>
+                            </div>
+                        </div> -->
+                        <hr class="singleline">
+                        <div class="order_info d-flex flex-row">
+                        </div>
+                        <div class="row">
+                           
+                            <div class="col-xs-6"> <button type="button" class="btn me-5">Add to Cart</button> <button type="button" class="btn">Add to Wishlist</button>
+                                <!-- <div class="product_fav"><i class="fas fa-heart"></i></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('../layouts/user-footer.ejs') %>

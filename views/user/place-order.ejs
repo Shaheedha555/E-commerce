@@ -1,0 +1,181 @@
+<%- include('../layouts/user-header') %>
+
+
+
+
+
+
+    <div class="container">
+        <div class="main-body profile">
+            <!-- <div class="row gutters-sm mt-5"> -->
+
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+
+                        <div class="card profile-card">
+                            <div class="card-body">
+    
+                                <h2 class="text-center">Address</h2>
+                                
+    
+                                <!-- <div class="row text-center"> -->
+                                    <!-- <div class="card address-card mb-3"> -->
+                                        <!-- <div class=" col card-body"> -->
+                                            <div class="row m-auto">
+                                                <%if(address){%>
+                                                <% address.details.forEach(function(ad){%>
+                                                    <div class="col-md-4 mb-3 text-start address position-relative">
+                                                        <h4 class="mb-4">Address</h4>
+                                                        <p>
+                                                         <%=ad.name%>
+                                                        <%=ad.housename%>
+                                                        </p>
+                                                        <p>
+                                                        </p>
+                                                        <p> <%=ad.street%></p>
+                                                        <p><%=ad.landmark%></p>
+                                                        
+                                                        <p><%=ad.district%></p> 
+                                                        
+                                                        <p> <%=ad.state%></p>
+                                                        
+                                                        <p><%=ad.country%></p>
+                                                        <p>Pin: <%=ad.pin%></p> 
+                                                        <p>contact :<%=ad.contact%> </p>
+                                                        <!-- <form action="/cart/payment"></form> -->
+                                                        <!-- <br><br> -->
+                                                        <div class="position-absolute bottom-0">
+
+                                                            <input  name="address" id="default" type="radio" value="<%=address.details.indexOf(ad)%>"
+                                                             onclick="selectAddress('<%=address.details.indexOf(ad)%>')"  <% if(ad.select==true){ %> checked <% }%> >
+                                                            <label class="text-dark h3" for="address">select</label>
+                                                        </div>
+                                                        <br>
+                                                       
+                                                        <!-- <a class="btn " href="/profile/">edit</a> -->
+                                                    </div>
+                                                    <%})%>
+                                                    <%}%>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <button onclick="addAddress()" class="btn ">Add new address</button>
+            
+                                                                <form id="add-address" class="profile-form hide mt-5" method="post"
+                                                                    action="/profile/add-address">
+            
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="name"
+                                                                            placeholder="name">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="housename"
+                                                                            placeholder="housename">
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="street"
+                                                                            placeholder="Street">
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="landmark"
+                                                                            placeholder="Landmark">
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="number" class="box" name="pin"
+                                                                            placeholder="Pincode">
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <select name="district" class="box"  id="">
+                                                                            <option value="">District</option>
+                                                                            <option value="Malappuram">Malappuram</option>
+                                                                            <option value="Kozhikkode">Kozhikkode</option>
+                                                                            <option value="Palakkad">Palakkad</option>
+                                                                            <option value="Trissur">Trissur</option>
+                                                                        </select>
+                                                                       
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="number" class="box" name="contact"
+                                                                            placeholder="Contact">
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="state" value="Kerala"
+                                                                            disabled>
+            
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="box" name="country"
+                                                                            value="India" disabled>
+            
+                                                                    </div>
+            
+                                                                    <br>
+                                                                    
+                                                                    <input type="submit" class="btn btn-default">
+                                                                    <!-- <button onclick="addAddress()" class="btn">cancel</button> -->
+                                                                    <a class="btn" href="/profile">cancel</a>
+                                                                    </form>
+                                                            </div>
+                                                        </div>
+                                            </div>
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+    
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 ">
+    
+                        <!-- <div class="row h-100 "> -->
+                            <div class="text-start h-100">
+    
+                                <div class="card p-4 h-100">
+                                    <h2>Total Amount : <span><%= total %>.00</span></h2>
+                                    <h3 class="pt-5">Select payment method</h3>
+                                    <form id="payment-form" action="/cart/payment" method="post" class="pay-form text-start">
+                                        <input name="payment" type="radio" id="cash-payment" value="COD"> 
+                                        <label for="cash-payment">Cash on Delivery</label>
+                                        <br>
+                                        <input name="payment" type="radio" id="card-payment" value="Card">
+                                        <label for="card-payment">Debit/Credit</label>
+                                        <br>
+                                        <input type="submit" class="btn mb-5" value="Place Order">
+                                    </form>
+                                </div>
+                            </div>
+                        <!-- </div> -->
+                        
+    
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- </div> -->
+        </div>
+    </div>
+
+
+
+
+
+    <%- include('../layouts/user-footer.ejs') %>
+       

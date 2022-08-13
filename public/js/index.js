@@ -1,10 +1,10 @@
 // Header Scroll 
-// let nav = document.querySelector(".navbar");
+// let nav = document.querySelector(".header");
 // window.onscroll = function() {
 //     if(document.documentElement.scrollTop > 50){
-//         nav.classList.add("header-scrolled"); 
+//         nav.classList.add("header-white"); 
 //     }else{
-//         nav.classList.remove("header-scrolled");
+//         nav.classList.remove("header-white");
 //     }
 // }
 
@@ -16,6 +16,11 @@
 //         navCollapse.classList.toggle("show");
 //     })
 // })
+$(document).on('turbolinks:load', function() {
+  setTimeout(function() {
+    $('.alert').fadeOut();
+  }, 3000);
+})
 
     $("#add-edit").validate({
         
@@ -313,7 +318,6 @@ if(input.files && input.files[0]){
 $("#image").change(function(){
   readURL(this);
 })
-$('.carousel').carousel()
 
 
 function editProfile(){
@@ -325,4 +329,277 @@ function addAddress(){
 
   $('#add-address').toggleClass('hide');
   
+}
+function editAddress(name){
+
+  $('#edit-address'+name).toggleClass('hide');
+  
+}
+
+if($("[data-fancybox]").length){
+  $("[data-fancybox]").fancybox();
+}
+
+
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function addToCart(proId,wt){
+  $.ajax({
+    url : '/cart/add/'+proId,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+      //  let count =  $("#cart-count").html();
+      //  count = parseInt(count)+1 ;
+      console.log('succ');
+      //   $('#cart-count').html(count);
+      location.reload()
+      }
+    }
+  });
+}
+function removeFromCart(proId,wt){
+  $.ajax({
+    url : '/cart/delete/'+proId+'/'+wt,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+      //  let count =  $("#cart-count").html();
+      //  count = parseInt(count)-1 ;
+      //   $('#cart-count').html(count);
+      location.reload()
+      }
+
+    }
+  });
+}
+function changeQuantity(proId,wt,price,count){
+  let qty = $("#qtyOf"+proId).text();
+  
+  $.ajax({
+    url:'/cart/change-quantity',
+    data:{
+      proId : proId,
+      wt : wt,
+      price : price,
+      count : count,
+      qty : parseInt(qty)
+    },
+    method : 'post',
+    success:(response)=>{
+      // if(response.status){
+      console.log(response);
+      //   if(count > 0){
+      //     qty = parseInt(qty) + 1
+      //   }else{
+      //     qty = parseInt(qty) - 1
+  
+      //   }
+      //   let amt = $("#amtOf"+proId).text();
+      //   console.log(amt);
+      //   $('#totalOf'+proId).text(qty*parseFloat(amt).toFixed(2));
+
+      //   $('#qtyOf'+proId).text(qty);
+      // }
+
+      location.reload()
+    }
+
+  })
+}
+
+function getPrice(proId,proprice,cartprice,wt){
+  let qty = $("#qtyOf"+proId).text();
+
+  $.ajax({
+    url:'/cart/change-weight',
+    data:{
+      proId:proId,
+      proprice :proprice,
+      cartprice,cartprice,
+      wt : wt,
+      qty:qty
+    },
+    method : 'post',
+    success:(response)=>{
+      if(response.status){
+
+      //   console.log(amt);
+     
+      //   if(wt==0.5) {
+      //     amt = parseFloat( (proprice * wt) + proprice*10/100).toFixed(2);
+      //  }
+      //   else if(wt==1){amt = proprice}
+      //   else{amt = parseFloat((proprice * wt) - proprice*10/100).toFixed(2) }
+       
+      //   $("#totalOf"+proId).text(amt)
+      //  $("#amtOf"+proId).text(amt);
+ 
+      location.reload()
+      }
+
+    }
+
+  })
+}
+function showCategories(){
+  document.getElementById('cat-head').style.display='block';
+  document.getElementById('cat-head-sm').style.display='none'
+}
+
+function addToWishlist(proId){
+  $.ajax({
+    url : '/wishlist/add/'+proId,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+      //  let count =  $("#cart-count").html();
+      //  count = parseInt(count)+1 ;
+      //   $('#cart-count').html(count);
+      location.reload()
+      }
+    }
+  });
+}
+function removeFromWishlist(proId){
+  $.ajax({
+    url : '/wishlist/delete/'+proId,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+      //  let count =  $("#cart-count").html();
+      //  count = parseInt(count)-1 ;
+      //   $('#cart-count').html(count);
+      location.reload()
+      }
+
+    }
+  });
+}
+
+function selectAddress(addressIndex){
+  $.ajax({
+    url: '/cart/place-order/select-address',
+    method : 'post',
+    data : {
+      addressIndex: addressIndex 
+    },
+    success : (response)=>{
+      if(response.status){
+        
+        location.reload()
+        console.log(response);
+      }
+    }
+  })
+}
+
+$('#payment-form').validate({
+
+  errorClass: "error fail-alert",
+  rules : {
+    payment : {
+      required : true 
+    }
+  },
+  messges : {
+    payment : {
+      required : 'Select payment method'
+    }
+  },
+  errorPlacement: function(error, element) 
+  {
+      if ( element.is(":radio") ) 
+      {
+          error.insertBefore( $(element).parents('.pay-form'))
+      }
+      else 
+      { // This is the default behavior 
+          error.insertAfter( element );
+      }
+   }
+})
+
+$("#payment-form").submit((e)=>{
+  e.preventDefault()
+  $.ajax({
+    url : '/cart/payment',
+    method : 'post',
+    data : $('#payment-form').serialize(),
+    success : (response)=>{
+      alert(response)
+      if(response.codStatus == 'placed'){
+        console.log(response)
+        console.log(response.status)
+
+        location.href = '/cart/place-order/success'
+      }else{
+        razorpayPayment(response);
+      }
+    }
+  })
+})
+
+function razorpayPayment(order){
+  var options = {
+    "key": "rzp_test_M7kqvBj4orNzLd", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "cakes.N.bakes",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+
+        verifyPayment(response,order);
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.open();
+
+}
+
+function verifyPayment(payment,order){
+  $.ajax({
+    url : 'cart/verify-payment',
+    data : {
+      payment,
+      order
+    },
+    method : 'post'
+  })
+}
+
+function cancelOrder(index){
+  $.ajax({
+    url : '/orders/order-cancel/'+index,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+        location.reload()
+      }
+    }
+  })
 }

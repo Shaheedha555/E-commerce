@@ -1,0 +1,81 @@
+<%- include('../layouts/user-header') %>
+
+
+
+<section class="shopping-cart">
+    
+    <h1 class="title"> My Orders </h1>
+    <%if( order!==null ){%>
+        
+        <% order.orders.forEach(function(o){%>
+            <h2> Order No: <%= order.orders.indexOf(o) +1 %></h2>
+        <div class="box-container m-5">
+            <table>
+                <thead class="box">
+                    <th>Products</th>
+                    <th>Status</th>
+                    <th>Delivery date</th>
+                    <th></th>
+                </thead>
+                
+                <tbody>
+                    
+                    <tr class="box">
+                        <td>
+                            <% o.orderDetails.forEach(function(d){%>
+                                <div>
+
+                                    <img src="/public/images/product-img/<%=d?.product?.image%>" alt="">
+                                    <h3>
+                                        <%=d?.product?.title%>
+                                    </h3>
+                                </div>
+
+                            <%})%>
+                        </td>
+                        
+                        <td>
+                            <h3><%=o.status%></h3>
+                        </td>
+                        <td>
+                            <h3><% let date = o.deliveryDate.split(" ") %>
+                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
+                        </td>
+                        
+                        
+                        <td>
+                            <a href="/orders/order-details/<%= order.orders.indexOf(o)%>"><button class="btn">View Details</button></a> <br>
+
+                            <% if(o.status == 'placed' || o.status == 'pending' ) {%>
+                           <button onclick="cancelOrder('<%=order.orders.indexOf(o)%>')" class="btn">Cancel Order</button>
+                                <%} else{%>
+                                    <% if(o.status == 'cancelled') {%>
+                            <button class="btn btn-light"> Order cancelled</button>
+
+                                        <%}%>
+                            
+                                    <%}%>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+            <%})%>
+
+
+
+
+          
+          
+
+            <%}else{%>
+                <h2 class="text-center pt-5">No orders</h2>
+                <%}%>
+    </section>
+
+
+
+
+    <%- include('../layouts/user-footer.ejs') %>

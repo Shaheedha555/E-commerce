@@ -2,7 +2,7 @@
 
 <section class="container add w-50">
     <h2 class="page-title">Edit Product</h2>
-    <a href="/admin/product" class="btn btn-primary"><i class="fa fa-angle-left"></i></a>
+    <a href="/admin/product" class="btn "><i class="fa fa-angle-left"></i></a>
     <br><br>
     <div class="row">
         <form id="add-edit" method="post" action="/admin/product/edit-product/<%= id %>" enctype="multipart/form-data">
@@ -20,7 +20,7 @@
             <div class="form-group">
                 <select id="category" type="text" class="box" name="category" value="" placeholder="category">
                     <% categories.forEach(function(cat){ %>
-                        <option value="<%= cat.slug %>" <% if (cat.slug == category) { %>
+                        <option value="<%= cat.title %>" <% if (cat.slug == category) { %>
                         selected="selected"
                         <% } %>        
                         > <%= cat.title %></option>
@@ -32,6 +32,10 @@
                 <img  width="100px" height="100px" src="/public/images/product-img/<%=image%>" id="img-prvw" alt="">
                 <input type="hidden" name="pimage" value="<%= image %>">
 
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="special" id="special" value="<%=special%>" <% if(special==true){ %> checked <%}%> >
+                <label class="h4" for="special">Special</label>
             </div>
             <div class="form-group">
                 <input id="price" type="text" class="box" name="price" value="<%= price %>" placeholder="price in rupees">

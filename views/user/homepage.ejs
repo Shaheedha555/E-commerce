@@ -7,17 +7,16 @@
 
 <section class="home">
     <% for( let i=0 ; i < banners.length ; i++ ){ %>
-        <a href=""><div class="<%if(i==0){ %>
+        <div class="<%if(i==0){ %>
             slide active <% }else{%>
         slide
-        <% } %> " style="background: url(/public/images/banner-img/<%=banners[i].banner%>) no-repeat;">
+        <% } %> " style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.1)) ,url(/public/images/banner-img/<%=banners[i].banner%>) no-repeat;">
             <div class="content">
                 <h3><%= banners[i].title %></h3>
                 <span><%= banners[i].caption %></span>
-                <a href="" class="btn">shop now</a>
+                <a href="products/<%=banners[i].category%>" class="btn">shop now</a>
             </div>
         </div>
-    </a>
     <%}%>
 
     <div id="next-slide" onclick="next()" class="fas fa-angle-right"></div>
@@ -37,7 +36,7 @@
             <div class="content">
                 <!-- <span>special offer</span> -->
                 <h3> <%=sp.title%></h3>
-                <a href="#" class="btn">shop now</a>
+                <a href="/products/product-details/<%=sp._id%>" class="btn"><i class="fas fa-eye"></i> view product</a>
             </div>
         </div>
     <%})%>
@@ -59,7 +58,7 @@
             <div class="content">
                 <!-- <span>special offer</span> -->
                 <h3> <%=cat.title%></h3>
-                <a href="#" class="btn">shop now</a>
+                <a href="products/<%=cat.title%>" class="btn">shop now</a>
             </div>
         </div>
     <%})%>
@@ -73,63 +72,6 @@
 
 
 
-
-
-
-
-
-
-<!-- footer section starts  -->
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="home.html"> <i class="fas fa-angle-right"></i> home</a>
-            <a href="products.html"> <i class="fas fa-angle-right"></i> products</a>
-            <a href="about.html"> <i class="fas fa-angle-right"></i> about</a>
-            <a href="blogs.html"> <i class="fas fa-angle-right"></i> blogs</a>
-            <a href="contact.html"> <i class="fas fa-angle-right"></i> contact</a>
-            <a href="login.html"> <i class="fas fa-angle-right"></i> login</a>
-            <a href="register.html"> <i class="fas fa-angle-right"></i> register</a>
-            <a href="cart.html"> <i class="fas fa-angle-right"></i> cart</a>
-        </div>
-
-        <div class="box">
-            <h3>extra links</h3>
-            <a href="#"> <i class="fas fa-angle-right"></i> my account </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> my order </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> my wishlist </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> terms of use </a>
-            <a href="#"> <i class="fas fa-angle-right"></i> privacy policy </a>
-        </div>
-
-        <div class="box">
-            <h3>follow us</h3>
-            <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
-            <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
-            <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
-            <a href="#"> <i class="fab fa-pinterest"></i> pinterest </a>
-            <a href="#"> <i class="fab fa-linkedin"></i> linkedin </a>
-            <a href="#"> <i class="fab fa-github"></i> github </a>
-        </div>
-
-        <div class="box">
-            <h3>newsletter</h3>
-            <p>subscribe for latest updates</p>
-            <form action="">
-                <input type="email" placeholder="enter your emal">
-                <input type="submit" value="subscribe" class="btn">
-            </form>
-        </div>
-
-    </div>
-
-    <div class="credit"> created by <span>mr .web designer</span> | all rights reserved </div>
-
-</section>
-
+<%- include('../layouts/user-footer-section.ejs') %>
 
 <%- include('../layouts/user-footer.ejs') %>

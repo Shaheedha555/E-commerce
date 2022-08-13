@@ -1,0 +1,94 @@
+<%- include('../layouts/user-header') %>
+
+
+
+<section class="shopping-cart">
+    
+    <h1 class="title">Order details</h1>
+
+        
+
+            <h2> Order No: <%= index + 1%></h2>
+        <div class="box-container m-5">
+            <table>
+                <thead class="box">
+                    <th>Products</th>
+                    <th>Status</th>
+
+                    <th>Order date</th>
+                    <th>Delivery date</th>
+                    <!-- <th></th> -->
+                </thead>
+                
+                <tbody>
+                    
+                    <tr class="box">
+                        <td>
+                            <table>
+                                <thead>
+
+                                    <th>Item</th>
+                                    <th>Wt(kg)</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+
+                                </thead>
+                            <% orderData.orderDetails.forEach(function(o){%>
+                                <tbody>
+
+                                    <tr>
+                                        <td><%= o.product.title%> <br>
+                                            <img src="/public/images/product-img/<%= o.product.image%>" alt=""> <br>
+                                            <a href="/products/product-details/<%= o.product._id%>"> View Product</a>
+                                        </td>
+
+                                        <td><%= o.weight%></td>
+                                        <td>₹<%=o.price%></td>
+                                        <td><%= o.quantity%></td>
+                                        <td>₹<%= o.sub_total%></td>
+
+        
+                                        <%})%>
+                                            
+                                    </tr>
+                                </tbody>
+                        </table>
+
+
+                        </td>
+                        
+                        <td>
+                            <h3><%=orderData.status%></h3>
+                        </td>
+                        <td>
+                            <h3><% let date = orderData.date.split(" ") %>
+                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
+                        </td>
+                        <td>
+                            <h3><%  d_date = orderData.deliveryDate.split(" ") %>
+                                <%= d_date[0]+ " " + d_date[1] +" "+ d_date[2] +" "+ d_date[3] %></h3>
+                        </td>
+                        
+                        
+                       
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+          
+          
+
+         
+    </section>
+
+
+
+
+    <%- include('../layouts/user-footer.ejs') %>

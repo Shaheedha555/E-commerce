@@ -6,7 +6,7 @@
     <br>
     <h2 class=" mt-5 h1">All Categories</h2>
 
-    <a href="/admin/category/add-category" ><button class="btn btn-primary">Add a new category</button> </a>
+    <a href="/admin/category/add-category" ><button class="btn">Add a new category</button> </a>
     <div class="table-responsive-sm">
         <% if (count>0){%>
 
@@ -18,7 +18,7 @@
                 </div>
               <%})%>
               <% error.forEach(function(err){ %>
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-danger" role="alert">
                     <%= err %>
                 </div>
               <%})%>
@@ -42,7 +42,21 @@
                                 <%}%>
                         </td>
                     <td><a href="/admin/category/edit-category/<%= cat._id %>"><i class="fa fa-pen pe-5"></i></a>
-                    <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>"><i class="fa fa-trash"></i> </a></td>
+                   <a class="confirmDeletion" href="/admin/category/delete-category/<%= cat._id %>" ><i class="fa fa-trash"></i></a></td>
+                    <!-- <div id="id01" class="modal">
+                        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                        <form class="modal-content" action="/">
+                          <div class="container">
+                            <h1>Delete</h1>
+                            <p>Are you sure you want to delete?</p>
+                      
+                            <div class="clearfix">
+                              <button onclick="document.getElementById('id01').style.display='none'" type="button" class="cancelbtn btn">Cancel</button>
+                              <a  href="/admin/category/delete-category/<%= cat._id %>"><button type="button" class="deletebtn btn">Delete</button> </a>
+                            </div>
+                          </div> -->
+                        <!-- </form>
+                      </div> -->
                 </tr>
                 <% }); %>
             

@@ -2,6 +2,9 @@ const express = require('express');
 const profileRouter = express.Router();
 const Address = require('../models/addressModel');
 const User = require('../models/userModel');
+const Cart = require('../models/cartModel');
+const Wishlist = require('../models/wishlistModel');
+
 const auth = require('../config/auth');
 const multer = require('multer');
 const fs = require('fs');
@@ -24,22 +27,42 @@ const upload = multer({storage : storage})
 
 
 profileRouter.get('/',auth.isUser,async(req,res)=>{
+
     let user = req.session.user
     let id = user._id;
     const userData = await User.findOne({_id:id})
     let address = await Address.findOne({userId:id});
-    console.log(address);
-    address = address.details ;
-    console.log(address);
+    // address = address.details ;
     const error = req.flash('error');
     const success = req.flash('success');
+    let count = null;
+    // let t = await Cart.findOne({ userId: id }).populate("cart.product");
+    if (user) {
 
-    res.render('user/user-profile',{user:userData,address,success,error});
+        const cartItems = await Cart.findOne({ userId: user._id });
+
+        if (cartItems) {
+            count = cartItems.cart.length;
+        }
+    }
+    let wishcount = null;
+   
+    // let t = await Cart.findOne({ userId: id }).populate("cart.product");
+    if (user) {
+
+        const wishlistItems = await Wishlist.findOne({ userId: user._id });
+
+        if (wishlistItems) {
+            wishcount = wishlistItems.wishlist.length;
+        }
+    }
+    res.render('user/user-profile',{user:userData,address,success,error,count,wishcount});
 
 });
 
 
-profileRouter.post('/edit-profile',upload.single('image'),(req,res)=>{
+profileRouter.post('/edit-profile',auth.isUser,upload.single('image'),(req,res)=>{
+
     let user = req.session.user;
     let id = user._id;
     let {name,email,contact,pimage} = req.body;
@@ -87,17 +110,40 @@ profileRouter.post('/edit-profile',upload.single('image'),(req,res)=>{
 })
 
 
-profileRouter.post('/add-address',async(req,res)=>{
+profileRouter.post('/add-address',auth.isUser,async(req,res)=>{
     let user = req.session.user;
     let id = user._id;
     console.log(id);
     let {name,housename,landmark,street,pin,contact,district,state,country} = req.body;
     console.log(req.body);
-    await Address.findOneAndUpdate({userId:id},{$push:{details:{name:name,housename:housename,
-        landmark:landmark,street:street,pin:pin,contact:contact,district:district,state:state,country:country}}})
-        res.redirect('/profile')
+    let addressbook = await Address.findOne({userId:id});
+    if(addressbook){
+        console.log('addressbook exists');
+        await Address.findOneAndUpdate({userId:id},{$push:{details:{name:name,housename:housename,
+            landmark:landmark,street:street,pin:pin,contact:contact,district:district,state:state,country:country}}})
+    }else{
+        console.log('addressbook doesnt exists');
+
+        let newaddress = new Address({
+            userId : id,
+            details:
+            [{name:name,
+            housename:housename,
+            landmark:landmark,
+            street:street,
+            pin:pin,
+            contact:contact,
+            district:district}]
+        });
+        await newaddress.save();
+        console.log('address saved');
+
+    }
+        res.redirect('back')
     // console.log(address);
-})
+});
+
+
 
 profileRouter.post('/change-password',async(req,res)=>{
     let user = req.session.user;

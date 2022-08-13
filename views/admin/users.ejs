@@ -39,14 +39,10 @@
                 <td>
                     <% if (!user.status){%>
 
-                    <a class="me-2" href="/admin/users/block/<%= user._id %>">Block</a>
+                    <a class="me-2 text-danger" href="/admin/users/block/<%= user._id %>">Block</a>
                     <%}else{%>
-                        <a href="/admin/users/unblock/<%= user._id %>"> Unblock</a>
-                        <%}%>                
-
-
-                <a class="confirmDeletion" href="/admin/users/delete/<%= user._id %>"><i class="fa fa-trash"></i> </a>
-                
+                        <a class="text-dark" href="/admin/users/unblock/<%= user._id %>"> Unblock</a>
+                        <%}%>                    
                 </td>
             </tr>
             <% }); %>

@@ -1,0 +1,51 @@
+<%- include('../layouts/user-header') %>
+
+
+
+<section class="products ">
+    <h1 class="title"> featured products </h1>
+<div class="border border-dark">
+    <div class="category p-4">
+        <a href="/products">All products</a>
+    </div>
+    <%categories.forEach(function(cat){%>
+        <div class="category p-4">
+           <a href="/products/<%= cat.slug %>"> <%= cat.title %></a>
+        </div>
+   <% }) %>
+</div>
+
+    <div class="box-container">
+       <% products.forEach(function(pro){ %>
+
+        <div class="box">
+            <div class="image">
+                <div class="icons">
+                    <a href="#" class="fas fa-shopping-cart"></a>
+                    <a href="/products/product-details/<%= pro._id %>" class="fas fa-eye"></a>
+                </div>                
+                <img src="/public/images/product-img/<%=pro.image%>" alt="">
+            </div>
+            <div class="content">
+                <h3> <%=pro.title%></h3>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <div class="price"><%=pro.price%> <span><%=pro.price%></span></div>
+            </div>
+        </div>
+        
+        <%})%>
+    </div>
+    
+</section>
+
+
+
+<%- include('../layouts/user-footer-section.ejs') %>
+
+<%- include('../layouts/user-footer.ejs') %>

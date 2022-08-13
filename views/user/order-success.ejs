@@ -1,0 +1,58 @@
+<%- include('../layouts/user-header') %>
+
+
+<section class="vh-90 text-center" >
+    <div class="container  h-100 ">
+      <div class="row m-auto w-50 border border-dark" style="background-color: white;">
+        <div class="col">
+        
+        
+               
+                <div class="card-body text-center text-black p-4">
+                    <h5 class=" mt-2" id="exampleModalLabel">Dear <%=user.name%></h5>
+                    <img src="/public/images/526-5264359_check-mark-icon-transparent-hd-png-download.png" class="rounded-circle m-auto" width="100px" alt="">
+                  <h4 class="mb-5 h2 text-primary" >Your order <br> has been placed successfully</h4>
+                  <hr class="mt-2 mb-4"
+                  style="height: 0; background-color: transparent; opacity: .75; border-top: 2px dashed #9e9e9e;">
+                  <div class="text-center">
+                    <div class="m-auto h4">
+
+                        <p class="mb-2 h5" style="color: #35558a;">Payment summary</p>
+                        <div class="d-flex justify-content-between ">
+                          <p class="fw-bold mb-0">Sub-total</p>
+                          <p class="text-muted mb-0"><%=total%>.00</p>
+                        </div>
+        
+                        <div class="d-flex justify-content-between  ">
+                          <p class="small mb-0">Shipping</p>
+                          <p class="small mb-0"><%=shipping%>.00</p>
+                        </div>
+        
+                        <div class="d-flex justify-content-between pb-1 ">
+                          <p class="small">Tax</p>
+                          <p class="small">00.00</p>
+                        </div>
+        
+                        <div class="d-flex justify-content-between ">
+                          <p class="fw-bold">Total</p>
+                          <p class="fw-bold" style="color: #35558a;"><%= total + shipping %>.00</p>
+                        </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="modal-footer d-flex justify-content-center border-top-0 py-4">
+                  <a href="/orders">
+                  <button type="button" class="btn btn-primary btn-lg mb-1">
+                    View orders
+                  </button></a>
+                </div>
+        
+  
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <%- include('../layouts/user-footer.ejs') %>

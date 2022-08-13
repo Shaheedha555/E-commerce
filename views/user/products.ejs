@@ -1,0 +1,56 @@
+<%- include('../layouts/user-header') %>
+
+
+
+<section class="products ">
+    <h1 class="title"> our products </h1>
+    <div id="cat-head" class="cat-head border border-dark">
+        <div class="category p-4">
+            <a href="/products">All products</a>
+        </div>
+        <%categories.forEach(function(cat){%>
+            <div class="category p-4">
+            <a href="/products/<%= cat.title %>"> <%= cat.title %></a>
+            </div>
+        <% }) %>
+    </div>
+    <div  id="cat-head-sm">
+        
+        <button id="show-cat" onclick=showCategories()>categories</button>
+    </div>
+
+    <div class="box-container">
+        <%if (products.length >0){%>
+       <% products.forEach(function(pro){ %>
+
+        <div class="box">
+            <div class="image">
+                <div class="icons">
+                    <a href="/products/product-details/<%= pro._id %>" class="fas fa-eye"></a>
+                    <!-- <a href="/cart/add/<%=pro._id%>" class="fas fa-shopping-cart"></a> -->
+                    <button onclick="addToCart('<%=pro._id%>')"><i class="fas fa-shopping-cart"></i></button>
+                    <a href="/wishlist/add/<%=pro._id%>" class="fas fa-heart"></a>
+
+                </div>                
+                <img src="/public/images/product-img/<%=pro.image%>" alt="">
+            </div>
+            <div class="content">
+                <h3> <%=pro.title%></h3>
+
+                <div class="price"><%=pro.price%> <span><%=pro.price%></span></div>
+            </div>
+        </div>
+        
+        <%})%>
+        <%}else{%>
+            <h2 class="text-center pt-5">No any products available</h2>
+            <%}%>
+    </div>
+    
+</section>
+
+
+
+<%- include('../layouts/user-footer-section.ejs') %>
+
+<%- include('../layouts/user-footer.ejs') %>

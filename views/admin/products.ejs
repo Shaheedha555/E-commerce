@@ -7,7 +7,7 @@
 
     <br>
     
-    <a href="/admin/product/add-product" ><button class="btn btn-primary">Add new Product</button> </a>
+    <a href="/admin/product/add-product" ><button class="btn">Add new Product</button> </a>
     <div class="table-responsive-sm">
         <% if (count>0){%>
         <table id="example" class="table data-table align-middle" style="width:100%">
@@ -44,7 +44,22 @@
                          <%}%>
                         </td>
                         <td><a href="/admin/product/edit-product/<%= pro._id %>"><i class="fa fa-pen pe-5"></i></a>
-                        <a class="confirmDeletion" href="/admin/product/delete-product/<%= pro._id %>"><i class="fa fa-trash"></i> </a></td>
+                            <a class="confirmDeletion" href="/admin/product/delete-product/<%= pro._id %>"><i class="fa fa-trash"></i></a></td>
+                            <!-- <div id="id01" class="modal">
+                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                <form class="modal-content" action="">
+                                  <div class="container">
+                                    <h1>Delete</h1>
+                                    <p>Are you sure you want to delete?</p>
+                              
+                                    <div class="clearfix">
+                                      <button onclick="document.getElementById('id01').style.display='none'" type="button" class="cancelbtn btn">Cancel</button>
+                                      <a  ><button type="button" class="deletebtn btn">Delete</button> </a>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </td> -->
                     </tr>
                     <% }); %>
                 
