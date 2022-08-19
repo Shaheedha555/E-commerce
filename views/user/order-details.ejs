@@ -5,7 +5,7 @@
 <section class="shopping-cart">
     
     <h1 class="title"> My Orders </h1>
-    <%if( order!==null ){%>
+    <%if( order.length>0 ){%>
         
         <% order.forEach(function(o){%>
             <h2> Order No: <%= order.indexOf(o) +1 %></h2>

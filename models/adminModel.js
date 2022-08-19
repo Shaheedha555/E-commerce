@@ -16,3 +16,5 @@ const adminSchema = new mongoose.Schema({
 });
 const Admin = mongoose.model('Admin', adminSchema);
 module.exports = Admin ;
+
+// NCLK2A8m7DBnwOg5

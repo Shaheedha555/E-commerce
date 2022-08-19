@@ -247,11 +247,11 @@ userRouter.get('/verify', async (req, res) => {
                             if (result) {
                                 User.updateOne({ _id: userId }, { $set: { verified: true } })
                                     .then(() => {
-                                        EmailVerification.deleteOne({ userId })
+                                        EmailVerification.deleteMany({ userId })
                                             .then(() => {
                                                 req.flash('success', 'Your email has been verified.Go and Login now !')
 
-                                                res.redirect('/register')
+                                                res.redirect('/login')
                                             })
                                             .catch(error => {
                                                 console.log(error);
@@ -415,7 +415,7 @@ userRouter.post('/verify-otp/:id', async (req, res) => {
                                 //     .catch(error => {
                                 //         console.log(error);
                                 //     })
-
+                                Otp.deleteMany({userId:id});
                                 req.session.account.otp = true;
                                 req.flash('success','Now update your password')
                                 res.redirect('/forgot-password');

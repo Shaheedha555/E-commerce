@@ -41,7 +41,6 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
             }
         }]).sort([['date',1]]).then((order)=>{
 
-       if(order.date < 9)
 
         res.render('user/order-details',{user,count,wishcount,order});
         
