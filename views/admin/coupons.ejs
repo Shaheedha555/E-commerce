@@ -1,0 +1,60 @@
+<%- include('../layouts/admin-header.ejs') %>
+
+
+
+<section class="category container "> 
+    <br>
+    <h2 class=" mt-5 h1">All Coupons</h2>
+
+    <a href="/admin/coupon/add-coupon" ><button class="btn">Add a new coupon</button> </a>
+    <div class="table-responsive-sm">
+        <% if (count>0){%>
+
+        
+        <table id="example" class="table data-table align-middle" style="width:100%">
+            <% success.forEach(function(msg){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= msg %>
+                </div>
+              <%})%>
+              <% error.forEach(function(err){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
+            <thead>
+                <tr>
+                    <th>Coupon</th>
+                    <th>Offer</th>
+                    <th>Expire in</th>
+
+                    <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% coupons.forEach(function(c){ %>
+                <tr>
+                    <td><%= c.coupon %></td>
+                    <td><%= c.offer %></td>
+                    <td><%= c.expiry %> day</td>
+
+                    <td><a href="/admin/coupon/edit-coupon/<%= c._id %>"><i class="fa fa-pen pe-5"></i></a>
+                   <a class="confirmDeletion" href="/admin/coupon/delete-coupon/<%= c._id %>" ><i class="fa fa-trash"></i></a></td>
+                   
+                </tr>
+                <% }); %>
+            
+            
+        </tbody>
+        
+    </table>
+    <%}else{%>
+        <br><br>
+        <h3 class="text-center">No any Coupons</h3>
+        <%}%>
+    </div>
+    
+</section>
+
+
+<%- include('../layouts/admin-footer.ejs') %>

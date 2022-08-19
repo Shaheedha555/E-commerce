@@ -10,6 +10,8 @@ const auth = require('../config/auth');
 
 wishlistRouter.get('/', auth.isUser, async (req, res) => {
     let user = req.session.user;
+    req.session.user.discount= null;
+
     let id = user._id;
     let list = await Wishlist.findOne({ userId: id }).populate("wishlist.product");
     let wishcount = null;
@@ -42,12 +44,7 @@ wishlistRouter.get('/add/:product', auth.isUser, async (req, res) => {
     let user = req.session.user;
    
     let id = user._id;
-    let wishlist = await Wishlist.findOne({ userId: id },(err)=>{
-        if(err){
-            console.log(err)
-            return res.redirect('*');
-        }
-    });
+    let wishlist = await Wishlist.findOne({ userId: id });
 
  
     if (!wishlist) {

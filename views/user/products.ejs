@@ -29,7 +29,8 @@
                     <a href="/products/product-details/<%= pro._id %>" class="fas fa-eye"></a>
                     <!-- <a href="/cart/add/<%=pro._id%>" class="fas fa-shopping-cart"></a> -->
                     <button onclick="addToCart('<%=pro._id%>')"><i class="fas fa-shopping-cart"></i></button>
-                    <a href="/wishlist/add/<%=pro._id%>" class="fas fa-heart"></a>
+                    <button onclick="addToWishlist('<%=pro._id%>')"><i class="fas fa-heart"></i></button>
+
 
                 </div>                
                 <img src="/public/images/product-img/<%=pro.image%>" alt="">

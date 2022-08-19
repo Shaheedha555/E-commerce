@@ -12,6 +12,8 @@ const Order = require('../models/orderModel');
 
 orderRouter.get('/',auth.isUser,async (req,res)=>{
     let user = req.session.user;
+    req.session.user.discount= null;
+
     let count = null;
     if (user) {
         
@@ -31,15 +33,15 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
             wishcount = wishlistItems.wishlist.length;
         }
     }
-    Order.findOne({userId:user._id}).populate([
-        {path:'orders.orderDetails',
+    Order.find({userId:user._id}).populate([
+        {path:'orderDetails',
             populate : {
                 path : 'product',
                 model : 'Product'
             }
-        }]).then((order)=>{
+        }]).sort([['date',1]]).then((order)=>{
 
-       
+       if(order.date < 9)
 
         res.render('user/order-details',{user,count,wishcount,order});
         
@@ -47,9 +49,9 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
 
 });
 
-orderRouter.get('/order-details/:index',auth.isUser,async (req,res)=>{
+orderRouter.get('/order-details/:id',auth.isUser,async (req,res)=>{
     let user = req.session.user;
-    let index= req.params.index;
+    let id= req.params.id;
 
     let count = null;
     if (user) {
@@ -70,9 +72,9 @@ orderRouter.get('/order-details/:index',auth.isUser,async (req,res)=>{
             wishcount = wishlistItems.wishlist.length;
         }
     }
-    let orders = await Order.findOne({userId:user._id}).populate([
+    await Order.findById((id)).populate([
 
-                        {path:'orders.orderDetails',
+                        {path:'orderDetails',
                             populate : {
                                
                                     path : 'product',
@@ -83,19 +85,16 @@ orderRouter.get('/order-details/:index',auth.isUser,async (req,res)=>{
 
                     ]).then((order)=>{
                         
-                        orderData = order.orders[index];
-                        console.log('ghjk' + orderData)
-                        res.render('user/order-single-details',{user,count,wishcount,orderData,index});
+                        res.render('user/order-single-details',{user,count,wishcount,order});
                         
                     });
 
 });
 
-orderRouter.get('/order-cancel/:index',async(req,res)=>{
-    let user = req.session.user;
-    let index= req.params.index;
-    Order.findOne({userId:user._id}).then((item)=>{
-        item.orders[index].status = 'cancelled';
+orderRouter.get('/order-cancel/:id',async(req,res)=>{
+    let id= req.params.id;
+    Order.findById((id)).then((item)=>{
+        item.status = 'cancelled';
         item.save();
         console.log(item + 'updated');
         res.json({status:true});

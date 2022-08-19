@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const cartSchema = new mongoose.Schema({
-  userId : mongoose.Schema.Types.ObjectId,
+  userId : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : 'User'
+          },
   cart : [{
     product : 
     {type :mongoose.Schema.Types.ObjectId,
@@ -12,8 +15,7 @@ const cartSchema = new mongoose.Schema({
       type : Number,
       default : 1},
     price  : Number,
-    sub_total: Number,
-    shipping_packing :Number  
+    sub_total: Number
   }]
 });
 const Cart = mongoose.model('Cart', cartSchema);

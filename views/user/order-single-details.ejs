@@ -8,75 +8,96 @@
 
         
 
-            <h2> Order No: <%= index + 1%></h2>
-        <div class="box-container m-5">
-            <table>
+            <!-- <h2> Order No: </h2> -->
+        <div class="box-container m-5 ">
+            <div class="table-responsive-sm">
+            <table id="example" class="table data-table align-middle" style="width:100%">
                 <thead class="box">
-                    <th>Products</th>
-                    <th>Status</th>
-
-                    <th>Order date</th>
-                    <th>Delivery date</th>
-                    <!-- <th></th> -->
+                    <th>Item</th>
+                    <th>Weight</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
                 </thead>
                 
                 <tbody>
                     
+                    <% order.orderDetails.forEach(function(o){%>
                     <tr class="box">
-                        <td>
-                            <table>
-                                <thead>
-
-                                    <th>Item</th>
-                                    <th>Wt(kg)</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-
-                                </thead>
-                            <% orderData.orderDetails.forEach(function(o){%>
-                                <tbody>
-
-                                    <tr>
-                                        <td><%= o.product.title%> <br>
-                                            <img src="/public/images/product-img/<%= o.product.image%>" alt=""> <br>
-                                            <a href="/products/product-details/<%= o.product._id%>"> View Product</a>
-                                        </td>
-
-                                        <td><%= o.weight%></td>
-                                        <td>₹<%=o.price%></td>
-                                        <td><%= o.quantity%></td>
-                                        <td>₹<%= o.sub_total%></td>
-
+                            <td>
+                    
+                    
+                                <%= o.product.title%> <br>
+                                    <img src="/public/images/product-img/<%= o.product.image%>" alt=""> <br>
+                                    <a href="/products/product-details/<%= o.product._id%>"> View Product</a>
+                            </td>
+                    
+                            <td>
+                                <%= o.weight%>
+                            </td>
+                            <td>₹<%=o.price%>
+                            </td>
+                            <td>
+                                <%= o.quantity%>
+                            </td>
+                            <td>₹<%= o.sub_total%>
+                            </td>
+                    </tr>
         
                                         <%})%>
                                             
-                                    </tr>
-                                </tbody>
-                        </table>
+                       
+                </tbody>
+            </table>
+        </div>
+                        <div class="order-details w-100 p-3 border border-2 border-dark mt-5">
+                            <div class="d-flex">
+                                <div class="m-2">
+                                    <h3>Status  </h3>
+                                    <h3> Order date </h3>
+                                    <h3>Delivery date </h3>
+                                    
+                                </div>
+                                <div class="m-2">
+                                    <h3>:</h3>
+                                    <h3>:</h3>
+                                    <h3>:</h3>
 
+                                </div>
+                                <div class="text-end m-2">
+                                    <h3><%=order.status%></h3>
+                                    <h3><% let date = order.date.split(" ") %>
+                                        <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
+                                    <h3><%  d_date = order.deliveryDate.split(" ") %>
+                                        <%= d_date[0]+ " " + d_date[1] +" "+ d_date[2] +" "+ d_date[3] %></h3>
 
-                        </td>
-                        
-                        <td>
-                            <h3><%=orderData.status%></h3>
-                        </td>
-                        <td>
-                            <h3><% let date = orderData.date.split(" ") %>
-                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
-                        </td>
-                        <td>
-                            <h3><%  d_date = orderData.deliveryDate.split(" ") %>
-                                <%= d_date[0]+ " " + d_date[1] +" "+ d_date[2] +" "+ d_date[3] %></h3>
-                        </td>
+                                </div>
+
+                            </div>
+                            <div class=" d-flex">
+                                <div class="m-2">
+                                    <h3>Discount </h3>
+                                    <h3>Shipping Charge </h3>
+                                    <h3>Total </h3>
+                                </div>
+                                <div class="m-2">
+                                    <h3>:</h3>
+                                    <h3>:</h3>
+                                    <h3>:</h3>
+
+                                </div>
+                                <div class="m-2">
+                                <h3> <%=order.discount%></h3>
+                                <h3><%=order.shipping%></h3>
+                                <h3> <%=order.total + order.shipping - order.discount%></h3>
+
+                                </div>
+
+                            </div>
+                        </div>
                         
                         
                        
-                    </tr>
-
-
-                </tbody>
-            </table>
         </div>
 
 

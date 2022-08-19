@@ -122,9 +122,9 @@
                                             <!-- <input name="default" id="default" type="checkbox" value="<%=address.details.indexOf(ad)%>"> -->
                                             <!-- <label  for="default">make default</label> -->
                                             <br>
-                                            <button onclick="editAddress('<%=ad.name%>')" class="btn">Edit</button>
-                                            <form id="edit-address-<%=ad.name%>" class="profile-form hide mt-5" method="post"
-                                            action="/profile/edit-address">
+                                            <button onclick="editAddress('<%=address.details.indexOf(ad)%>')" class="btn">Edit</button>
+                                            <form id="edit-address-<%=address.details.indexOf(ad)%>" class="profile-form hide mt-5" method="post"
+                                            action="/profile/edit-address/<%=address.details.indexOf(ad)%>">
 
                                             <div class="form-group">
                                                 <input type="text" class="box" name="name" value="<%=ad.name%>"
@@ -183,7 +183,7 @@
                                                 <a class="btn" href="/profile">cancel</a>
                                             </form>
                                             <!-- <a class="btn " href="/profile/">edit</a> -->
-                                            <a class="btn " href="">delete</a>
+                                            <a class="btn " href="/profile/delete-address/<%=address.details.indexOf(ad)%>">delete</a>
                                         </div>
                                         <%})%>
                                         <%}%>

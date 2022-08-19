@@ -14,6 +14,7 @@ const auth = require('./config/auth');
 const userRouter = require('./routes/user-router')
 const adminRouter = require('./routes/admin-router')
 const categoryRouter = require('./routes/category-router')
+const couponRouter = require('./routes/coupon-router')
 const productRouter = require('./routes/product-router')
 const profileRouter = require('./routes/profile-router')
 const userProductRouter = require('./routes/user-product-router')
@@ -22,11 +23,12 @@ const wishlistRouter = require('./routes/wishlist-router')
 const orderRouter = require('./routes/order-router')
 const Wishlist = require('./models/wishlistModel');
 const Cart = require('./models/cartModel');
+const orderStatusRouter = require('./routes/order-status-router');
 
 
 mongoose.connect(config.database)
     .then(()=>{console.log('Database Connected')})
-    .catch((err)=>{console.log('Database connection failed')});
+    .catch((err)=>{console.log('Database connection failed'+err)});
 
 console.log(mongoose.connection.readyState);
 
@@ -64,11 +66,14 @@ app.use('/',userRouter);
 app.use('/admin',adminRouter);
 app.use('/admin/category',categoryRouter);
 app.use('/admin/product',productRouter);
+app.use('/admin/orders',orderStatusRouter);
+app.use('/admin/coupon',couponRouter);
 app.use('/profile',profileRouter);
 app.use('/products',userProductRouter);
 app.use('/cart',cartRouter);
 app.use('/wishlist',wishlistRouter);
 app.use('/orders',orderRouter);
+
 
 app.get('/admin/*',auth.isAdmin,(req,res)=>{
     let admin = req.session.admin;

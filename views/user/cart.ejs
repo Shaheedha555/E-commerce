@@ -8,8 +8,10 @@
     <%if( carts!==null ){%>
         <% if(carts.cart.length > 0){ %>
         <div class="box-container">
-            <table>
-                <thead class="box">
+            <div class="table-responsive-sm">
+
+                <table  id="example" class="table data-table align-middle" style="width:100%">
+                    <thead class="box">
                     <th>Product</th>
                     <th>size/wt</th>
                     <th>price</th>
@@ -73,6 +75,7 @@
 
                 </tbody>
             </table>
+        </div>
 
 
 
@@ -81,9 +84,48 @@
             <h1 class="title">checkout cart</h1>
 
             <div class="cart-total">
-                <h3>subtotal : <%= sum %>.00<span></span></h3>
-                <h3>shipping/packing : <%= shipping %>.00</h3>
-                <h3>total : <%= sum + shipping %>.00<span></span></h3>
+                <div class="net-total">
+                    <div>
+
+                        <h3>subtotal : <%= sum %>.00<span></span></h3>
+                        <h3>shipping/packing : <%= shipping %>.00</h3>
+                        <h3>discount :<%if(discount){%> <%= discount %><%}else{%>00<%}%>.00 </h3>
+                        <h3>total : <%if(discount){%>  <%= sum + shipping - discount   %> <%}else{%><%= sum + shipping%> <%}%>.00<span></span></h3>
+                    </div>
+                    <div class="">
+                        <button id="myBtn" class="m-2">Available coupons</button>
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span class="modal-close">&times;</span>
+                            <div class="d-flex">
+
+                                <div class="row">
+                                        <%coupons.forEach(function(c){%>
+                                        <div class="col-6 ">
+                                            <button class=" h3 m-2 p-3" type="button"><%=c.coupon%></button>
+
+                                        </div>
+                                        <%})%>
+                                    </div>
+                            </div>
+                        </div>
+
+                        </div>
+                        <form class="coupon-form" action="/cart/discount-coupon" method="post">
+                            <input id="coupon" type="text" name="coupon" placeholder="your coupon" class="box"> <br>
+                            <%error.forEach(function(er){%>
+                                <p class="text-danger h5"><%=er%></p>
+                                <%})%>
+                            <p></p>
+                            <button  onclick="applyCoupon()" class="btn w-100">Apply Coupon</button>
+                        </form>
+                    </div>
+                </div>
+                
                 <a href="/cart/place-order" class="btn">proceed to checkout</a>
             </div>
             <%}else{%>

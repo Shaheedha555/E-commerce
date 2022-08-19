@@ -7,8 +7,8 @@
     <h1 class="title"> My Orders </h1>
     <%if( order!==null ){%>
         
-        <% order.orders.forEach(function(o){%>
-            <h2> Order No: <%= order.orders.indexOf(o) +1 %></h2>
+        <% order.forEach(function(o){%>
+            <h2> Order No: <%= order.indexOf(o) +1 %></h2>
         <div class="box-container m-5">
             <table>
                 <thead class="box">
@@ -36,6 +36,9 @@
                         
                         <td>
                             <h3><%=o.status%></h3>
+                            <%if(o.status=='pending'){%>
+                                <a href="/cart/place-order/<%= o._id%>">try again</a>
+                                <%}%>
                         </td>
                         <td>
                             <h3><% let date = o.deliveryDate.split(" ") %>
@@ -44,10 +47,10 @@
                         
                         
                         <td>
-                            <a href="/orders/order-details/<%= order.orders.indexOf(o)%>"><button class="btn">View Details</button></a> <br>
+                            <a href="/orders/order-details/<%= o._id%>"><button class="btn">View Details</button></a> <br>
 
                             <% if(o.status == 'placed' || o.status == 'pending' ) {%>
-                           <button onclick="cancelOrder('<%=order.orders.indexOf(o)%>')" class="btn">Cancel Order</button>
+                           <button onclick="cancelOrder('<%=o._id%>')" class="btn">Cancel Order</button>
                                 <%} else{%>
                                     <% if(o.status == 'cancelled') {%>
                             <button class="btn btn-light"> Order cancelled</button>

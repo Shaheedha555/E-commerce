@@ -13,6 +13,7 @@ userProductRouter.get('/',async(req,res)=>{
     let count =null
     const user = req.session.user;
     if(user){
+        req.session.user.discount= null;
         
         const cartItems = await Cart.findOne({userId:user._id});
     

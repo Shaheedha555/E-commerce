@@ -850,7 +850,15 @@ background: none;
   border: 0.2rem solid #333;
   background: white;
 }
-
+.shopping-cart .cart-total .net-total{
+  display: flex;
+  justify-content: space-between;
+}
+.coupon-form input{
+border: 1px solid black;
+height: 50px;
+font-size: 10px;
+}
 .shopping-cart .cart-total h3 {
   margin-bottom: 1rem;
   font-size: 2rem;
@@ -1540,97 +1548,7 @@ ul {
 
 
 /* Float cancel and delete buttons and add an equal width */
-.modal .cancelbtn,.modal .deletebtn {
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  opacity: 0.9;
-  float: left;
-  width: 50%;
-}
-
-/* Add a color to the cancel button */
-.modal .cancelbtn {
-  background-color: #ccc;
-  color: black;
-}
-
-/* Add a color to the delete button */
-.modal .deletebtn {
-  background-color: #666665;
-}
-
-/* Add padding and center-align text to the container */
-.modal .container {
-  /* padding: 6px; */
-  text-align: center;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 30%;
-  top: 20%;
-  width: 50%; /* Full width */
-  height: 40%; /* Full height */
-  overflow: hidden;
-  background-color: #e496bc;
-  padding-top: 50px;
-
-}
-
-/* Modal Content/Box */
-.modal .modal-content {
-  background-color: #e496bc;
-  margin-left: 2rem;
-  border: none;
-  /* margin: 4% auto 15% auto;  */
-  width: 80%; /* Could be more or less, depending on screen size */
-
-}
-
-/* Style the horizontal ruler */
-.modal hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* The Modal Close Button (x) */
-.modal .close {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
-}
-
-.modal .close:hover,
-.modal .close:focus {
-  color: #f44336;
-  cursor: pointer;
-}
-
-/* Clear floats */
-.modal .clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn, .deletebtn {
-    width: 100%;
-  }
-}
-
+/* 
 
 /**checkout**/
 .pay-form{
@@ -1644,4 +1562,57 @@ margin: 30px;
 #order-success{
   font-size: 30px;
   color: green;
+}
+
+
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  box-sizing: border-box;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: fit-content; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+#myBtn {
+  background-color: rgb(241, 156, 213);
+  border: 0.5px solid black;
+  border-radius: 40%;
+  color: #000;
+  padding: 5px;
+}
+
+.order-details{
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
 }

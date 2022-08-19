@@ -1,0 +1,36 @@
+<%- include('../layouts/admin-header.ejs') %>
+
+<section class="container add w-50">
+ <h2 class="page-title">Add a coupon</h2>
+    <a href="/admin/coupon" class="btn"><i class="fa fa-angle-left"></i></a>
+   
+    <br><br>
+    <div class=" row">
+        <form id="add-coupon" method="post" action="/admin/coupon/add-coupon">
+            <% error.forEach(function(err){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
+            <div class="form-group">
+                <!-- <label for="title">Title</label> -->
+                <input id="coupon" type="text" class="box" name="coupon" placeholder="Coupon">
+            </div>
+            <div class="form-group">
+                <!-- <label for="title">Title</label> -->
+                <input id="offer" type="text" class="box" name="offer"  placeholder="Offer">
+            </div>
+            <div class="form-group">
+                <!-- <label for="title">Title</label> -->
+                <input id="expiry" type="number" class="box" name="expiry"  placeholder="Expire days">
+            </div>
+           
+            <br>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+    
+</section>
+
+
+<%- include('../layouts/admin-footer.ejs') %>

@@ -30,6 +30,8 @@ profileRouter.get('/',auth.isUser,async(req,res)=>{
 
     let user = req.session.user
     let id = user._id;
+    req.session.user.discount= null;
+
     const userData = await User.findOne({_id:id})
     let address = await Address.findOne({userId:id});
     // address = address.details ;
@@ -117,32 +119,53 @@ profileRouter.post('/add-address',auth.isUser,async(req,res)=>{
     let {name,housename,landmark,street,pin,contact,district,state,country} = req.body;
     console.log(req.body);
     let addressbook = await Address.findOne({userId:id});
-    if(addressbook){
+    if(addressbook.details.length >0){
         console.log('addressbook exists');
         await Address.findOneAndUpdate({userId:id},{$push:{details:{name:name,housename:housename,
             landmark:landmark,street:street,pin:pin,contact:contact,district:district,state:state,country:country}}})
     }else{
         console.log('addressbook doesnt exists');
-
-        let newaddress = new Address({
-            userId : id,
-            details:
-            [{name:name,
-            housename:housename,
-            landmark:landmark,
-            street:street,
-            pin:pin,
-            contact:contact,
-            district:district}]
-        });
-        await newaddress.save();
-        console.log('address saved');
+        await Address.findOneAndUpdate({userId:id},{$push:{details:{name:name,housename:housename,
+            landmark:landmark,street:street,pin:pin,contact:contact,district:district,state:state,country:country,select:true}}})
+       
+        console.log('default address saved');
 
     }
         res.redirect('back')
     // console.log(address);
 });
 
+profileRouter.post('/edit-address/:index',async (req,res)=>{
+    let user = req.session.user;
+    let index = req.params.index;
+    let {name,housename,landmark,street,pin,contact,district} = req.body;
+    await Address.findOne({userId:user._id}).then((address)=>{
+        address.details[index].name = name;
+        address.details[index].housename = housename;
+        address.details[index].landmark = landmark;
+        address.details[index].street = street;
+        address.details[index].pin = pin;
+        address.details[index].contact = contact;
+        address.details[index].district = district;
+
+        address.save();
+
+        res.redirect('back');
+
+    })
+
+})
+profileRouter.get('/delete-address/:index',async(req,res)=>{
+    let index = req.params.index;
+    let user =req.session.user;
+    await Address.findOne({userId:user._id}).then((address)=>{
+        let ad = address.details[index];
+        console.log(ad);
+        address.details.pull(ad)
+        address.save();
+        res.redirect('back')
+    })
+})
 
 
 profileRouter.post('/change-password',async(req,res)=>{

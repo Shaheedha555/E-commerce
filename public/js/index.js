@@ -330,9 +330,9 @@ function addAddress(){
   $('#add-address').toggleClass('hide');
   
 }
-function editAddress(name){
+function editAddress(index){
 
-  $('#edit-address'+name).toggleClass('hide');
+  $('#edit-address-'+index).toggleClass('hide');
   
 }
 
@@ -362,6 +362,9 @@ function addToCart(proId,wt){
       console.log('succ');
       //   $('#cart-count').html(count);
       location.reload()
+      }else{
+        console.log('no user');
+        location.href= '/login';
       }
     }
   });
@@ -469,6 +472,18 @@ function addToWishlist(proId){
     }
   });
 }
+function addToCartAndRemove(proId){
+  $.ajax({
+    url : '/cart/add/'+proId,
+    method : 'get',
+    success : (response)=>{
+      if(response.status){
+        removeFromWishlist(proId);
+      location.reload()
+      }
+    }
+  });
+}
 function removeFromWishlist(proId){
   $.ajax({
     url : '/wishlist/delete/'+proId,
@@ -535,13 +550,14 @@ $("#payment-form").submit((e)=>{
     method : 'post',
     data : $('#payment-form').serialize(),
     success : (response)=>{
-      alert(response)
+      // alert(response)
       if(response.codStatus == 'placed'){
         console.log(response)
         console.log(response.status)
 
         location.href = '/cart/place-order/success'
       }else{
+        console.log(response +'response');
         razorpayPayment(response);
       }
     }
@@ -561,7 +577,7 @@ function razorpayPayment(order){
         // alert(response.razorpay_payment_id);
         // alert(response.razorpay_order_id);
         // alert(response.razorpay_signature);
-
+      console.log('verify fn');
         verifyPayment(response,order);
     },
     "prefill": {
@@ -583,22 +599,100 @@ rzp1.open();
 
 function verifyPayment(payment,order){
   $.ajax({
-    url : 'cart/verify-payment',
+    url : '/cart/verify-payment',
     data : {
       payment,
       order
     },
-    method : 'post'
+    method : 'post',
+    success : (response)=>{
+      if(response.status){
+        
+        location.href = '/cart/place-order/success'
+
+      }
+    }
   })
 }
 
-function cancelOrder(index){
+function cancelOrder(id){
   $.ajax({
-    url : '/orders/order-cancel/'+index,
+    url : '/orders/order-cancel/'+id,
     method : 'get',
     success : (response)=>{
       if(response.status){
         location.reload()
+      }
+    }
+  })
+}
+
+function changeStatus(id){
+  let status = document.getElementById("update-order-status").value;
+  console.log('changed ', status , id);
+  $.ajax({
+    url : '/admin/orders/change-status/'+id,
+    method : 'post',
+    data : {
+      status
+
+    },
+    success : (response)=>{
+      console.log('response got');
+      if(response.status){
+      console.log('response true');
+        location.reload();
+      }
+    }
+  })
+}
+
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("modal-close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+function applyCoupon(){
+  let coupon = $('#coupon').val();
+  alert(coupon);
+  $.ajax({
+    url : '/cart/discount-coupon/',
+    method : 'post',
+    data : {
+      coupon
+
+    },
+    success : (response)=>{
+      console.log('response got');
+      if(response.status){
+      console.log('response true');
+        location.reload();
+      }else{
+        location.reload();
+
       }
     }
   })

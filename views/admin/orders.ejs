@@ -1,0 +1,89 @@
+<%- include('../layouts/admin-header.ejs') %>
+
+
+
+<section class="category container "> 
+    <br>
+    <h2 class=" mt-5 h1">All Orders</h2>
+
+    <div class="table-responsive-sm">
+        <% if (count>0){%>
+
+        
+        <table id="example" class="table data-table align-middle" style="width:100%">
+            <% success.forEach(function(msg){ %>
+                <div class="alert alert-success" role="alert">
+                    <%= msg %>
+                </div>
+              <%})%>
+              <% error.forEach(function(err){ %>
+                <div class="alert alert-danger" role="alert">
+                    <%= err %>
+                </div>
+              <%})%>
+            <thead>
+                <tr>
+                    <th>User-ID</th>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th></th>
+                    
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.forEach(function(order){ %>
+            
+
+                <tr>
+                    <td><%= order.userId.name %></td>
+                    <td>
+                        <!-- <table>
+                            <thead>
+                                <th>item</th>
+
+                            </thead>
+                        </table> -->
+            <% order.orderDetails.forEach(function(item){ %>
+
+                        <img width="100px" height="100px" src="/public/images/product-img/<%=item.product.image%>" alt=""> <br>
+                        <%= item.product.title %> <br>
+                <% }) %>
+
+                    </td>
+                <td><%= order.status %></td>
+                <td>
+                    <% if (order.status !== 'cancelled'){%>
+                    <!-- <form style="background: none;" class="w-50"> -->
+                        <!-- <div class="form-group"> -->
+
+                            <select name="status" id="update-order-status" class="btn" onchange="changeStatus('<%=order._id%>')">
+                                <option value="">Change status</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                    
+                            </select>
+                            
+                        <!-- </div> -->
+                    <!-- </form> -->
+                    <%}%>
+                </td>
+                   
+                </tr>
+                <% }) %>
+                
+            
+            
+        </tbody>
+        
+    </table>
+    <%}else{%>
+        <br><br>
+        <h3 class="text-center">No any Orders</h3>
+        <%}%>
+    </div>
+    
+</section>
+
+
+<%- include('../layouts/admin-footer.ejs') %>

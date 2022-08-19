@@ -23,7 +23,7 @@
                                     <!-- <div class="card address-card mb-3"> -->
                                         <!-- <div class=" col card-body"> -->
                                             <div class="row m-auto">
-                                                <%if(address){%>
+                                                <%if(address.details.length > 0){%>
                                                 <% address.details.forEach(function(ad){%>
                                                     <div class="col-md-4 mb-3 text-start address position-relative">
                                                         <h4 class="mb-4">Address</h4>
@@ -56,7 +56,9 @@
                                                         <!-- <a class="btn " href="/profile/">edit</a> -->
                                                     </div>
                                                     <%})%>
-                                                    <%}%>
+                                                    <%}else{%>
+                                                        <h3 class="h1 text-center p-5 text-danger">You must add your address</h3>
+                                                        <%}%>
                                                         <div class="row">
                                                             <div class="col">
                                                                 <button onclick="addAddress()" class="btn ">Add new address</button>
@@ -119,7 +121,7 @@
                                                                     
                                                                     <input type="submit" class="btn btn-default">
                                                                     <!-- <button onclick="addAddress()" class="btn">cancel</button> -->
-                                                                    <a class="btn" href="/profile">cancel</a>
+                                                                    <a class="btn" href="/cart/place-order">cancel</a>
                                                                     </form>
                                                             </div>
                                                         </div>
@@ -138,16 +140,20 @@
                             <div class="text-start h-100">
     
                                 <div class="card p-4 h-100">
-                                    <h2>Total Amount : <span><%= total %>.00</span></h2>
+                                    <h5>Total Amount : <span><%= total %>.00</span></h5>
+                                    <h6>Shipping : <span><%= shipping %>.00</span></h6>
+                                    <h6>Discount : <span><%= discount %>.00</span></h6>
+                                    <h3>Net Amount : <span><%= total + shipping - discount %>.00</span></h3>
+
                                     <h3 class="pt-5">Select payment method</h3>
                                     <form id="payment-form" action="/cart/payment" method="post" class="pay-form text-start">
-                                        <input name="payment" type="radio" id="cash-payment" value="COD"> 
+                                        <input name="payment" type="radio" id="cash-payment" value="COD" > 
                                         <label for="cash-payment">Cash on Delivery</label>
                                         <br>
-                                        <input name="payment" type="radio" id="card-payment" value="Card">
+                                        <input name="payment" type="radio" id="card-payment" value="Card" checked>
                                         <label for="card-payment">Debit/Credit</label>
                                         <br>
-                                        <input type="submit" class="btn mb-5" value="Place Order">
+                                        <button type="submit" class="btn mb-5" <% if(address.details.length < 1){%> disabled <%}%> > Place Order</button>
                                     </form>
                                 </div>
                             </div>
