@@ -69,7 +69,7 @@ productRouter.get('/add-product', auth.isAdmin, (req, res) => {
 
 productRouter.post('/add-product', upload.single('image'), function (req, res) {
 
-    let { description, price, category,special } = req.body;
+    let { description, price, category,special,vegan } = req.body;
     let title = req.body.title.replace(/\s+/g, '-').toUpperCase();
     let slug = req.body.title.replace(/\s+/g, '-').toLowerCase();
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
@@ -98,9 +98,8 @@ productRouter.post('/add-product', upload.single('image'), function (req, res) {
                 category: category,
                 image: image,
                 images: [],
-                special : special
-
-
+                special : special,
+                vegan:vegan
             });
 
             product.save(function (err) {
@@ -142,6 +141,10 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
             const admin = req.session.admin;
             const error = req.flash('error')
             const success = req.flash('success')
+            let vegan=true;
+            let special=true;
+            if(product.vegan==null || product.vegan==false) vegan =false;
+            if(product.special==null || product.special==false) special =false;
 
             res.render('admin/edit-product', {
                 admin,
@@ -152,21 +155,23 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
                 categories: categories,
                 category: product.category,
                 image: product.image,
-                special : product.special,
+                special : special,
+                vegan : vegan,
                 price: product.price,
                 id: product._id,
                 gallery: product.images,
                 // special : special
 
             })
-        })
+        }).clone()
     })
 
 
 })
 
 productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
-    let {title,pimage,description,price,category,special} = req.body;
+    let {title,pimage,description,price,category,special,vegan} = req.body;
+    console.log(special,'  ',vegan);
     let slug = title.replace(/\s+/g, '-').toLowerCase();
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
     let id = req.params.id;
@@ -188,31 +193,35 @@ productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
 
             Product.findById((id), async (err, product) => {
                 if (err) console.log(err);
-                if(image!==""){
+                let img = image!=="" ? image : pimage ;
 
-                    product.title = title,
+                // if(image!==""){
+
+                        product.title = title,
                         product.slug = slug,
                         product.description = description,
                         product.price = price2,
                         product.category = category,
-                        product.image = image,
-                        product.special = special
+                        product.image = img,
+                        product.special = special,
+                        product.vegan = vegan
 
-                }else{
-                    product.title = title,
-                    product.slug = slug,
-                    product.description = description,
-                    product.price = price2,
-                    product.category = category,
-                    product.image = pimage,
-                    product.special = special
+                // }else{
+                //     product.title = title,
+                //     product.slug = slug,
+                //     product.description = description,
+                //     product.price = price2,
+                //     product.category = category,
+                //     product.image = pimage,
+                //     product.special = special,
+                //     product.vegan = vegan
 
-                }
+                // }
 
                 await product.save((err) => {
+                    if (err) return console.log(err);
                     console.log('saving pro');
 
-                    if (err) return console.log(err);
                     if (image !== "") {
                         console.log('image is already there');
 

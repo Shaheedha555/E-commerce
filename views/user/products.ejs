@@ -6,13 +6,16 @@
     <h1 class="title"> our products </h1>
     <div id="cat-head" class="cat-head border border-dark">
         <div class="category p-4">
-            <a href="/products">All products</a>
+            <a href="/products">All</a>
         </div>
         <%categories.forEach(function(cat){%>
             <div class="category p-4">
             <a href="/products/<%= cat.title %>"> <%= cat.title %></a>
             </div>
         <% }) %>
+        <div class="category p-4">
+            <a href="products/vegan">VEGANS</a>
+        </div>
     </div>
     <div  id="cat-head-sm">
         

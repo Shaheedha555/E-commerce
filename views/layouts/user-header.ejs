@@ -29,55 +29,62 @@
 <body>
 
 <!-- header section starts  -->
-
-<header class="header">
-
-    <a href="/" class="logo"> Cakes.<span>n</span>.bakes </a>
-
-    <nav class="navbar">
-        <ul>
-            <li><a href="/">home</a></li>
-            <li><a href="/products">products</a></li>
-            <li><a href="/about">about</a></li>
-            <li><a href="/contact">contact us</a></li>
-            <li><a href="#"><i class="fa fa-user"></i> <%= locals.user ? user.name:'Account' %> </a>
-                <ul>
-                    <% if (locals.user){%>
-                        <li><a href="/profile">profile</a></li>
-                        <li><a href="/orders">my orders</a></li>
-                        <li><a href="/logout">logout</a></li>
-
-                    <%}else{%>
-                        <li><a href="/login">login</a></li>
-                        <li><a href="/register">register</a></li>
-                    <%}%>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div id="search-btn" class="fas fa-search"></div>
-        <a href="/wishlist" ><i class="fa fa-heart position-relative">
-            <% if (locals.user){%>
-                <span id="wishlist-count" class="position-absolute top-25 translate-middle badge rounded-pill bg-dark"><%=wishcount%></span>
-                <%}%>
-            </i>
-        </i></a>
-        <a href="/cart"> <i class="fas fa-shopping-cart position-relative">
-            <% if (locals.user){%>
-            <span id="cart-count" class="position-absolute top-25 translate-middle badge rounded-pill bg-dark"><%=count%></span>
-            <%}%>
-        </i></a>
+<header class="user-header">
+    <div class="user-head">
+        <p><i class="fa fa-user"></i> <%= locals.user ? user.name:'User' %></p>
     </div>
 
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
-        <label for="search-box" class="fas fa-search"></label>
-    </form>
-
+    <div class="header">
+    
+        <a href="/" class="logo"> Cakes.<span>n</span>.bakes </a>
+    
+        <nav class="navbar">
+            <ul>
+                <li><a href="/">home</a></li>
+                <li><a href="/products">products</a></li>
+                <li><a href="/about">about</a></li>
+                <li><a href="/contact">contact us</a></li>
+                <li><a href="#"><i class="fa fa-user"></i> <%= locals.user ? user.name:'Account' %> </a>
+                    <ul>
+                        <% if (locals.user){%>
+                            <li><a href="/profile">My profile</a></li>
+                            <li><a href="/orders">my orders</a></li>
+                            <li><a href="/logout">logout</a></li>
+    
+                        <%}else{%>
+                            <li><a href="/login">login</a></li>
+                            <li><a href="/register">register</a></li>
+                        <%}%>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    
+        <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <a href="/wishlist" ><i class="fa fa-heart position-relative">
+                <% if (locals.user){%>
+                    <span id="wishlist-count" class="position-absolute top-25 translate-middle badge rounded-pill bg-dark"><%=wishcount%></span>
+                    <%}%>
+                </i>
+            </i></a>
+            <a href="/cart"> <i class="fas fa-shopping-cart position-relative">
+                <% if (locals.user){%>
+                <span id="cart-count" class="position-absolute top-25 translate-middle badge rounded-pill bg-dark"><%=count%></span>
+                <%}%>
+            </i></a>
+            <div id="menu-btn" class="fas fa-bars"></div>
+    
+        </div>
+    
+        <form action="" class="search-form">
+            <input type="search" name="" placeholder="search here..." id="search-box">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+    
+    </div>
 </header>
+
 
 
 

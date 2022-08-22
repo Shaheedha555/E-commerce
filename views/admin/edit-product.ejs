@@ -1,6 +1,6 @@
 <%- include('../layouts/admin-header.ejs') %>
 
-<section class="container add w-50">
+<div class="dash-content container add w-50">
     <h2 class="page-title">Edit Product</h2>
     <a href="/admin/product" class="btn "><i class="fa fa-angle-left"></i></a>
     <br><br>
@@ -33,9 +33,15 @@
                 <input type="hidden" name="pimage" value="<%= image %>">
 
             </div>
-            <div class="form-group">
-                <input type="checkbox" name="special" id="special" value="<%=special%>" <% if(special==true){ %> checked <%}%> >
-                <label class="h4" for="special">Special</label>
+            <div class="form-group d-flex">
+                <div class="pe-5">
+                    <input type="checkbox" name="special" id="special" value="<%=special%>" <% if(special==true){ %> checked <%}%> >
+                    <label class="h4" for="special">Special</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="vegan" id="vegan" value="<%=vegan%>" <% if(vegan==true){ %> checked <%}%> >
+                    <label class="h4" for="vegan">Vegan</label>
+                </div>
             </div>
             <div class="form-group">
                 <input id="price" type="text" class="box" name="price" value="<%= price %>" placeholder="price in rupees">
@@ -64,6 +70,7 @@
         </form>
 
     </div>
+</div>
     
 </section>
 

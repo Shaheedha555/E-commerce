@@ -46,7 +46,8 @@ orderStatusRouter.get('/',auth.isAdmin,async(req,res)=>{
     // ])
     let success = req.flash('success');
     let error = req.flash('error');
-    res.render('admin/orders',{admin,count,orders,success,error});
+    let status = ['shipped','delivered','cancelled']
+    res.render('admin/orders',{admin,count,orders,success,error,status});
 });
 orderStatusRouter.post('/change-status/:id',auth.isAdmin,async(req,res)=>{
     

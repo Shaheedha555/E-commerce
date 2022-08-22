@@ -1,6 +1,6 @@
 <%- include('../layouts/admin-header.ejs') %>
 
-<section class="container add w-50">
+<div class="dash-content container add w-50">
     <h2 class="page-title">Add a Product</h2>
     <a href="/admin/product" class="btn"><i class="fa fa-angle-left"></i></a>
         
@@ -30,9 +30,16 @@
                 <input id="image" type="file" class="box" name="image">
                 <img src="#" id="img-prvw" alt="">
             </div>
-            <div class="form-group">
-                <input type="checkbox" name="special" id="special" value="true">
+            <div class="form-group d-flex">
+                <div class=" pe-5">
+                    <input type="checkbox" name="special" id="special" value="true">
                 <label class="h4" for="special">Special</label>
+                </div>
+                <div>
+
+                    <input type="checkbox" name="vegan" id="vegan" value="true">
+                    <label class="h4" for="vegan">Vegan</label>
+                </div>
             </div>
             <div class="form-group">
                 <input id="price" type="number" class="box" name="price" value="<%= price %>" placeholder="price in rupees">
@@ -41,6 +48,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
+</div>
     
 </section>
 

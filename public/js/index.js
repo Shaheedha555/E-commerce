@@ -266,9 +266,8 @@ $(document).on('turbolinks:load', function() {
             })
 // 
 
-$('a.confirmDeletion').on('click',function(){
-    if(!confirm('Confirm deletion'))
-    return false
+$('a.confirmDeletion').click(function(){
+  Swal.fire('Confirm deletion')
 });
 
 let searchForm = document.querySelector('.header .search-form');
@@ -628,7 +627,7 @@ function cancelOrder(id){
 }
 
 function changeStatus(id){
-  let status = document.getElementById("update-order-status").value;
+  let status = $("#update-order-status").val();
   console.log('changed ', status , id);
   $.ajax({
     url : '/admin/orders/change-status/'+id,
@@ -646,6 +645,9 @@ function changeStatus(id){
     }
   })
 }
+$(".alert-danger" ).fadeOut(5000);
+$(".alert-success" ).fadeOut(5000);
+
 
 
 

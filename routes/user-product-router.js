@@ -63,6 +63,33 @@ userProductRouter.get('/:category',async(req,res)=>{
     res.render('user/products',{products,categories,user,count,wishcount});
 });
 
+userProductRouter.get('/vegan',async(req,res)=>{
+    let products = await Product.find({vegan:true});
+    let count =null
+    const user = req.session.user;
+    if(user){
+        
+        const cartItems = await Cart.findOne({userId:user._id});
+    
+        if(cartItems){
+            count = cartItems.cart.length;
+        }
+    }
+    let wishcount = null;
+   
+    // let t = await Cart.findOne({ userId: id }).populate("cart.product");
+    if (user) {
+
+        const wishlistItems = await Wishlist.findOne({ userId: user._id });
+
+        if (wishlistItems) {
+            wishcount = wishlistItems.wishlist.length;
+        }
+    }
+    console.log(products.length);
+    res.render('user/products',{products,user,count,wishcount});
+});
+
 
 userProductRouter.get('/product-details/:id',async(req,res)=>{
     let id = req.params.id;

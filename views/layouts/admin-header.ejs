@@ -20,7 +20,11 @@
 
     <!-- custom css file link  -->
     <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <link rel="stylesheet" href="../public/css/adminStyle.css">
     <link rel="stylesheet" href="../public/css/style.css">
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
     <!-- custom js file link  -->
     <script src="../public/js/index.js" defer></script>
@@ -39,55 +43,51 @@
 <body>
 
 <!-- header section starts  -->
+<!-- <header class="admin-header">
+    <div class="admin-head">
+        <p>
+            <% if (locals.admin) {%>  <a href="/admin/logout" class=" text-light"><i class="fa fa-lock-open"></i> Logout</a> <%}else{%> <a class=" text-light" href="/admin"> <i class="fa fa-lock"></i> Login </a><%}%>
 
-<header class="header">
+        </p>
 
-    <a href="/admin" class="logo"> Cakes.<span>n</span>.bakes </a>
-
-    <nav class="navbar">
-        <ul>
-            <li><a href="/admin/dashboard">Dashboard</a></li>
-            <li><a href="/admin/category">Category</a></li>
-            <li><a href="/admin/product">Products</a></li>
-            <li><a href="/admin/users">Users</a></li>
-            <li><a href="/admin/orders">Orders</a></li>
-
-
-
-            <!-- <li><a href="#">pages +</a>
-                <ul>
-                    <li><a href="about.html">about</a></li>
-                    <li><a href="blogs.html">blogs</a></li>
-                </ul>
-            </li> -->
-            <% if(locals.admin){%>
-            
-                <li><a href="/admin"><i class="fa fa-lock-open"></i> Admin</a>
-                    <ul>
-                        <li><a href="/admin/logout">Logout</a></li>
-                    </ul>
-                </li>
-
-            <%}else{%>
-                <li><a href="/admin"><i class="fa fa-lock"></i> Admin</a></li>
-                <%}%>
-                
-
-            
-        </ul>
-    </nav>
-
-    <div class="icons">
-        <div id="menu-btn" class="fas fa-bars"></div>
-        <div id="search-btn" class="fas fa-search"></div>
-        <a href="cart.html" class="fas fa-shopping-cart"></a>
     </div>
-
-    <form action="" class="search-form">
-        <input type="search" name="" placeholder="search here..." id="search-box">
-        <label for="search-box" class="fas fa-search"></label>
-    </form>
-
+    <div class="header">
+    
+        <a href="/admin" class="logo"> Cakes.<span>n</span>.bakes </a>
+    
+        <nav class="navbar">
+            <ul>
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/category">Category</a></li>
+                <li><a href="/admin/product">Products</a></li>
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="/admin/orders">Orders</a></li>
+     -->
+    
+    
+                <!-- <li><a href="#">pages +</a>
+                    <ul>
+                        <li><a href="about.html">about</a></li>
+                        <li><a href="blogs.html">blogs</a></li>
+                    </ul>
+                </li> -->
+                
+    
+                
+            <!-- </ul>
+        </nav>
+    
+        <div class="icons">
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="menu-btn" class="fas fa-bars"></div>
+        </div>
+    
+        <form action="" class="search-form">
+            <input type="search" name="" placeholder="search here..." id="search-box">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+    
+    </div>
 </header>
 
 
@@ -97,7 +97,74 @@
 
 
 
+ -->
+ <nav>
+    <div class="logo-name">
+        
+        <a href="/admin" class="logo_name">cakes.<span>N</span>.bakes</a>
+    </div>
 
+    <div class="menu-items">
+        <ul class="nav-links">
+            <li><a href="/admin">
+                <i class="uil uil-estate"></i>
+                <span class="link-name">Dahsboard</span>
+            </a></li>
+            <li><a href="/admin">
+                <i class="uil uil-chart"></i>
+                <span class="link-name">Chart</span>
+            </a></li>
+            <li><a href="/admin/users">
+                <i class="uil uil-users-alt"></i>                
+                <span class="link-name">All Users</span>
+            </a></li>
+            <li><a href="/admin/category">
+                <!-- <i class="uil uil-thumbs-up"></i> -->
+                <i class="uil uil-files-landscapes"></i>
+
+                <span class="link-name">All Categories</span>
+            </a></li>
+            <li><a href="/admin/product">
+                <i class="uil uil-comments"></i>
+                <span class="link-name">All Products</span>
+            </a></li>
+            <li><a href="/admin/coupon">
+                <i class="uil uil-pricetag-alt"></i>
+                <span class="link-name">Coupons</span>
+            </a></li>
+            <li><a href="/admin/banners">
+                <i class="uil uil-panorama-h"></i>
+                <span class="link-name">Banners</span>
+            </a></li>
+            <li><a href="/admin/orders">
+                <i class="uil uil-shopping-cart-alt"></i>
+                <span class="link-name">Orders</span>
+            </a></li>
+        </ul>
+        
+        
+    </div>
+</nav>
+
+
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <% if(locals.admin){%>
+                
+               <a href="/admin/logout"><i class="fa fa-lock-open"></i> Logout</a>
+
+        <%}else{%>
+            <a href="/admin"><i class="fa fa-lock"></i> Admin</a>
+            <%}%>
+            
+        <!-- <div class="search-box">
+            <i class="uil uil-search"></i>
+            <input type="text" placeholder="Search here...">
+        </div> -->
+        
+        <!--<img src="images/profile.jpg" alt="">-->
+    </div>
 
 
 

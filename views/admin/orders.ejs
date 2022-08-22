@@ -2,7 +2,7 @@
 
 
 
-<section class="category container "> 
+<div class="dash-content category container "> 
     <br>
     <h2 class=" mt-5 h1">All Orders</h2>
 
@@ -57,10 +57,10 @@
                         <!-- <div class="form-group"> -->
 
                             <select name="status" id="update-order-status" class="btn" onchange="changeStatus('<%=order._id%>')">
-                                <option value="">Change status</option>
-                                <option value="shipped">Shipped</option>
-                                <option value="delivered">Delivered</option>
-                                <option value="cancelled">Cancelled</option>
+                                <!-- <option value="">Change status</option> -->
+                                <%status.forEach(function(s){%>
+                                    <option  value="<%= s %>" <% if(order.status == s){ %> selected <%}%> > <%=s%></option>
+                                    <%})%>
                     
                             </select>
                             
@@ -82,6 +82,7 @@
         <h3 class="text-center">No any Orders</h3>
         <%}%>
     </div>
+</div>
     
 </section>
 

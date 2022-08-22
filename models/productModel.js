@@ -7,7 +7,9 @@ const productSchema = new mongoose.Schema({
     description : String,
     price : Number,
     images: [String],
-    special : Boolean
+    special : Boolean,
+    vegan : Boolean
+
 
 });
 const Product = mongoose.model('Product', productSchema);

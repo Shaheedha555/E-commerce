@@ -1,15 +1,13 @@
 <%- include('../layouts/admin-header.ejs') %>
 
-
-
-<section class="category container "> 
-    <br>
+<div class="dash-content">
+    
     <h2 class=" mt-5 h1">All Categories</h2>
-
+    
     <a href="/admin/category/add-category" ><button class="btn">Add a new category</button> </a>
     <div class="table-responsive-sm">
         <% if (count>0){%>
-
+    
         
         <table id="example" class="table data-table align-middle" style="width:100%">
             <% success.forEach(function(msg){ %>
@@ -56,8 +54,13 @@
         <h3 class="text-center">No any Category</h3>
         <%}%>
     </div>
-    
+</div>
 </section>
+
+<!-- <section class="category container "> 
+    <br>
+    
+</section> -->
 
 
 <%- include('../layouts/admin-footer.ejs') %>
