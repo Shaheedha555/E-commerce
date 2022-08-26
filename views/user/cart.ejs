@@ -86,50 +86,94 @@
             <div class="cart-total">
                 <div class="net-total">
                     <div>
-
-                        <h3>subtotal : <%= sum %>.00<span></span></h3>
+                        <table class="">
+                            <tbody>
+                                <tr>
+                                    <th>subtotal</th>
+                                    <td>:</td>
+                                    <td><%= sum %>.00</td>
+                                </tr>
+                                <tr>
+                                    <th>shipping</th>
+                                    <td>:</td>
+                                    <td><%= shipping %>.00</td>
+                                </tr>
+                                <tr>
+                                    <th>discount</th>
+                                    <td>:</td>
+                                    <td class="text-danger"><%if(discount){%> <%= discount %><%}else{%>00<%}%>.00 </td>
+                                </tr>
+                                <tr>
+                                    <th>total</th>
+                                    <td>:</td>
+                                    <td class="h1 text-success"><%if(discount){%>  <%= sum + shipping - discount   %> <%}else{%><%= sum + shipping%> <%}%>.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- <h3>subtotal : <%= sum %>.00<span></span></h3>
                         <h3>shipping/packing : <%= shipping %>.00</h3>
                         <h3>discount :<%if(discount){%> <%= discount %><%}else{%>00<%}%>.00 </h3>
-                        <h3>total : <%if(discount){%>  <%= sum + shipping - discount   %> <%}else{%><%= sum + shipping%> <%}%>.00<span></span></h3>
+                        <h3>total : <%if(discount){%>  <%= sum + shipping - discount   %> <%}else{%><%= sum + shipping%> <%}%>.00<span></span></h3> -->
                     </div>
-                    <div class="">
+                    <div class="apply-coupon">
                         <button id="myBtn" class="m-2">Available coupons</button>
 
                         <!-- The Modal -->
                         <div id="myModal" class="modal">
 
                         <!-- Modal content -->
-                        <div class="modal-content">
+                        <div class="modal-content w-50">
                             <span class="modal-close">&times;</span>
-                            <div class="d-flex">
+                            <div class="text-center ">
 
                                 <div class="row">
-                                        <%coupons.forEach(function(c){%>
-                                        <div class="col-6 ">
-                                            <button class=" h3 m-2 p-3" type="button"><%=c.coupon%></button>
+                                    <%if(coupons.length > 0){%>
+                                        <table class="align-middle">
+                                            <tbody>
+                                                <%coupons.forEach(function(c){%>
+                                                <tr>
+                                                        <td>
+                                                            <!-- <div class="tooltip"> -->
 
-                                        </div>
-                                        <%})%>
+                                                                <p id="copy-code-<%= c.coupon %>" class="copy-code text-danger">Click  to COPY</p>
+                                                                <button type="button" id="<%=c.coupon%>"   onclick="copyToClipboard('<%=c.coupon%>')">
+                                                                    <!-- <span class="tooltiptext" id="myTooltip">copy</span> -->
+                                                                    <%=c.coupon%></button>
+                                                            <!-- </div> -->
+                                                        </td>
+                                                        <td>
+                                                            <h3><%= c.description %></h3>
+
+                                                        </td>
+                                                    </tr>
+                                                    <%})%>
+                                                </tbody>
+                                            </table>
+
+                                        <%}else{%>
+                                            <h3 class="p-5">No coupons Available</h3>
+                                            <%}%>
                                     </div>
                             </div>
                         </div>
 
                         </div>
-                        <form class="coupon-form" action="/cart/discount-coupon" method="post">
+                        <form id="coupon-form" class="coupon-form" action="/cart/discount-coupon" method="post">
                             <input id="coupon" type="text" name="coupon" placeholder="your coupon" class="box"> <br>
                             <%error.forEach(function(er){%>
                                 <p class="text-danger h5"><%=er%></p>
                                 <%})%>
                             <p></p>
-                            <button  onclick="applyCoupon()" class="btn w-100">Apply Coupon</button>
+                            <button  onclick="applyCoupon()" class="btn-pink w-100">Apply Coupon</button>
                         </form>
                     </div>
                 </div>
                 
-                <a href="/cart/place-order" class="btn">proceed to checkout</a>
+                <a href="/cart/place-order" class="btn mt-5">proceed to checkout</a>
             </div>
             <%}else{%>
                 <h2 class="text-center pt-5">Cart is empty</h2>
+
 
                 <%}%>
 

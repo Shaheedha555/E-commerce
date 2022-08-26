@@ -59,7 +59,7 @@
                             <select name="status" id="update-order-status" class="btn" onchange="changeStatus('<%=order._id%>')">
                                 <!-- <option value="">Change status</option> -->
                                 <%status.forEach(function(s){%>
-                                    <option  value="<%= s %>" <% if(order.status == s){ %> selected <%}%> > <%=s%></option>
+                                    <option <% if (status.indexOf(s) < status.indexOf(order.status) ){ %> disabled <% } %>  value="<%= s %>" <% if(order.status == s){ %> selected <%}%> > <%=s%></option>
                                     <%})%>
                     
                             </select>

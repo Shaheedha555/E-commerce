@@ -19,10 +19,9 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Description</th>
                     <th>Category</th>
+                    <th>Price(per-Kg)</th>
                     <th>Image</th>
-                    <th>Price(per Kg)</th>
                     <th>Action</th>
             </tr>
         </thead>
@@ -33,7 +32,6 @@
                 <% products.forEach(function(pro){ %>
                     <tr>
                         <td><%= pro.title %></td>
-                        <td><%= pro.description %></td>
                         <td><%= pro.category %></td>
                         <td><%= pro.price %>₹</td>
                         <td>

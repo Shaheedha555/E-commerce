@@ -1,0 +1,241 @@
+
+<%- include('../layouts/admin-header.ejs') %>
+
+
+     
+  
+   
+
+   
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text">Dashboard</span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box">
+                        <i class="uil uil-users-alt"></i>                
+                        <span class="text">Total Verified Users</span>
+                        <span class="number"><%=user[1].count %></span>
+                        
+                    </div>
+                    <div class="box">
+                        <i class="uil uil-shopping-cart-alt"></i>
+                        <span class="text">Total Orders</span>
+                        <span class="number"><%= orderCount[0].orderDetails %></span>
+                    </div>
+                    <div class="box">
+                        <i class="uil uil-box"></i>
+                        <span class="text">Total Products</span>
+                        <span class="number"><%= productCount %></span>
+                    </div>
+                    <div class="box">
+                        <i class="uil uil-rupee-sign"></i>                        
+                        <span class="text">Total Revenue</span>
+                        <span class="number"><%= total[0].total + total[0].totalShip - total[0].totalDisc %></span>
+                    </div>
+                    <div class="box">
+                        <i class="uil uil-percentage"></i>
+                        <span class="text">Total Discount</span>
+                        <span class="number"><%= total[0].totalDisc %></span>
+                    </div>
+                </div>
+            </div>
+            <div class="charts row p-5">
+                <div class="col-md-6 col-sm-12 p-5">
+                    <h2>Monthly Orders</h2>
+                    <canvas id="myChart1" width="20" height="20" max-width="30"></canvas>
+
+                </div>
+                <div class="col-md-6 col-sm-12 p-5">
+                    <h2>Category-based orders</h2>
+
+                    <canvas id="myChart2" width="20" height="20" max-width="30"></canvas>
+
+                </div>
+              
+
+            </div>
+            <%if(recentOrders.length >0){%>
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Recently Placed Orders</span>
+                </div>
+
+                <div class="activity-data">
+                    <table class="table table-lg m-5 align-middle table-default">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Product</th>
+                                <td>Date</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% recentOrders.forEach(function(order){%>
+                            <tr>
+                                <td><%=order.user.name%></td>
+                                <td><img width="100px" src="/public/images/product-img/<%=order.product.image%>" alt=""> <br>
+                                    <%=order.product.title%></td>
+                                <td><% let date = order.date.split(" ") %>
+                                    <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></td>
+                            </tr>
+                    <%}) %>
+
+                        </tbody>
+                    </table>
+                    <!-- <div class="data names">
+                        <span class="data-title">User</span>
+                        <span class="data-list"></span>
+                        
+                    </div>
+                    <div class="data email">
+                        <span class="data-title">Product</span>
+                        <span class="data-list">
+                            
+                        </span>
+                        
+                    </div> -->
+
+                    <!-- <div class="data joined">
+                        <span class="data-title">Joined</span>
+                        <span class="data-list">2022-02-12</span>
+                        <span class="data-list">2022-02-12</span>
+                        <span class="data-list">2022-02-13</span>
+                        <span class="data-list">2022-02-13</span>
+                        <span class="data-list">2022-02-14</span>
+                        <span class="data-list">2022-02-14</span>
+                        <span class="data-list">2022-02-15</span>
+                    </div>
+                    <div class="data type">
+                        <span class="data-title">Type</span>
+                        <span class="data-list">New</span>
+                        <span class="data-list">Member</span>
+                        <span class="data-list">Member</span>
+                        <span class="data-list">New</span>
+                        <span class="data-list">Member</span>
+                        <span class="data-list">New</span>
+                        <span class="data-list">Member</span>
+                    </div>
+                    <div class="data status">
+                        <span class="data-title">Status</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                        <span class="data-list">Liked</span>
+                    </div> -->
+                </div>
+            </div>
+            <%}%>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+         document.addEventListener("DOMContentLoaded",chartShow,false)
+
+         function chartShow(){
+
+             $.ajax({
+                url: '/admin/chart',
+                method : 'get',
+                success : (response)=>{
+                    console.log(response);
+                  
+
+                        makeChart1(response.orders)
+                        makeChart2(response.categories)
+
+                    
+                }
+             })
+            } 
+             function makeChart1(details){
+                var xValues = details.map((item)=>{
+                        return item._id[0]
+                })
+                 var yValues = details.map((item) => {
+                     return item.count
+                 })
+                 const labels = xValues;
+             
+
+             const data = {
+                 labels: labels,
+                 datasets: [{
+                     label: labels,
+                     backgroundColor: 'rgb(255, 99, 132)',
+                     borderColor: '#8d0163',
+                     barThickness: 60,
+                     data: yValues,
+                 }]
+             };
+
+             const config = {
+                 type: 'bar',
+                 data: data,
+                 options: {
+                    title : {
+                        display : true,
+                        text : 'Total orders'
+
+                    }
+                 }
+             };
+
+             const myChart = new Chart(
+                 document.getElementById('myChart1'),
+                 config
+             );
+         }
+         function makeChart2(details){
+                var xValues = details.map((item)=>{
+                        return item._id
+                })
+                 var yValues = details.map((item) => {
+                     return item.count
+                 })
+                 const labels = xValues;
+             
+                 let barColors = [];
+                 details.forEach(element => {
+                    var letters = "0123456789ABCDEF";
+                    var color = '#';
+                    for (var i = 0; i < 6; i++){
+                        color += letters[(Math.floor(Math.random() * 16))];
+                    }
+                    barColors.push(color);
+                 });
+             const data = { 
+                 labels: labels,
+                 datasets: [{
+                     label: labels,
+                     backgroundColor:barColors,
+                     borderColor: '#8d0163',
+
+                     data: yValues,
+                 }]
+             };
+
+             const config = {
+                 type: 'doughnut',
+                 data: data,
+                 options: {}
+             };
+
+             const myChart = new Chart(
+                 document.getElementById('myChart2'),
+                 config
+             );
+         }
+            
+    </script>
+
+    <%- include('../layouts/admin-footer.ejs') %>

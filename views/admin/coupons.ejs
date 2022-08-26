@@ -26,7 +26,8 @@
                 <tr>
                     <th>Coupon</th>
                     <th>Offer</th>
-                    <th>Expire in</th>
+                    <th>Caption</th>
+                    <th>Expiry date</th>
 
                     <th></th>
             </tr>
@@ -36,7 +37,8 @@
                 <tr>
                     <td><%= c.coupon %></td>
                     <td><%= c.offer %></td>
-                    <td><%= c.expiry %> day</td>
+                    <td><%= c.caption %></td>
+                    <td><%= c.expiry %></td>
 
                     <td><a href="/admin/coupon/edit-coupon/<%= c._id %>"><i class="fa fa-pen pe-5"></i></a>
                    <a class="confirmDeletion" href="/admin/coupon/delete-coupon/<%= c._id %>" ><i class="fa fa-trash"></i></a></td>

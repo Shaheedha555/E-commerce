@@ -20,9 +20,9 @@
     --title-icon-color: #fff;
     
     /* ====== Transition ====== */
-    /* --tran-05: all 0.5s ease;
+    --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
-    /* --tran-03: all 0.2s ease; */
+    --tran-03: all 0.2s ease;
 } 
 
 /* body{
@@ -219,7 +219,7 @@ nav.close ~ .dashboard .top{
 .dash-content .boxes{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-wrap: wrap;
 }
 .dash-content .boxes .box{
@@ -229,6 +229,7 @@ nav.close ~ .dashboard .top{
     border-radius: 12px;
     width: calc(100% / 3 - 15px);
     padding: 15px 20px;
+    margin: 5px;
     background-color: #e496bc;
     transition: var(--tran-05);
 }

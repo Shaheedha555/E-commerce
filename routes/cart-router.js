@@ -63,32 +63,44 @@ cartRouter.get('/', auth.isUser, async (req, res) => {
 
 cartRouter.post('/discount-coupon',async(req,res)=>{
     let coupon = req.body.coupon;
+    console.log(coupon)
+    let total = req.session.user.total;
      Coupon.findOne({coupon:coupon},(err,c)=>{
         if(err)console.log(err);
         if(c){
 
             let offer = c.offer;
-            let expireDays = c.expiry
-            let couponDate = new Date(c.date)
-            couponDate.setDate(couponDate.getDate()+expireDays);
-            console.log(couponDate);
-            let date =  new Date(); 
-            console.log(date+' now');
-            console.log(couponDate+' exp');
+            // let expireDays = c.expiry
+            // let couponDate = new Date(c.date)
+            // couponDate.setDate(couponDate.getDate()+expireDays);
+            // console.log(couponDate);
+            let date =  new Date();
+            let exDate = new Date(c.expiry)
+            // date = date.toDateString(); 
+            date = date.getTime()
+            exDate = exDate.getTime()
+            console.log(date+' now' , exDate + '   exp');
+            console.log(c.coupon+' name');
+            if(total>=c.minimum){
 
-            if(date > couponDate){
-                console.log('expired'); 
-                req.flash('error','coupon expired!');
-                res.json({status:false});
-            }else{
-    
-                if(coupon.includes('%')){
-                    req.session.user.discount = parseFloat(req.session.user.total*offer/100).toFixed(0);
+                if(date > exDate){
+                    console.log('expired'); 
+                    req.flash('error','coupon expired!');
+                    res.json({status:false});
                 }else{
-                    req.session.user.discount = offer;
+        
+                    if(coupon.includes('%')){
+                        req.session.user.discount = parseFloat(req.session.user.total*offer/100).toFixed(0);
+                    }else{
+                        req.session.user.discount = offer;
+                    }
+                    
+                    res.json({status:true});
                 }
+            }else{
+                req.flash('error',`Your total amount is less than ${c.minimum}`);
+                res.json({status:false});
                 
-                res.json({status:true});
             }
         }else{
             req.flash('error','Invalid coupon!');
@@ -330,12 +342,10 @@ cartRouter.post('/payment',auth.isUser,async(req,res)=>{
     }else{
         shipping = 100;
     }
-    let discount = req.session.user.discount;
-    let status;
+    let discount = req.session.user.discount ? req.session.user.discount : 0 ;
+    let status = paymentMethod == 'COD' ? 'placed': 'pending'
 
-        if(paymentMethod == 'COD') status = 'placed' ;
-        else status = 'pending';
-        
+      
             console.log('orders is not there');
 
             let order = new Order({

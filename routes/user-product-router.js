@@ -35,32 +35,37 @@ userProductRouter.get('/',async(req,res)=>{
     res.render('user/products',{products,categories,user,count,wishcount});
 });
 userProductRouter.get('/:category',async(req,res)=>{
-    let category = req.params.category;
-    let categories = await Category.find({});
-    let products = await Product.find({category:category});
-    let count =null
-    const user = req.session.user;
-    if(user){
+    try {
+        let category = req.params.category;
+        let categories = await Category.find({});
+        let products = await Product.find({category:category});
+        let count =null
+        const user = req.session.user;
+        if(user){
+            
+            const cartItems = await Cart.findOne({userId:user._id});
         
-        const cartItems = await Cart.findOne({userId:user._id});
+            if(cartItems){
+                count = cartItems.cart.length;
+            }
+        }
+        let wishcount = null;
+       
+        // let t = await Cart.findOne({ userId: id }).populate("cart.product");
+        if (user) {
     
-        if(cartItems){
-            count = cartItems.cart.length;
+            const wishlistItems = await Wishlist.findOne({ userId: user._id });
+    
+            if (wishlistItems) {
+                wishcount = wishlistItems.wishlist.length;
+            }
         }
+        console.log(products.length);
+        res.render('user/products',{products,categories,user,count,wishcount});
+    } catch (err) {
+        if(err) res.render('user/404')
     }
-    let wishcount = null;
    
-    // let t = await Cart.findOne({ userId: id }).populate("cart.product");
-    if (user) {
-
-        const wishlistItems = await Wishlist.findOne({ userId: user._id });
-
-        if (wishlistItems) {
-            wishcount = wishlistItems.wishlist.length;
-        }
-    }
-    console.log(products.length);
-    res.render('user/products',{products,categories,user,count,wishcount});
 });
 
 userProductRouter.get('/vegan',async(req,res)=>{
@@ -93,30 +98,36 @@ userProductRouter.get('/vegan',async(req,res)=>{
 
 userProductRouter.get('/product-details/:id',async(req,res)=>{
     let id = req.params.id;
-    let product = await Product.findById(id);
-    let images = product.images;
-    const user = req.session.user;
-    let count =null
-    if(user){
+    try{
+
+        let product = await Product.findById(id)
+        let images = product.images;
+        const user = req.session.user;
+        let count =null
+        if(user){
+            
+            const cartItems = await Cart.findOne({userId:user._id});
         
-        const cartItems = await Cart.findOne({userId:user._id});
+            if(cartItems){
+                count = cartItems.cart.length;
+            }
+        }
+        let wishcount = null;
+       
+        // let t = await Cart.findOne({ userId: id }).populate("cart.product");
+        if (user) {
     
-        if(cartItems){
-            count = cartItems.cart.length;
+            const wishlistItems = await Wishlist.findOne({ userId: user._id });
+    
+            if (wishlistItems) {
+                wishcount = wishlistItems.wishlist.length;
+            }
         }
+        res.render('user/single-product',{product,images,user,count,wishcount});
+    }catch(err){
+        if(err)
+        res.render('user/404');
     }
-    let wishcount = null;
-   
-    // let t = await Cart.findOne({ userId: id }).populate("cart.product");
-    if (user) {
-
-        const wishlistItems = await Wishlist.findOne({ userId: user._id });
-
-        if (wishlistItems) {
-            wishcount = wishlistItems.wishlist.length;
-        }
-    }
-    res.render('user/single-product',{product,images,user,count,wishcount});
 })
 
 

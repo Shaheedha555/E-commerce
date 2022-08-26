@@ -1,6 +1,5 @@
 const express = require('express');
 const wishlistRouter = express.Router();
-// const Category = require('../models/categoryModel');
 const Product = require('../models/productModel');
 const Cart = require('../models/cartModel');
 
@@ -37,62 +36,75 @@ wishlistRouter.get('/', auth.isUser, async (req, res) => {
 })
 
 
-wishlistRouter.get('/add/:product', auth.isUser, async (req, res) => {
+wishlistRouter.get('/add/:product', async (req, res) => {
 
     let productid = req.params.product;
 
     let user = req.session.user;
-   
-    let id = user._id;
-    let wishlist = await Wishlist.findOne({ userId: id });
+    if(user){
 
- 
-    if (!wishlist) {
+        let id = user._id;
+        let wishlist = await Wishlist.findOne({ userId: id });
+    
+     
+        if (!wishlist) {
+    
+            console.log(' wishlist is null');
+    
+            let newlist = new Wishlist({
+                userId: id,
+                wishlist: [{
+                    product: productid,
+                     }]
+            });
+            await newlist.save();
+            console.log("list created");
+            console.log(newlist);
+            res.json({status:true,item:'added'});
+        } else {
+    
+            let list = wishlist.wishlist;
+    
+            // console.log('cart is not null');
+    
+            let newItem = true;
+    
+            for (let i = 0; i < list.length; i++) {
+    
+                if (list[i].product == productid) {
+    
+                     newItem = false;
+    
+    
+                  
+                  
+    
+                }
+            }
+            if (newItem) {
+                console.log("new item");
+    
+                await Wishlist.findOneAndUpdate({ userId: id }, { $push: { wishlist: { product: productid} } })
+    
+    
+                console.log("new item pushed");
+                res.json({ status: true,item:'added' });
 
-        console.log(' wishlist is null');
-
-        let newlist = new Wishlist({
-            userId: id,
-            wishlist: [{
-                product: productid,
-                 }]
-        });
-        await newlist.save();
-        console.log("list created");
-        console.log(newlist);
-    } else {
-
-        let list = wishlist.wishlist;
-
-        // console.log('cart is not null');
-
-        let newItem = true;
-
-        for (let i = 0; i < list.length; i++) {
-
-            if (list[i].product == productid) {
-
-                 newItem = false;
-
-
-              
-              
+    
+            }else{
+                await Wishlist.findOneAndUpdate({ userId: id }, { $pull: { wishlist: { product: productid} } })
+                res.json({ status: true,item:'removed' });
 
             }
         }
-        if (newItem) {
-            console.log("new item");
+        // console.log(userCart);
+    
+    }else{ 
+        
+        res.json({ status: false });
 
-            await Wishlist.findOneAndUpdate({ userId: id }, { $push: { wishlist: { product: productid} } })
-
-
-            console.log("new item pushed");
-
-        }
     }
-    // console.log(userCart);
-
-    res.json({ status: true });
+   
 
 });
 

@@ -123,7 +123,7 @@ categoryRouter.get('/edit-category/:id',auth.isAdmin,(req,res)=>{
 
         if(err){
             console.log(err)
-            return res.redirect('/admin/*');
+            return res.render('admin/404');
         }
 
         admin = req.session.admin;

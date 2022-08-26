@@ -5,8 +5,14 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const Admin = require('../models/adminModel');
 const Banner = require('../models/bannerModel');
-const Users = require('../models/userModel');
+const User = require('../models/userModel');
 const Category = require('../models/categoryModel');
+const Product = require('../models/productModel');
+const Order = require('../models/orderModel');
+const Coupon = require('../models/couponModel');
+
+
+
 
 
 const multer = require('multer');
@@ -23,11 +29,13 @@ const upload = multer({ storage: storage });
 
 let admin;
 
-adminRouter.get('/', (req, res) => {
+adminRouter.get('/', async(req, res) => {
     if (req.session.admin)
-     res.redirect('/admin/dashboard');
+ 
+        res.redirect('/admin/dashboard');
 
     else {
+
         const error = req.flash('error');
         res.render('admin/login-ad', { error: error });
     }
@@ -55,19 +63,178 @@ adminRouter.post('/', async (req, res) => {
 
 
 
-adminRouter.get('/dashboard',auth.isAdmin, (req, res) => {
+adminRouter.get('/dashboard',auth.isAdmin, async (req, res) => {
 
         admin = req.session.admin;
+        let productCount = await Product.count();
+        let orderCount = await Order.aggregate([{$match : {status : 'delivered'}},{$unwind:'$orderDetails'},{$count : 'orderDetails'}]);
+        let user = await User.aggregate([{$match : {}},{$group : {_id : '$verified',count:{$sum:1}}},{$sort:{_id:1}}]);
+        let categories = await Category.find({})
+        let total = await Order.aggregate([
+            {
+                $match : {
+                    status : 'delivered'
+                }
+            },
+            {
+                $group : {
+                    _id : 'null',
+                    total : {
+                        $sum : '$total'
+                    },
+                    totalDisc : {
+                        $sum : '$discount'
+                    },
+                    totalShip : {
+                        $sum : '$shipping'
+                    } 
+                } 
+            } 
+        ])
+        let recentOrders = await Order.aggregate([
+            {
+                $match : {
+                    status : 'delivered'
+                }
+            },
+            {
+                $sort : {
+                    date : -1
+                }
+            },
+            {
+                $unwind : '$orderDetails'
+            },
+            {
+                $limit : 10
+            },
+            {
+                $project : {
+                    userId : 1,
+                    'orderDetails.product' : 1,
+                    date : 1,
+                    _id : 0
+                }
+            },
+            {
+                $lookup : {
+                    from : 'users',
+                    localField : 'userId',
+                    foreignField : '_id',
+                    as : 'user'
+                }
+            },
+            {
+                $lookup : {
+                    from : 'products',
+                    localField : 'orderDetails.product',
+                    foreignField : '_id',
+                    as : 'product'
+                }
+            },
+            {
+                $unwind : '$product'
+            },
+            {
+                $unwind : '$user'
+            },
+            {
+                $project : {
+                    'product.title' : 1,
+                    'product.image' : 1,
+                    'user.name' : 1 ,
+                     date : 1 
+                }
+            }  
+        ])
+        console.log(total); 
+        console.log(recentOrders);
 
-        res.render('admin/homepage-ad', { admin });
+        res.render('admin/dashboard', { admin,productCount,total,user,recentOrders,orderCount,categories} );
 
 });
+adminRouter.get('/chart',async(req,res)=>{
+    let categories = await Order.aggregate([
+        {
+            $match :{
+                status : 'delivered'
+            }
 
+        },
+        {
+            $unwind : '$orderDetails'
+        },
+        {
+            $project : {
+                orderDetails : 1,
+                _id: 0
+            }
+        },
+        {
+            $lookup : {
+                from : 'products',
+                localField : 'orderDetails.product',
+                foreignField : '_id',
+                as : 'items'
+            }
+        },
+        {
+            $unwind : '$items'
+        },
+        {
+            $project : {
+                'items.category' : 1,
+                _id : 0  ,
+                'orderDetails.quantity' : 1
+            }
+        },
+        {
+            $group:{
+                _id : '$items.category',
+                count : {
+                    $sum : 1
+                }
+            }
+        }
+      
+    ]);
+    let orders = await Order.aggregate([
+        {
+            $match :{
+                status : 'delivered'
+            }
+
+        },
+        {
+            $unwind : '$orderDetails'
+        },
+        {
+            $group: {
+                _id: {
+
+                    $slice: [{
+                        $split: [
+                            "$date", " "
+                        ]
+                    }, 1, 1]
+
+                },
+                count:
+                    { $sum: 1 }
+
+            }
+        }
+    ]);
+    console.log(orders)
+    console.log(categories)
+
+    res.json({orders,categories});
+});  
 adminRouter.get('/logout', (req, res) => {
 
     req.session.destroy();
     res.redirect('/admin');
-
+ 
 });
 
 
@@ -78,7 +245,9 @@ adminRouter.get('/banner', auth.isAdmin, async (req, res) => {
         if (err) console.log(err);
         admin = req.session.admin;
         const success = req.flash('success');
-        res.render('admin/banner', { banners, admin, success });
+        const error = req.flash('error');
+
+        res.render('admin/banner', { banners, admin, success,error });
 
     });
 
@@ -141,8 +310,7 @@ adminRouter.get('/banner/edit-banner/:id', auth.isAdmin, (req, res) => {
     const id = req.params.id
     Banner.findById({ _id: id }, (err, bnr) => {
 
-        console.log(bnr + '   bnr');
-
+        if(err) return res.render('admin/404')
         admin = req.session.admin;
         res.render('admin/edit-banner',
             {
@@ -191,37 +359,46 @@ adminRouter.post('/banner/edit-banner/:id', upload.single('banner'), (req, res) 
 });
 
 adminRouter.get('/banner/delete/:id', auth.isAdmin, (req, res) => {
+    Banner.count((err,c)=>{
+        if (c > 1){
 
-    Banner.findById(req.params.id, (err, bnr) => {
-
-        if (err) return console.log(err);
-
-        const banner = bnr.banner;
-
-        fs.unlink('public/images/banner-img/' + banner, (err) => {
-
-            if (err) console.log(err);
-
-            console.log('old img deleted');
-
-        });
-
-        Banner.deleteOne(bnr, () => {
-
+            Banner.findById(req.params.id, (err, bnr) => {
+        
+                if (err) return console.log(err);
+        
+                const banner = bnr.banner;
+        
+                fs.unlink('public/images/banner-img/' + banner, (err) => {
+        
+                    if (err) console.log(err);
+        
+                    console.log('old img deleted');
+        
+                });
+        
+                Banner.deleteOne(bnr, () => {
+        
+                    res.redirect('/admin/banner');
+        
+                });
+        
+            });
+        }else{
+            req.flash('error',"Banners shouldn't be empty")
             res.redirect('/admin/banner');
 
-        });
+        }
+    })
 
-    });
 
 });
 
 
 adminRouter.get('/users', auth.isAdmin, async (req, res) => {
 
-    let count = await Users.count();
+    let count = await User.count();
 
-    Users.find((err, users) => {
+    User.find((err, users) => {
 
         if (err) return console.log(err);
 
@@ -247,7 +424,7 @@ adminRouter.get('/users', auth.isAdmin, async (req, res) => {
 
 adminRouter.get('/users/block/:id', auth.isAdmin, (req, res) => {
 
-    Users.findByIdAndUpdate(req.params.id, { status: "true" }).then((err) => {
+    User.findByIdAndUpdate(req.params.id, { status: "true" }).then((err) => {
 
         if (err) console.log(err);
 
@@ -259,7 +436,7 @@ adminRouter.get('/users/block/:id', auth.isAdmin, (req, res) => {
 
 adminRouter.get('/users/unblock/:id', auth.isAdmin, (req, res) => {
 
-    Users.findByIdAndUpdate(req.params.id, { status: "false" }).then((err) => {
+    User.findByIdAndUpdate(req.params.id, { status: "false" }).then((err) => {
 
         if (err) console.log(err);
 

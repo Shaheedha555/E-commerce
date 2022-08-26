@@ -73,14 +73,18 @@ app.use('/products',userProductRouter);
 app.use('/cart',cartRouter);
 app.use('/wishlist',wishlistRouter);
 app.use('/orders',orderRouter);
+// app.use( function(err,req,res,next){
+// if(err)
+//     res.render('user/404',{header:'user-header'});
 
+// })
 
-app.get('/admin/*',auth.isAdmin,(req,res)=>{
+app.get('/admin/*',(req,res)=>{
     let admin = req.session.admin;
 
     res.render('admin/404',{admin});
 })
-app.get('*',auth.isUser,async(req,res)=>{
+app.get('*',async(req,res)=>{
 
     let user = req.session.user;
     let count = null;

@@ -70,8 +70,8 @@ productRouter.get('/add-product', auth.isAdmin, (req, res) => {
 productRouter.post('/add-product', upload.single('image'), function (req, res) {
 
     let { description, price, category,special,vegan } = req.body;
-    let title = req.body.title.replace(/\s+/g, '-').toUpperCase();
-    let slug = req.body.title.replace(/\s+/g, '-').toLowerCase();
+    let title = req.body.title.toUpperCase();
+    let slug = req.body.title.toLowerCase();
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
 
     Product.findOne({ slug: slug, category: category }, function (err, product) {
@@ -129,6 +129,7 @@ productRouter.post('/add-product', upload.single('image'), function (req, res) {
 });
 
 productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
+    
     Category.find(function (err, categories) {
         if (err) {
             console.log(err);
@@ -136,7 +137,7 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
         Product.findById(req.params.id, (err, product) => {
             if(err){
                 console.log(err)
-                return res.redirect('/admin/*');
+                return res.render('admin/404');
             }
             const admin = req.session.admin;
             const error = req.flash('error')
@@ -172,7 +173,7 @@ productRouter.get('/edit-product/:id', auth.isAdmin, (req, res) => {
 productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
     let {title,pimage,description,price,category,special,vegan} = req.body;
     console.log(special,'  ',vegan);
-    let slug = title.replace(/\s+/g, '-').toLowerCase();
+    let slug = title.toLowerCase();
     let image = typeof req.file !== "undefined" ? req.file.filename : "";
     let id = req.params.id;
     let price2 = parseFloat(price).toFixed(2);
@@ -239,7 +240,10 @@ productRouter.post('/edit-product/:id', upload.single('image'), (req, res) => {
                     req.flash('success', 'Product edited successfully.')
                     res.redirect('/admin/product');
                 })
-            }).catch((err) => console.log(err))
+            }).catch((err) => {
+                console.log(err)
+                // res.render('admin/404')
+            })
 
 
         }

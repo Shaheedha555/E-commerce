@@ -139,13 +139,37 @@
                         <!-- <div class="row h-100 "> -->
                             <div class="text-start h-100">
     
-                                <div class="card p-4 h-100">
-                                    <h5>Total Amount : <span><%= total %>.00</span></h5>
+                                <div class="card p-4 ">
+                                    <table class="table p-4 table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Amount</th>
+                                                <td>:</td>
+                                                <td><%= total %>.00</td>
+                                            </tr>
+                                            <tr>
+                                               <td>Shipping</th> 
+                                               <td>:</td>
+                                               <td><%= shipping %>.00</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Discount</th>
+                                                <td>:</td>
+                                                <td> <%if(discount){%><%= discount %><%}else{%>0<%}%>.00</td>
+                                            </tr>
+                                            <tr>
+                                                <th class="h1">Net Amount</th>
+                                                <th>:</th>
+                                                <th class="h1"><%= total + shipping - discount %>.00</th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- <h5>Total Amount : <span><%= total %>.00</span></h5>
                                     <h6>Shipping : <span><%= shipping %>.00</span></h6>
-                                    <h6>Discount : <span><%= discount %>.00</span></h6>
-                                    <h3>Net Amount : <span><%= total + shipping - discount %>.00</span></h3>
-
-                                    <h3 class="pt-5">Select payment method</h3>
+                                    <h6>Discount : <span><%= discount %>.00</span></h6> -->
+                                    <!-- <h3 class="h1">Net Amount : <span><%= total + shipping - discount %>.00</span></h3> -->
+                                </div>
+                                    <h2 class="pt-5">Select payment method</h2>
                                     <form id="payment-form" action="/cart/payment" method="post" class="pay-form text-start">
                                         <input name="payment" type="radio" id="cash-payment" value="COD" > 
                                         <label for="cash-payment">Cash on Delivery</label>

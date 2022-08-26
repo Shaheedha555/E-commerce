@@ -2,7 +2,7 @@
 
 
 
-<section class="products ">
+<section id="products" class="products">
     <h1 class="title"> our products </h1>
     <div id="cat-head" class="cat-head border border-dark">
         <div class="category p-4">
@@ -32,7 +32,7 @@
                     <a href="/products/product-details/<%= pro._id %>" class="fas fa-eye"></a>
                     <!-- <a href="/cart/add/<%=pro._id%>" class="fas fa-shopping-cart"></a> -->
                     <button onclick="addToCart('<%=pro._id%>')"><i class="fas fa-shopping-cart"></i></button>
-                    <button onclick="addToWishlist('<%=pro._id%>')"><i class="fas fa-heart"></i></button>
+                    <button onclick="addToWishlist('<%=pro._id%>')"><i id="<%=pro._id%>-heart" class="fas fa-heart"></i></button>
 
 
                 </div>                

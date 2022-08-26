@@ -512,7 +512,13 @@ userRouter.get('/contact',async(req,res)=>{
 
 });
 
-
+userRouter.post('/search',async(req,res)=>{
+    let payload = req.body.payload.trim();
+    let search = await Product.find({title:{$regex: new RegExp(payload+'.*','i')}}).exec();
+    search = search.slice(0,10);
+    console.log(payload);
+    res.json({payload:search});
+})
 userRouter.get('/logout', (req, res) => {
     req.session.user=null;
     req.flash('success','You are logged out successfully!')

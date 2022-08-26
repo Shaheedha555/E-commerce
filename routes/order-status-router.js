@@ -17,48 +17,21 @@ orderStatusRouter.get('/',auth.isAdmin,async(req,res)=>{
             model : 'Product'
         }
         }
-    ]);
-    // console.log(orders);
+    ]).sort({date:-1});
    
-    // let orders =  await Order.aggregate([
-    //     {
-    //         $match : {}
-    //     },
-       
-    //     {
-    //         $unwind : '$orders'
-    //     },
-    //     {
-    //         $lookup : {
-    //             from : 'Product',
-    //             localField : 'orders.orderDetails',
-    //             foreignField : '_id',
-    //             as : 'product'
-    //         }
-    //     },
-       
-    //     {
-    //         $sort : {
-    //             'orders.date' : -1
-    //         }
-    //     }
-        
-    // ])
     let success = req.flash('success');
     let error = req.flash('error');
-    let status = ['shipped','delivered','cancelled']
+    let status = ['placed','shipped','cancelled','delivered']
     res.render('admin/orders',{admin,count,orders,success,error,status});
 });
 orderStatusRouter.post('/change-status/:id',auth.isAdmin,async(req,res)=>{
     
-    console.log('fghjk');
     let {status} = req.body;
     let id = req.params.id;
     console.log(status,id);
     await Order.findById((id)).then((order)=>{
         order.status = status;
         order.save();
-        console.log('dfghjk');
         res.json({status:true});
     });
 })

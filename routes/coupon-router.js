@@ -41,8 +41,10 @@ couponRouter.get('/add-coupon',auth.isAdmin,(req,res)=>{
 
 couponRouter.post('/add-coupon', function (req, res) {
  
-    let {coupon,offer,expiry} = req.body;
-    console.log(coupon)
+    let {coupon,offer,expiry,description,minimum} = req.body;
+    let date= new Date();
+    date = date.toDateString();
+    expiry =new Date(expiry).toDateString();
      
         Coupon.findOne({coupon:coupon}, function (err, coupon) {
 
@@ -62,12 +64,14 @@ couponRouter.post('/add-coupon', function (req, res) {
                 let item = new Coupon({
                                     coupon:req.body.coupon,
                                     offer:offer,
-                                    date : new Date(),
+                                    minimum : minimum,
+                                    description:description,
+                                    date : date,
                                     expiry : expiry
                                 });
 
                 item.save(function (err) {
-
+                    console.log(item);
                     if (err)
                         return console.log(err);
 
@@ -91,7 +95,7 @@ couponRouter.get('/edit-coupon/:id',auth.isAdmin,(req,res)=>{
 
         if(err){
             console.log(err)
-            return res.redirect('/admin/*');
+            return res.redirect('admin/404');
         }
 
         admin = req.session.admin;
@@ -102,6 +106,8 @@ couponRouter.get('/edit-coupon/:id',auth.isAdmin,(req,res)=>{
                                             id : coupon._id,
                                             coupon: coupon.coupon,
                                             offer : coupon.offer,
+                                            minimum : coupon.minimum,
+                                            description : coupon.description,
                                             expiry : coupon.expiry
                                         }
         );
@@ -110,12 +116,13 @@ couponRouter.get('/edit-coupon/:id',auth.isAdmin,(req,res)=>{
 
 couponRouter.post('/edit-coupon/:id',(req,res)=>{
 
-    let {coupon,offer,expiry} = req.body;
-    
+    let {coupon,offer,expiry,description,minimum} = req.body;
+    expiry =new Date(expiry).toDateString();
+
     let id = req.params.id;
        
         Coupon.findOne({coupon: coupon,_id: {$ne: id}},(err,coupon)=>{
-
+            if(err) return res.render('admin/404');
             if (coupon){
 
                
@@ -127,7 +134,7 @@ couponRouter.post('/edit-coupon/:id',(req,res)=>{
             }else{ 
 
 
-                    Coupon.findByIdAndUpdate({_id:id},{$set:{coupon:req.body.coupon , offer:offer, expiry:expiry}})
+                    Coupon.findByIdAndUpdate({_id:id},{$set:{coupon:req.body.coupon , offer:offer, expiry:expiry,description:description,minimum:minimum}})
                     .then((coupon)=>{
                         coupon.save((err)=>{
 

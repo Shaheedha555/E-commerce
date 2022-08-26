@@ -39,7 +39,7 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
                 path : 'product',
                 model : 'Product'
             }
-        }]).sort([['date',1]]).then((order)=>{
+        }]).sort({date : -1}).then((order)=>{
 
 
         res.render('user/order-details',{user,count,wishcount,order});
@@ -49,44 +49,49 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
 });
 
 orderRouter.get('/order-details/:id',auth.isUser,async (req,res)=>{
-    let user = req.session.user;
-    let id= req.params.id;
-
-    let count = null;
-    if (user) {
+    try {
         
-        const cartItems = await Cart.findOne({ userId: user._id });
-
-        if (cartItems) {
-            count = cartItems.cart.length;
-        }
-    }
-    let wishcount = null;
-   
-    if (user) {
-
-        const wishlistItems = await Wishlist.findOne({ userId: user._id });
-
-        if (wishlistItems) {
-            wishcount = wishlistItems.wishlist.length;
-        }
-    }
-    await Order.findById((id)).populate([
-
-                        {path:'orderDetails',
-                            populate : {
-                               
-                                    path : 'product',
-                                    model : 'Product'
+        let user = req.session.user;
+        let id= req.params.id;
+    
+        let count = null;
+        if (user) {
             
+            const cartItems = await Cart.findOne({ userId: user._id });
+    
+            if (cartItems) {
+                count = cartItems.cart.length;
+            }
+        }
+        let wishcount = null;
+       
+        if (user) {
+    
+            const wishlistItems = await Wishlist.findOne({ userId: user._id });
+    
+            if (wishlistItems) {
+                wishcount = wishlistItems.wishlist.length;
+            }
+        }
+        await Order.findById((id)).populate([
+    
+                            {path:'orderDetails',
+                                populate : {
+                                   
+                                        path : 'product',
+                                        model : 'Product'
+                
+                                }
                             }
-                        }
-
-                    ]).then((order)=>{
-                        
-                        res.render('user/order-single-details',{user,count,wishcount,order});
-                        
-                    });
+    
+                        ]).then((order)=>{
+                            
+                            res.render('user/order-single-details',{user,count,wishcount,order});
+                            
+                        });
+    } catch (error) {
+        if(error) res.render('user/404');
+    }
 
 });
 
