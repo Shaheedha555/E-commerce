@@ -754,23 +754,17 @@ $('#coupon-form').validate({
       required: "Please enter your coupon name."
     }
   },
-  errorPlacement: function (error, element) {
-    if (element.is(":text")) {
-      error.insertBelow($(element).parents('#coupon-form'))
-    }
-    else { // This is the default behavior 
-      error.insertAfter(element);
-    }
-  },
+
   submitHandler: function applyCoupon(form) {
-    let coupon = $('#coupon').val();
+    // let coupon = $('#coupon').val();
     $.ajax({
       url: form.action,
       method: form.method,
       data: $(form).serialize(),
       success: (response) => {
 
-        location.reload();
+          location.reload();
+      
 
       }
     })
@@ -825,3 +819,116 @@ function copyToClipboard(id) {
   window.location.reload();
 
 }
+ 
+
+// html-form-submission
+        // $("#contact-form").on("submit",(e)=>{
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url:"https://script.google.com/macros/s/AKfycbz_ID5fQq7-pAwjyoE4aHZ7WnjaADr_wpYKU_yFCEkrwqPKe_wHywXIeO77JcnJAiUs/exec",
+        //         data:$("#contact-form").serialize(),
+        //         method:"post",
+        //         success:function (response){
+        //             alert("Form submitted successfully")
+        //             window.location.reload()
+        //             //window.location.href="https://google.com"
+        //         },
+        //         error:function (err){
+        //             alert("Something Error")
+    
+        //         }
+        //     })
+        // })
+        // $("#contact-form").validate({
+        //   errorClass: "error fail-alert",
+        
+        //   rules: {
+        //     name: {
+        //       required: true,
+        //     },
+        //     email: {
+        //       required: true,
+        //       email: true
+        //     },
+        //     number: {
+        //       required: true,
+        //       number: true
+        //     },
+        //     message: {
+        //       required: true,
+        //     }
+        //   },
+        //   messages: {
+        //     name: {
+        //       required: "Please enter your name.",
+        //     },
+        //     number: {
+        //       required: "Please enter your Mobile no.",
+        //       number : "Please enter number"
+        //     },
+        //     email: {
+        //       required: "Please enter your email.",
+        //       email: "The email should be in the format: abc@domain.tld"
+        //     },
+        //     message: {
+        //       required: "Please enter your message.",
+        //     }
+        //   },
+        //   submitHandler : (e)=>{
+        //     e.preventDefault()
+        //     $.ajax({
+        //         url:"https://script.google.com/macros/s/AKfycbz_ID5fQq7-pAwjyoE4aHZ7WnjaADr_wpYKU_yFCEkrwqPKe_wHywXIeO77JcnJAiUs/exec",
+        //         data:$("#contact-form").serialize(),
+        //         method:"post",
+        //         success:function (response){
+        //             alert("Form submitted successfully")
+        //             window.location.reload()
+        //             //window.location.href="https://google.com"
+        //         },
+        //         error:function (err){
+        //             alert("Something Error")
+    
+        //         }
+        //       })
+        //     }
+        //   submitHandler:function sendEnquiry(e){
+        //     $.ajax({
+        //         url:e.action,
+        //         data:e.serialize(),
+        //         method:e.method,
+        //         success: (response)=>{
+        //           if(response){
+        //             console.log(response);
+        //             alert("Form submitted successfully");
+        //             location.reload()
+        //           }
+        //             //window.location.href="https://google.com"
+        //         },
+        //         error:function (err){
+        //             alert("Something Error")
+    
+        //         }
+        //     })
+        // }
+        // });
+
+        
+
+        function change_image(image){
+
+                 var container = document.getElementById("main-image");
+
+                container.src = image.src;
+            }
+    
+
+
+            document.addEventListener("DOMContentLoaded", function(event) {
+
+
+
+            
+
+
+
+            });

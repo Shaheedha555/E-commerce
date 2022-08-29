@@ -1,0 +1,157 @@
+<%- include('../layouts/user-header') %>
+
+
+
+<section class="orders">
+    
+    <h1 class="title"> My Orders </h1>
+    <%if( order.length>0 ){%>
+        
+        <% order.forEach(function(o){%>
+            <h2 class="pt-3"> Order No: <%= order.length - order.indexOf(o) %></h2>
+        <div class="lap box-container m-5">
+            <table class="table align-middle">
+                <thead class="box">
+                    <th>Products</th>
+                    <th>Order date</th>
+                    <th>Status</th>
+                    <th></th>
+                </thead>
+                
+                <tbody>
+                    
+                    <tr class="box">
+                        <td class="w-25 pe-5">
+                            <% o.orderDetails.forEach(function(d){%>
+                                <div>
+
+                                    <img width="100px" src="/public/images/product-img/<%=d?.product?.image%>" alt="">
+                                    <h3>
+                                        <%=d?.product?.title%>
+                                    </h3>
+                                </div>
+
+                            <%})%>
+                        </td>
+                        <td>
+                            <h3><% let date = o.date.split(" ") %>
+                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
+                        </td>
+                        
+                        <td>
+                            <%if(o.status=='placed'){%>
+                            <h3><%=o.status%></h3>
+
+                                <%}else if (o.status=='cancelled'){%>
+                            <h3 class="text-danger"><%=o.status%></h3>
+                            <%}else{%>
+                                <h3 class="text-success"><%=o.status%></h3>
+
+                                <%}%>
+                            <%if(o.status=='pending'){%>
+                                <!-- <a href="/cart/place-order/<%= o._id%>">try again</a> -->
+                                <%}%>
+                        </td>
+                       
+                        
+                        <td>
+                            <a href="/orders/order-details/<%= o._id%>"><button class="btn">View Details</button></a> <br>
+
+                            <% if(o.status == 'placed' || o.status == 'pending' ) {%>
+                           <button onclick="cancelOrder('<%=o._id%>')" class="btn">Cancel Order</button>
+                                <%} else{%>
+                                    <% if(o.status == 'cancelled') {%>
+                            <button class="btn btn-light"> Order cancelled</button>
+
+                                        <%}%>
+                            
+                                    <%}%>
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="box-container mob">
+
+            <div class="box row d-flex flex-row justify-content-between m-auto text-center">
+                <% o.orderDetails.forEach(function(d){%>
+                    <div class="col text-center m-auto">
+
+                        <img width="80px" height="80px" src="/public/images/product-img/<%=d.product.image%>" alt="">
+                        <div class="content">
+                            <h5 class="">
+                               <%=d.product.title%>
+                            </h5>
+                            
+                            <div id="qty" class="qty">
+                                <h3>Qty: <%=d.quantity%></h3>
+                                
+                            </div>
+                            <div class="price">₹ <span id="amtOf<%=d.product._id%>">
+                                    <%= d.price %>.00
+                                </span></div>
+                        </div>
+                    </div>
+                <%})%>
+                <%if(o.status=='placed'){%>
+                    <h2 class="pt-3"><%=o.status%></h2>
+
+                        <%}else if (o.status=='cancelled'){%>
+                    <h2 class="pt-3 text-danger"><%=o.status%></h2>
+                    <%}else{%>
+                        <h2 class="pt-3 text-success"><%=o.status%></h2>
+
+                        <%}%>
+                    <%if(o.status=='pending'){%>
+                        <!-- <a href="/cart/place-order/<%= o._id%>">try again</a> -->
+                        <%}%>                <!-- <table class="pt-5 mt-5">
+                    <tbody>
+                        <tr>
+                            <th>Date </th>
+                            <td><%  date = o.date.split(" ") %>
+                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></td>
+                            <th>Discount</th>
+                            <td><%= o.discount %></td>
+                        </tr>
+                        <tr>
+
+                            <th>Total</th>
+                            <td><%= o.total %></td>
+                            <th>Shipping</th>
+                            <td><%= o.shipping %></td>
+                        </tr>
+                    </tbody>
+                </table> -->
+                <a href="/orders/order-details/<%= o._id%>"><button class="btn">View Details</button></a> <br>
+
+                <% if(o.status == 'placed' || o.status == 'pending' ) {%>
+               <button onclick="cancelOrder('<%=o._id%>')" class="btn m-auto mt-3 w-50">Cancel Order</button>
+                    <%} else{%>
+                        <% if(o.status == 'cancelled') {%>
+                <button class="btn btn-light"> Order cancelled</button>
+
+                            <%}%>
+                
+                        <%}%>
+            </div>
+
+        </div>
+
+
+
+        <%})%>
+
+          
+          
+
+            <%}else{%>
+                <h2 class="text-center pt-5">No orders</h2>
+                <%}%>
+    </section>
+
+
+
+
+    <%- include('../layouts/user-footer.ejs') %>

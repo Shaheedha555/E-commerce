@@ -1,6 +1,66 @@
 <%- include('../layouts/user-header') %>
 
 
+
+
+
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-12 ">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-7 col-lg-5">
+                        <div class="images container p-3">
+                            <div class="text-center "> 
+
+                                <img class="image-responsive" id="main-image" src="/public/images/product-img/<%=product.image%>" max-width="350" width="350"  /> 
+                            </div>
+                            <div class="thumbnail text-center">
+                                <%images.forEach(function(img){%>
+
+                                <img onclick="change_image(this)" src="/public/images/product-img/<%=img%>" width="70">
+                                <!-- <img onclick="change_image(this)" src="https://i.imgur.com/Dhebu4F.jpg" width="70">  -->
+                                <%})%>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-lg-5">
+                        <div class="product p-4">
+                            <!-- <div class="d-flex justify-content-between align-items-center"> -->
+                                <!-- <div class="d-flex align-items-center"> <i class="fa fa-long-arrow-left"></i> <span class="ml-1">Back</span> </div> <i class="fa fa-shopping-cart text-muted"></i> -->
+                            <!-- </div> -->
+                            <div class="mt-4 mb-3">
+                                 <!-- <span class="text-uppercase text-muted brand">Orianz</span> -->
+                                <h2 class=""><%= product.title%></h2>
+                                <div class="price d-flex flex-row align-items-center"> <span class="act-price">₹<%= product.price%></span>
+                                    <!-- <div class="ml-2"> <small class="dis-price">$59</small> <span>40% OFF</span> </div> -->
+                                </div>
+                            </div>
+                            <p class="about"><%= product.description%></p>
+                            <!-- <div class="sizes mt-5">
+                                <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
+                            </div> -->
+                            <div class="cart mt-4 align-items-center"> <button onclick="addToCart('<%=product._id%>')" class="btn text-uppercase mr-2">Add to cart</button> <button onclick="addToWishlist('<%=product._id%>')" class="btn"><i class="fa fa-heart text-light"></i></button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <div class="super_container">
    
     <div class="single_product">
@@ -10,14 +70,12 @@
                     <ul class="image_list">
                         <%images.forEach(function(img){%>
                         <li >
-                            <a data-fancybox="gallery" href="/public/images/product-img/<%=img%>">
                             <img src="/public/images/product-img/<%=img%>"  alt="">
                             </a>
                         </li>
 
                         <%})%>
                     </ul>
-                    <!-- data-image="https://res.cloudinary.com/dxfq3iotg/image/upload/v1565713229/single_4.jpg" -->
                 </div>
                 <div class="col-lg-4 order-lg-2 order-1">
                     <div class="image_selected"><img src="/public/images/product-img/<%=product.image%>" alt=""></div>
@@ -27,22 +85,18 @@
                      
                         <div class="product_name"><%= product.title%></div>
                         <div> <span class="product_price"><%= product.price%></span> <strike class="product_discount"> <span>₹ 2,000<span> </strike> </div>
-                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'>₹ 2,000<span> </div>
+                        <div> <span class="product_saved">You Saved:</span> <span style='color:black'> 2,000<span> </div>
                         <hr class="singleline">
                         <div> <span class="product_info"> <%= product.description%></div>
-                        <!-- <div>
-                            
-                            <div class="row" style="margin-top: 15px;">
-                                <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">Weight</span><br> <button class="btn btn-sm">0.5 kg</button> <button class="btn btn-sm">1kg</button> <button class="btn btn-sm">2 kg</button> </div>
-                            </div>
-                        </div> -->
+                       
                         <hr class="singleline">
                         <div class="order_info d-flex flex-row">
                         </div>
                         <div class="row">
                            
-                            <div class="col-xs-6"> <button type="button" class="btn me-5">Add to Cart</button> <button type="button" class="btn">Add to Wishlist</button>
-                                <!-- <div class="product_fav"><i class="fas fa-heart"></i></div> -->
+                            <div class="col-xs-6"> 
+                                <button onclick="addToCart('<%=product._id%>')" type="button" class="btn me-5">Add to Cart</button>
+                                 <button onclick="addToWishlist('<%=product._id%>')" type="button" class="btn">Add to Wishlist</button>
                             </div>
                         </div>
                     </div>
@@ -51,7 +105,7 @@
            
         </div>
     </div>
-</div>
+</div> -->
 
 
 

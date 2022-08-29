@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="../public/css/style.css">
  <!-- JQuery -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" ></script>	
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     
 
 </head>
@@ -31,7 +33,11 @@
 <!-- header section starts  -->
 <header class="user-header">
     <div class="user-head">
-        <p><i class="fa fa-user"></i> <%= locals.user ? user.name:'User' %></p>
+        <%if (locals.user){%>
+        <a class="text-light" href="/profile"><i class="fa fa-user"></i> <%= locals.user.name %></a>
+        <%}else{%>
+        <a class="text-light" href="/login"><i class="fa fa-user"></i> User</a>
+        <%}%>
     </div>
 
     <div class="header">

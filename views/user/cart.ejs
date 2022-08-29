@@ -7,83 +7,67 @@
     <h1 class="title"> My Cart </h1>
     <%if( carts!==null ){%>
         <% if(carts.cart.length > 0){ %>
-        <div class="box-container">
-            <div class="table-responsive-sm">
+            <div class="cart">
 
-                <table class="table align-middle" style="width:100%">
-                    <thead class="box">
-                    <th>Product</th>
-                    <th>size/wt</th>
-                    <th>price</th>
-                    <th>qty</th>
-                    <th>total</th>
-                    <th></th>
-                </thead>
-
-                <tbody>
+            <div class="box-container">
                 <% carts.cart.forEach(function(c){%>
 
-                    <tr class="box">
-                        <td>
-                            <img src="/public/images/product-img/<%=c.product.image%>" alt="">
-                            <h3>
-                                <%=c.product.title%>
-                            </h3>
+                <div class="box mb-3 p-3">
+                    <button class="confirmDeletion" onclick="removeFromCart('<%=c.product._id%>','<%=c.weight%>')"><i class="fas fa-times"></i>
+                    </button>
+                    <img src="/public/images/product-img/<%=c.product.image%>" alt="">
+                    <div class="content">
+                        <h3 class="ps-3">
+                            <%=c.product.title%>
+                        </h3>
+                        <form id="myForm" action="">
+                            <div class="form-group pe-4">
+                                <input type="radio" name="size" id="size1" value="0.5"
+                                    onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',0.5)" <%
+                                    if(c.weight==0.5){%> checked <%}%> >
+                                    <label for="size1">0.5 Kg</label><br>
 
-                        </td>
-                        <td>
-                            <form id="myForm" action="">
-                                <input type="radio" name="size" id="size1" value="0.5"  onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',0.5)" <% if(c.weight == 0.5){%> checked <%}%> >
-                                <label for="size1">0.5 Kg</label><br>
-                                
-                                <input type="radio" name="size" id="size2" value="1" onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',1)"  <% if(c.weight == 1){%> checked <%}%> >
-                                <label for="size2">1 Kg</label><br>
-                                
-                                <input type="radio" name="size" id="size3" value="2" onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',2)" <% if(c.weight == 2){%> checked <%}%>>
-                                <label for="size3">2 Kg</label>
-                            </form>
-                        </td>
-                        <td class="content">
-                            <div class="price" >₹ <span id="amtOf<%=c.product._id%>"><%= c.price %></span> 
-                                 <!-- <span>
-                                    <%=c.product.price%>
-                                </span>  -->
                             </div>
-                        </td>
-                        <td class="content">
-                            <div id="qty" class="qty">
-                                <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',1)"><i class="fas fa-plus"></i></button>
-                               <span id="qtyOf<%=c.product._id%>"><%=c.quantity%></span> 
+                            <div class="form-group pe-4">
+                
+                                <input type="radio" name="size" id="size2" value="1"
+                                    onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',1)" <%
+                                    if(c.weight==1){%> checked <%}%> >
+                                    <label for="size2">1 Kg</label><br>
+                            </div>
+
+                                    <div class="form-group pe-4">
+            
+                                    <input type="radio" name="size" id="size3" value="2"
+                                        onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',2)" <%
+                                        if(c.weight==2){%> checked <%}%>>
+                                        <label for="size3">2 Kg</label>
+                            </div>
+
+                        </form>
+                        <div id="qty" class="qty">
+                            <h3>Qty: </h3>
+                            <div>
+
                                 <%if(c.quantity > 1){%>
                                     <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',-1)"><i class="fas fa-minus"></i></button>
                                     <%}%>
-                            </div>
-
-                        </td>
-                        <td class="content">
-                            <div class="price" >₹  <span id="totalOf<%=c.product._id%>"> <%=c.sub_total%></span>
-                                    
+                                    <span class="h1" id="qtyOf<%=c.product._id%>"><%=c.quantity%></span> 
+                                    <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',1)"><i class="fas fa-plus"></i></button>
                                 </div>
-                        </td>
-                        <td>
-                        <button class="confirmDeletion" onclick="removeFromCart('<%=c.product._id%>','<%=c.weight%>')"><i class="fas fa-times"></i>
-                        </button>
-                        </td>
-                    </tr>
-                    <%})%>
-
-
-                </tbody>
-            </table>
-        </div>
-
-
+                        </div>
+                        <div class="price ps-3">₹ <span id="amtOf<%=c.product._id%>">
+                                <%= c.price %>.00
+                            </span></div>
+                    </div>
+                </div>
+                <%})%>
 
             </div>
-
-            <h1 class="title">checkout cart</h1>
-
+      
+            
             <div class="cart-total">
+                <h1 class="title">checkout cart</h1>
                 <div class="net-total">
                     <div>
                         <table class="">
@@ -110,10 +94,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <!-- <h3>subtotal : <%= sum %>.00<span></span></h3>
-                        <h3>shipping/packing : <%= shipping %>.00</h3>
-                        <h3>discount :<%if(discount){%> <%= discount %><%}else{%>00<%}%>.00 </h3>
-                        <h3>total : <%if(discount){%>  <%= sum + shipping - discount   %> <%}else{%><%= sum + shipping%> <%}%>.00<span></span></h3> -->
+                       
                     </div>
                     <div class="apply-coupon">
                         <button id="myBtn" class="m-2">Available coupons</button>
@@ -164,7 +145,7 @@
                                 <p class="text-danger h5"><%=er%></p>
                                 <%})%>
                             <p></p>
-                            <button  onclick="applyCoupon()" class="btn-pink w-100">Apply Coupon</button>
+                            <button  type="submit" class="btn-pink">Apply Coupon</button>
                         </form>
                     </div>
                 </div>
@@ -180,9 +161,82 @@
             <%}else{%>
                 <h2 class="text-center pt-5">Cart is empty</h2>
                 <%}%>
+
+            </div>
+            
+              
     </section>
 
 
 
 
     <%- include('../layouts/user-footer.ejs') %>
+
+
+
+    <!-- <div class="table-responsive-sm">
+
+                <table class="table align-middle" style="width:100%">
+                    <thead class="box">
+                    <th>Product</th>
+                    <th>size/wt</th>
+                    <th>price</th>
+                    <th>qty</th>
+                    <th>total</th>
+                    <th></th>
+                </thead>
+
+                <tbody>
+                <% carts.cart.forEach(function(c){%>
+
+                    <tr class="box">
+                        <td>
+                            <img src="/public/images/product-img/<%=c.product.image%>" alt="">
+                            <h3>
+                                <%=c.product.title%>
+                            </h3>
+
+                        </td>
+                        <td>
+                            <form id="myForm" action="">
+                                <input type="radio" name="size" id="size1" value="0.5"  onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',0.5)" <% if(c.weight == 0.5){%> checked <%}%> >
+                                <label for="size1">0.5 Kg</label><br>
+                                
+                                <input type="radio" name="size" id="size2" value="1" onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',1)"  <% if(c.weight == 1){%> checked <%}%> >
+                                <label for="size2">1 Kg</label><br>
+                                
+                                <input type="radio" name="size" id="size3" value="2" onclick="getPrice('<%=c.product._id%>','<%=c.product.price%>','<%=c.price%>',2)" <% if(c.weight == 2){%> checked <%}%>>
+                                <label for="size3">2 Kg</label>
+                            </form>
+                        </td>
+                        <td class="content">
+                            <div class="price" >₹ <span id="amtOf<%=c.product._id%>"><%= c.price %></span> 
+                                 
+                            </div>
+                        </td>
+                        <td class="content">
+                            <div id="qty" class="qty">
+                                <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',1)"><i class="fas fa-plus"></i></button>
+                               <span id="qtyOf<%=c.product._id%>"><%=c.quantity%></span> 
+                                <%if(c.quantity > 1){%>
+                                    <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',-1)"><i class="fas fa-minus"></i></button>
+                                    <%}%>
+                            </div>
+
+                        </td>
+                        <td class="content">
+                            <div class="price" >₹  <span id="totalOf<%=c.product._id%>"> <%=c.sub_total%></span>
+                                    
+                                </div>
+                        </td>
+                        <td>
+                        <button class="confirmDeletion" onclick="removeFromCart('<%=c.product._id%>','<%=c.weight%>')"><i class="fas fa-times"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    <%})%>
+
+
+                </tbody>
+            </table>
+        </div> -->

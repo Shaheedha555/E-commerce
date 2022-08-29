@@ -24,6 +24,120 @@
 
     <!-- Custom JS -->
     <script src="../public/js/index.js" defer></script>
+    <script>
+        $("#contact-form").validate({
+          errorClass: "error fail-alert",
+        
+          rules: {
+            name: {
+              required: true,
+            },
+            email: {
+              required: true,
+              email: true
+            },
+            number: {
+              required: true,
+              number: true
+            },
+            message: {
+              required: true,
+            },
+            subscription:{
+                required : true
+            }
+          },
+          messages: {
+            name: {
+              required: "Please enter your name.",
+            },
+            number: {
+              required: "Please enter your Mobile no.",
+              number : "Please enter number"
+            },
+            email: {
+              required: "Please enter your email.",
+              email: "The email should be in the format: abc@domain.tld"
+            },
+            message: {
+              required: "Please enter your message.",
+            },
+            subscription :{
+                required : "Enter your email"
+            }
+          },
+          submitHandler: function () {
+                myfunction();
+                return false;
+            }
+        
+        });
+
+        // if ($('#contact-form').valid()) {
+        //          myfunction()
+        //     }
+function myfunction() {
+    
+    // $("#contact-form").on("submit",(e)=>{
+        // e.preventDefault()
+        $.ajax({
+            url:"https://script.google.com/macros/s/AKfycbz_ID5fQq7-pAwjyoE4aHZ7WnjaADr_wpYKU_yFCEkrwqPKe_wHywXIeO77JcnJAiUs/exec",
+            data:$("#contact-form").serialize(),
+            method:"post",
+            success:function (response){
+                alert("Form submitted successfully")
+                // $('#msg-report').addClass('show')
+                window.location.reload()
+            },
+            error:function (err){
+                alert("Something Error")
+
+            }
+        })
+    // })
+}
+$("#subscribe-form").validate({
+          errorClass: "error fail-alert",
+        
+          rules: {
+            name: {
+              required: true,
+            },
+            email: {
+              required: true,
+              email: true
+            },
+            number: {
+              required: true,
+              number: true
+            },
+            message: {
+              required: true,
+            }
+          },
+          messages: {
+            name: {
+              required: "Please enter your name.",
+            },
+            number: {
+              required: "Please enter your Mobile no.",
+              number : "Please enter number"
+            },
+            email: {
+              required: "Please enter your email.",
+              email: "The email should be in the format: abc@domain.tld"
+            },
+            message: {
+              required: "Please enter your message.",
+            }
+          },
+          submitHandler: function () {
+                myfunction();
+                return false;
+            }
+        
+        });
+    </script>
 </body>
 
 </html>

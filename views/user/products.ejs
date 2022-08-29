@@ -32,7 +32,9 @@
                     <a href="/products/product-details/<%= pro._id %>" class="fas fa-eye"></a>
                     <!-- <a href="/cart/add/<%=pro._id%>" class="fas fa-shopping-cart"></a> -->
                     <button onclick="addToCart('<%=pro._id%>')"><i class="fas fa-shopping-cart"></i></button>
-                    <button onclick="addToWishlist('<%=pro._id%>')"><i id="<%=pro._id%>-heart" class="fas fa-heart"></i></button>
+                  
+                        <button onclick="addToWishlist('<%=pro._id%>')"><i id="<%=pro._id%>-heart"  class="fas fa-heart"></i></button>
+
 
 
                 </div>                
@@ -41,14 +43,14 @@
             <div class="content">
                 <h3> <%=pro.title%></h3>
 
-                <div class="price"><%=pro.price%> <span><%=pro.price%></span></div>
+                <div class="price">₹<%=pro.price%> </div>
             </div>
         </div>
         
         <%})%>
         <%}else{%>
             <h2 class="text-center pt-5">No any products available</h2>
-            <%}%>
+        <%}%>
     </div>
     
 </section>

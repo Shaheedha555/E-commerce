@@ -10,7 +10,9 @@ const auth = require('../config/auth')
 userProductRouter.get('/',async(req,res)=>{
     let products = await Product.find({});
     let categories = await Category.find({});
-    let count =null
+    let count =null;
+    let list =null;
+
     const user = req.session.user;
     if(user){
         req.session.user.discount= null;
@@ -31,8 +33,12 @@ userProductRouter.get('/',async(req,res)=>{
         if (wishlistItems) {
             wishcount = wishlistItems.wishlist.length;
         }
+     list = await Wishlist.findOne({ userId: req.session.user._id }).populate("wishlist.product");
+
     }
-    res.render('user/products',{products,categories,user,count,wishcount});
+
+
+    res.render('user/products',{products,categories,user,count,wishcount,list});
 });
 userProductRouter.get('/:category',async(req,res)=>{
     try {

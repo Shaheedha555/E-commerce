@@ -42,7 +42,7 @@ orderRouter.get('/',auth.isUser,async (req,res)=>{
         }]).sort({date : -1}).then((order)=>{
 
 
-        res.render('user/order-details',{user,count,wishcount,order});
+        res.render('user/orders',{user,count,wishcount,order});
         
     });
 

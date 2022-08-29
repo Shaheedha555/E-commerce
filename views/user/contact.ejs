@@ -6,11 +6,12 @@
 
     <div class="row">
 
-        <form action="">
-            <input type="text" placeholder="your name" class="box">
-            <input type="number" placeholder="your number" class="box">
-            <input type="email" placeholder="your email" class="box">
-            <textarea name="" placeholder="your message" id="" cols="30" rows="10"></textarea>
+        <form id="contact-form" action="" >
+            <div id="msg-report" class="sent-message text-success">Your message has been sent. Thank you!</div>
+            <input name="name" type="text" placeholder="your name" class="box">
+            <input name="number" type="number" placeholder="your number" class="box">
+            <input name="email" type="email" placeholder="your email" class="box">
+            <textarea name="message" placeholder="your message" id="" cols="30" rows="10"></textarea>
             <input type="submit" value="send message" class="btn">
         </form>
 
