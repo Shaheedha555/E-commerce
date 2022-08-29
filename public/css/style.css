@@ -1416,8 +1416,13 @@ margin: 30px;
   width: 95%;
   margin: 0 auto;
 }
-
-
+ .box-container.invoice{
+  max-width: 95%;
+  margin: 0 auto;
+ }
+ .box-container.invoice table{
+  padding: 1.5rem;
+ }
 @media (max-width: 1290px) {
   html {
     font-size: 58%;
@@ -1763,3 +1768,7 @@ margin: 30px;
 .brand{font-size: 13px}
 .act-price{font-size: 22px; font-weight: 700}
 .about{font-size: 14px}
+
+
+
+

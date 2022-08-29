@@ -68,7 +68,7 @@ adminRouter.get('/dashboard',auth.isAdmin, async (req, res) => {
         admin = req.session.admin;
         let productCount = await Product.count();
         let orderCount = await Order.aggregate([{$match : {status : 'delivered'}},{$unwind:'$orderDetails'},{$count : 'orderDetails'}]);
-        let user = await User.aggregate([{$match : {}},{$group : {_id : '$verified',count:{$sum:1}}},{$sort:{_id:1}}]);
+        let user = await User.aggregate([{$match : {}},{$group : {_id : '$verified',count:{$sum:1}}},{$sort:{_id:-1}}]);
         let categories = await Category.find({})
         let total = await Order.aggregate([
             {
@@ -94,7 +94,7 @@ adminRouter.get('/dashboard',auth.isAdmin, async (req, res) => {
         let recentOrders = await Order.aggregate([
             {
                 $match : {
-                    status : 'delivered'
+                    status : 'placed'
                 }
             },
             {
@@ -145,10 +145,17 @@ adminRouter.get('/dashboard',auth.isAdmin, async (req, res) => {
                     'user.name' : 1 ,
                      date : 1 
                 }
+            },
+            {
+                $sort : {
+                    date : 1
+                }
             }  
         ])
         console.log(total); 
         console.log(recentOrders);
+        console.log(user);
+
 
         res.render('admin/dashboard', { admin,productCount,total,user,recentOrders,orderCount,categories} );
 

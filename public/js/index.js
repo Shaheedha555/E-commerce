@@ -303,8 +303,23 @@ $('#add-address').validate({
 })
 // 
 
-$('a.confirmDeletion').click(function () {
-  Swal.fire('Confirm deletion')
+$('#confirmDeletion').click(function () {
+  // Swal.fire({
+  //   title: 'Do you want to save the changes?',
+  //   showDenyButton: true,
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Save',
+  //   denyButtonText: `Don't save`,
+  // }).then((result) => {
+  //   /* Read more about isConfirmed, isDenied below */
+  //   if (result.isConfirmed) {
+  //     removeFromCart()
+  //     Swal.fire('Saved!', '', 'success')
+  //   } else if (result.isDenied) {
+  //     Swal.fire('Changes are not saved', '', 'info')
+  //   }
+  // })
+  confirm('Are you sure?')
 });
 
 let searchForm = document.querySelector('.header .search-form');

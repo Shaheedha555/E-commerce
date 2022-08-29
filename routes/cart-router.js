@@ -232,6 +232,7 @@ cartRouter.post('/change-quantity',auth.isUser, async (req, res) => {
 cartRouter.post('/change-weight',auth.isUser,async(req,res)=>{
     let  id =req.session.user._id;
     let {proId,proprice,cartprice,wt,qty} = req.body;
+    console.log(proId,proprice,cartprice,wt,qty)
     proprice = parseInt(proprice);
 
     if(wt==0.5){

@@ -22,8 +22,9 @@
                 </div>
               <%})%>
             <thead>
-                <tr>
-                    <th>User-ID</th>
+                <tr> 
+                    <th>Date</th>
+                    <th>User</th>
                     <th>Order</th>
                     <th>Status</th>
                     <th></th>
@@ -35,6 +36,8 @@
             
 
                 <tr>
+                    <td><% let date = order.date.split(" ") %>
+                        <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></td>
                     <td><%= order.userId.name %></td>
                     <td>
                         <!-- <table>

@@ -13,13 +13,17 @@
                 <% carts.cart.forEach(function(c){%>
 
                 <div class="box mb-3 p-3">
-                    <button class="confirmDeletion" onclick="removeFromCart('<%=c.product._id%>','<%=c.weight%>')"><i class="fas fa-times"></i>
+                    <button id="confirmDeletion" class="" onclick="removeFromCart('<%=c.product._id%>','<%=c.weight%>')"><i class="fas fa-times"></i>
+                        
                     </button>
                     <img src="/public/images/product-img/<%=c.product.image%>" alt="">
                     <div class="content">
                         <h3 class="ps-3">
                             <%=c.product.title%>
                         </h3>
+                        <h2 class="ps-3">₹ <span id="amtOf<%=c.product._id%>">
+                            <%= c.price %>.00
+                        </span></h2>
                         <form id="myForm" action="">
                             <div class="form-group pe-4">
                                 <input type="radio" name="size" id="size1" value="0.5"
@@ -56,9 +60,10 @@
                                     <button onclick="changeQuantity('<%=c.product._id%>','<%=c.weight%>',' <%=c.price%>',1)"><i class="fas fa-plus"></i></button>
                                 </div>
                         </div>
-                        <div class="price ps-3">₹ <span id="amtOf<%=c.product._id%>">
-                                <%= c.price %>.00
-                            </span></div>
+                        
+                            <div class="price ps-3" >₹  <span id="totalOf<%=c.product._id%>"> <%=c.sub_total%></span>
+                                    
+                            </div>
                     </div>
                 </div>
                 <%})%>

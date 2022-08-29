@@ -19,7 +19,7 @@
                     <div class="box">
                         <i class="uil uil-users-alt"></i>                
                         <span class="text">Total Verified Users</span>
-                        <span class="number"><%=user[1].count %></span>
+                        <span class="number"><%=user[0].count %></span>
                         
                     </div>
                     <div class="box">
@@ -70,6 +70,7 @@
                     <table class="table table-lg m-5 align-middle table-default">
                         <thead>
                             <tr>
+                                <th>Sl No.</th>
                                 <th>User</th>
                                 <th>Product</th>
                                 <td>Date</td>
@@ -78,6 +79,7 @@
                         <tbody>
                             <% recentOrders.forEach(function(order){%>
                             <tr>
+                                <td><%= recentOrders.indexOf(order) + 1%></td>
                                 <td><%=order.user.name%></td>
                                 <td><img width="100px" src="/public/images/product-img/<%=order.product.image%>" alt=""> <br>
                                     <%=order.product.title%></td>
