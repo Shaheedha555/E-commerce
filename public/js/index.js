@@ -146,6 +146,8 @@ $("#user-login-form").validate({
 
     email: {
       required: "Please enter your email.",
+      email: "The email should be in the format: abc@domain.tld"
+
     },
     password: {
       required: "Please enter your Password.",
@@ -170,6 +172,7 @@ $("#admin-login-form").validate({
 
     email: {
       required: "Please enter your email.",
+      email: "The email should be in the format: abc@domain.tld"
     },
     password: {
       required: "Please enter your Password.",
@@ -520,10 +523,10 @@ function getPrice(proId, proprice, cartprice, wt) {
 
   })
 }
-function showCategories() {
-  document.getElementById('cat-head').style.display = 'block';
-  document.getElementById('cat-head-sm').style.display = 'none'
-}
+// function showCategories() {
+//   document.getElementById('cat-head').style.display = 'block';
+//   document.getElementById('cat-head-sm').style.display = 'none'
+// }
 
 function addToWishlist(proId) {
   $('#' + proId + '-heart').toggleClass('fa-like');
@@ -726,8 +729,54 @@ function changeStatus(id) {
 $(".alert-danger").fadeOut(5000);
 $(".alert-success").fadeOut(5000);
 
+function getProducts() {
+  let category = $('#categoryFilter').val()
+  let sort = $('#sort').val();
+   console.log(sort+ ' sort')
+  $.ajax({
+    url: '/products/' + category,
+    method: 'get',
+    data : {
+      sort:sort
+    },
+    success: (response) => {
+      console.log('response got');
+      // if (response.status) {
+      //   console.log('response true');
+      if(category=='All'){
+        location.href= '/products' ;
+
+      } else if (category == 'vegan'){
+        location.href= 'products/vegan' ;
+
+      }else{
+        location.href= '/products/'+category ;
+      }
+      // }
+    }
+  })
+}
 
 
+// function sortProducts(){
+//   let sort = $('#sort').val();
+//   let category = $('#categoryFilter').val()
+
+//   $.ajax({
+//     url: '/products/'+ category,
+//     method: 'get',
+//     data : {
+//       sort
+//     },
+//     success: (response) => {
+//       console.log('response got');
+//       // if (response.status) {
+//       //   console.log('response true');
+     
+//       // }
+//     }
+//   })
+// }
 
 // Get the modal
 var modal = document.getElementById("myModal");

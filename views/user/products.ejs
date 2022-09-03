@@ -5,22 +5,31 @@
 <section id="products" class="products">
     <h1 class="title"> our products </h1>
     <div id="cat-head" class="cat-head border border-dark">
-        <div class="category p-4">
-            <a href="/products">All</a>
-        </div>
-        <%categories.forEach(function(cat){%>
-            <div class="category p-4">
-            <a href="/products/<%= cat.title %>"> <%= cat.title %></a>
-            </div>
-        <% }) %>
-        <div class="category p-4">
-            <a href="products/vegan">VEGANS</a>
-        </div>
+       
+       
+        <select onchange="getProducts()" name="category" class="btn" id="categoryFilter" >
+            <option value="">Category</option>
+            <%categories.forEach(function(cat){%>
+                <option value="<%= cat.title %>"><%= cat.title %></option>
+                
+                <% }) %>
+                <option value="All">All</option>
+            <option value="vegan">Vegan</option>
+
+        </select>
+        <!-- <select onchange="getProducts()" name="category" class="btn" title="Sort" id="sort" >
+            <option value="">Sort</option>
+                
+                <option value="1">Price : Low to High</option>
+            <option value="-1">Price : High to Low</option>
+
+        </select> -->
+       
     </div>
-    <div  id="cat-head-sm">
+    <!-- <div  id="cat-head-sm">
         
         <button id="show-cat" onclick=showCategories()>categories</button>
-    </div>
+    </div> -->
 
     <div class="box-container">
         <%if (products.length >0){%>

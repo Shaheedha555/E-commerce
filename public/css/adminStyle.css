@@ -191,7 +191,10 @@ nav.close ~ .dashboard .top{
 }
 
 .dashboard .dash-content{
-    padding-top: 65px;
+    padding-top: 40px;
+}
+.dash-content.container{
+    width: 50%;
 }
 .dash-content .title{
     display: flex;
@@ -215,6 +218,9 @@ nav.close ~ .dashboard .top{
     font-weight: 500;
     color: var(--text-color);
     margin-left: 10px;
+}
+.dash-content .page-title{
+    padding-top: 20px;
 }
 .dash-content .boxes{
     display: flex;
@@ -337,6 +343,9 @@ nav.close ~ .dashboard .top{
         width: calc(100% / 2 - 15px);
         margin-top: 15px;
     }
+    .dash-content.container{
+        width: 100%;
+    }
 }
 @media (max-width: 560px) {
     .dash-content .boxes .box{
@@ -362,7 +371,10 @@ nav.close ~ .dashboard .top{
         opacity: 0;
         pointer-events: none;
     }
-    nav.close li a .link-name{
+    nav.close li a i{
+        opacity: 1;
+    }
+    nav.close li a .link-name,nav li a i{
         opacity: 0;
         pointer-events: none;
     }

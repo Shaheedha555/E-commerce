@@ -59,7 +59,7 @@
               
 
             </div>
-            <%if(recentOrders.length >0){%>
+            <!-- <%if(recentOrders.length >0){%>
             <div class="activity">
                 <div class="title">
                     <i class="uil uil-clock-three"></i>
@@ -89,7 +89,7 @@
                     <%}) %>
 
                         </tbody>
-                    </table>
+                    </table> -->
                     <!-- <div class="data names">
                         <span class="data-title">User</span>
                         <span class="data-list"></span>
@@ -103,39 +103,10 @@
                         
                     </div> -->
 
-                    <!-- <div class="data joined">
-                        <span class="data-title">Joined</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-12</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-13</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-14</span>
-                        <span class="data-list">2022-02-15</span>
-                    </div>
-                    <div class="data type">
-                        <span class="data-title">Type</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                        <span class="data-list">New</span>
-                        <span class="data-list">Member</span>
-                    </div>
-                    <div class="data status">
-                        <span class="data-title">Status</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                        <span class="data-list">Liked</span>
-                    </div> -->
-                </div>
+                   
+                <!-- </div>
             </div>
-            <%}%>
+            <%}%> -->
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -172,8 +143,9 @@
                  labels: labels,
                  datasets: [{
                      label: labels,
-                     backgroundColor: 'rgb(255, 99, 132)',
-                     borderColor: '#8d0163',
+                     backgroundColor: ['#d60d7f','#780446','#f788c7','#4f1938'],
+                     borderColor: '#000',
+                     borderWidth: 2,
                      barThickness: 60,
                      data: yValues,
                  }]
@@ -205,21 +177,14 @@
                  })
                  const labels = xValues;
              
-                 let barColors = [];
-                 details.forEach(element => {
-                    var letters = "0123456789ABCDEF";
-                    var color = '#';
-                    for (var i = 0; i < 6; i++){
-                        color += letters[(Math.floor(Math.random() * 16))];
-                    }
-                    barColors.push(color);
-                 });
+                 let barColors = ['#d60d7f','#780446','#f788c7','#4f1938'];
+                 
              const data = { 
                  labels: labels,
                  datasets: [{
                      label: labels,
                      backgroundColor:barColors,
-                     borderColor: '#8d0163',
+                     borderColor: '#000',
 
                      data: yValues,
                  }]

@@ -68,6 +68,7 @@ userProductRouter.get('/:category',async(req,res)=>{
         }
         console.log(products.length);
         res.render('user/products',{products,categories,user,count,wishcount});
+        // res.json({status:true})
     } catch (err) {
         if(err) res.render('user/404')
     }

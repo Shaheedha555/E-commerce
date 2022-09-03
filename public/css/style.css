@@ -445,7 +445,7 @@ form{
 }
 /* .products .cat-head .category{
 } */
-#cat-head-sm{
+/* #cat-head-sm{
   width: 100%;
   text-align: center;
   background-color: white;
@@ -457,16 +457,16 @@ form{
   position: sticky;
   z-index: 900;
   top: 110px;
-}
+} */
 /* .products .border{
   display: flex;
   justify-content: space-between;
 } */
-#show-cat{
+/* #show-cat{
   text-transform: uppercase;
 
 background: none;
- }
+ } */
 
 
 .products .cat-head a{
@@ -1361,7 +1361,9 @@ margin: 30px;
   font-size: 30px;
   color: green;
 }
-
+.order-success .success{
+  width:50%;
+}
 
 
 .modal {
@@ -1584,6 +1586,10 @@ margin: 30px;
     right: 1.5rem;
     
   }
+  .products .cat-head{
+    display: flex;
+    flex-direction: column;
+  }
  
 }
 @media (max-width : 830px) {
@@ -1627,7 +1633,7 @@ margin: 30px;
 }
 
 @media (max-width:800px) {
-  .products .cat-head{
+  /* .products .cat-head{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -1638,9 +1644,11 @@ margin: 30px;
     top: 110px;
    }
    
-   #cat-head-sm{
+    */
+   
+   /* #cat-head-sm{
     display: block;
-   }
+   } */
    .box-container.lap{
     display: none;
   }
@@ -1697,6 +1705,10 @@ margin: 30px;
   .card {
       width: 90%
   }
+  .order-success .success{
+    width:100%;
+  }
+  
 }
 
 .track-title {
@@ -1768,6 +1780,7 @@ margin: 30px;
 .brand{font-size: 13px}
 .act-price{font-size: 22px; font-weight: 700}
 .about{font-size: 14px}
+.image-responsive{width: 100%;}
 
 
 
