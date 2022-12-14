@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "app.js",
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +14,7 @@
     "body-parser": "^1.20.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
     "dropzone": "^6.0.0-beta.2",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
@@ -28,6 +29,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.20"
   }
 }

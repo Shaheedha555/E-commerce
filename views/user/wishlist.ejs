@@ -2,59 +2,44 @@
 
 
 
-<section class="shopping-cart">
-    
-    <h1 class="title"> My Wishlist </h1>
-    <%if( list!==null){%>
-        <%if (list.wishlist.length > 0){ %>
-        <div class="box-container">
-            <table>
-                <thead class="box">
-                    <th>Product</th>
-                    <th>price</th>
-                    <th></th>
-                </thead>
+    <section class="shopping-cart">
 
-                <tbody>
-                <% list.wishlist.forEach(function(w){%>
+        <h1 class="title"> My Wishlist </h1>
+        <%if( list!==null){%>
+            <%if (list.wishlist.length> 0){ %>
+                <div class="box-container">
+                    <div class="wish-box">
+                        <% list.wishlist.forEach(function(w){%>
 
-                    <tr class="box">
-                        <td>
-                            <img src="/public/images/product-img/<%=w.product.image%>" alt="">
-                            <h3>
-                                <%=w.product.title%>
-                            </h3>
+                            <div class="box">
+                                <img src="/public/images/product-img/<%=w.product.image%>" alt="">
+                                <h3>
+                                    <%=w.product.title%>
+                                </h3>
+                                <div class="price">₹ <%= w.product.price %>
 
-                        </td>
-                       
-                        <td class="content">
-                            <div class="price" >₹ <%= w.product.price %>
-                                
+                                </div>
+                                <button class=" btn" onclick="addToCartAndRemove('<%=w.product._id%>')">Add to
+                                    Cart</button>
+                                <button class="confirmDeletion" onclick="removeFromWishlist('<%=w.product._id%>')"><i
+                                        class="fas fa-times"></i></button>
+
                             </div>
-                        </td>
-                       
-                       
-                        <td>
-                        <button class=" btn" onclick="addToCartAndRemove('<%=w.product._id%>')">Add to Cart</button>
-                        <button class="confirmDeletion" onclick="removeFromWishlist('<%=w.product._id%>')"><i class="fas fa-times"></i></button>
+                            <%})%>
 
-                        </td>
-                    </tr>
-                    <%})%>
-
-                </tbody>
-            </table>
+                                </tbody>
+                                </table>
 
 
 
-            </div>
-            <%}else{%>
-                <h2 class="text-center pt-5">Wishlist is empty</h2>
-                <%}%>
-            
-            <%}else{%>
-                <h2 class="text-center pt-5">Wishlist is empty</h2>
-                <%}%>
+                    </div>
+                    <%}else{%>
+                        <h2 class="text-center pt-5">Wishlist is empty</h2>
+                        <%}%>
+
+                            <%}else{%>
+                                <h2 class="text-center pt-5">Wishlist is empty</h2>
+                                <%}%>
     </section>
 
 

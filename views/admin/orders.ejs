@@ -2,7 +2,7 @@
 
 
 
-<div class="dash-content category container "> 
+<div class="dash-content "> 
     <br>
     <h2 class=" mt-5 h1">All Orders</h2>
 
@@ -40,12 +40,7 @@
                         <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></td>
                     <td><%= order.userId.name %></td>
                     <td>
-                        <!-- <table>
-                            <thead>
-                                <th>item</th>
-
-                            </thead>
-                        </table> -->
+                   
             <% order.orderDetails.forEach(function(item){ %>
 
                         <img width="100px" height="100px" src="/public/images/product-img/<%=item.product.image%>" alt=""> <br>
@@ -56,19 +51,13 @@
                 <td><%= order.status %></td>
                 <td>
                     <% if (order.status !== 'cancelled'){%>
-                    <!-- <form style="background: none;" class="w-50"> -->
-                        <!-- <div class="form-group"> -->
-
+                  
                             <select name="status" id="update-order-status" class="btn" onchange="changeStatus('<%=order._id%>')">
-                                <!-- <option value="">Change status</option> -->
                                 <%status.forEach(function(s){%>
                                     <option <% if (status.indexOf(s) < status.indexOf(order.status) ){ %> disabled <% } %>  value="<%= s %>" <% if(order.status == s){ %> selected <%}%> > <%=s%></option>
                                     <%})%>
                     
                             </select>
-                            
-                        <!-- </div> -->
-                    <!-- </form> -->
                     <%}%>
                 </td>
                    

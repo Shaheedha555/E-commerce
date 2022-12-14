@@ -1,11 +1,3 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600&display=swap'); */
-/* *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-} */
-
 :root{
     /* ===== Colors ===== */
     --primary-color: #0E4BF1;
@@ -25,25 +17,10 @@
     --tran-03: all 0.2s ease;
 } 
 
-/* body{
-    min-height: 100vh;
-    background-color: var(--primary-color);
-} */
-/* body.dark{
-    --primary-color: #3A3B3C;
-    --panel-color: #242526;
-    --text-color: #CCC;
-    --black-light-color: #CCC;
-    --border-color: #4D4C4C;
-    --toggle-color: #FFF;
-    --box1-color: #3A3B3C;
-    --box2-color: #3A3B3C;
-    --box3-color: #3A3B3C;
-    --title-icon-color: #CCC;
-} */
+
 /* === Custom Scroll Bar CSS === */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 5px;
 }
 ::-webkit-scrollbar-track {
     background: #f5d7e6;
@@ -193,9 +170,7 @@ nav.close ~ .dashboard .top{
 .dashboard .dash-content{
     padding-top: 40px;
 }
-.dash-content.container{
-    width: 50%;
-}
+
 .dash-content .title{
     display: flex;
     align-items: center;
@@ -254,12 +229,7 @@ nav.close ~ .dashboard .top{
     font-weight: 500;
     color: var(--text-color);
 }
-/* .boxes .box.box2{
-    background-color: var(--box2-color);
-}
-.boxes .box.box3{
-    background-color: var(--box3-color);
-} */
+
 .dash-content .activity .activity-data{
     display: flex;
     justify-content: space-between;
