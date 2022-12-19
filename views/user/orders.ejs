@@ -2,7 +2,7 @@
 
 
 
-<section class="orders">
+<section class="orders ">
     
     <h1 class="title"> My Orders </h1>
     <%if( order.length>0 ){%>
@@ -21,7 +21,7 @@
                 <tbody>
                     
                     <tr class="box">
-                        <td class="w-25 pe-5">
+                        <td class="w-25 pe-5 ">
                             <% o.orderDetails.forEach(function(d){%>
                                 <div>
 
@@ -35,7 +35,7 @@
                         </td>
                         <td>
                             <h3><% let date = o.date.split(" ") %>
-                                <%= date[0]+ " " + date[1] +" "+ date[2] +" "+ date[3] %></h3>
+                                <%=  date[1] +" "+ date[2] +" "+ date[3] %></h3>
                         </td>
                         
                         <td>
@@ -57,11 +57,12 @@
                         <td>
                             <a href="/orders/order-details/<%= o._id%>"><button class="btn">View Details</button></a> <br>
 
-                            <% if(o.status == 'placed' || o.status == 'pending' ) {%>
+                            <% if((o.status == 'placed' || o.status == 'pending') && (new Date().getTime() - new Date(o.date).getTime()) < 7200000 ) {
+                                console.log('tym', new Date().getTime() - new Date(o.date).getTime())%>
                            <button onclick="cancelOrder('<%=o._id%>')" class="btn">Cancel Order</button>
                                 <%} else{%>
                                     <% if(o.status == 'cancelled') {%>
-                            <button class="btn btn-light"> Order cancelled</button>
+                            <button class=" btn-light"> Order cancelled</button>
 
                                         <%}%>
                             
@@ -142,7 +143,7 @@
 
 
         <%})%>
-
+</div>
           
           
 

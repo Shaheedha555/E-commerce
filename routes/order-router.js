@@ -42,6 +42,13 @@ orderRouter.get("/", auth.isUser, async (req, res) => {
     ])
     .sort({ date: -1 })
     .then((order) => {
+      // console.log(order, " b4");
+      // order.sort((item1, item2) => {
+      //   let getDate = (date) => new Date(date).getTime();
+      //   return getDate(item1.date) < getDate(item2.date);
+      // });
+      // console.log(order, " aftr");
+
       res.render("user/orders", { user, count, wishcount, order });
     });
 });

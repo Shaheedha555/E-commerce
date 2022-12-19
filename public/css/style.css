@@ -551,7 +551,8 @@ form {
 }
 
 .shopping-cart .box-container .wish-box {
-  width: 100%;
+margin: 0 auto;
+  gap: 2rem;
 }
 
 .shopping-cart .box-container .wish-box .box {
@@ -803,6 +804,7 @@ form {
 
 .shopping-cart .box-container {
   margin-bottom: 2rem;
+  width: 65%;
 }
 
 .shopping-cart .box-container .box,
@@ -851,7 +853,7 @@ form {
 
 .shopping-cart .box-container .box .fa-times {
   position: absolute;
-  top: 40%;
+  top: 5%;
   right: 1.5rem;
   font-size: 2.5rem;
   cursor: pointer;
@@ -928,6 +930,7 @@ form {
   border-radius: .5rem;
   border: 0.2rem solid #333;
   background: white;
+  height: fit-content;
 }
 
 .shopping-cart .cart-total .net-total {
@@ -1123,9 +1126,6 @@ label.error.fail-alert {
 
 .profile .card {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
-}
-
-.profile .card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -1134,6 +1134,7 @@ label.error.fail-alert {
   background-color: #fff;
   background-clip: border-box;
   border: none;
+  height: fit-content;
 
 }
 
@@ -1455,6 +1456,7 @@ label.error.fail-alert {
 
 .box-container.invoice table {
   padding: 1.5rem;
+  line-height: 1.5;
 }
 
 @media (max-width: 1290px) {

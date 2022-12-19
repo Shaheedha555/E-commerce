@@ -8,18 +8,17 @@ const Order = require("../models/orderModel");
 orderStatusRouter.get("/", auth.isAdmin, async (req, res) => {
   let admin = req.session.admin;
   let count = await Order.count();
-  let orders = await Order.find({})
-    .populate([
-      { path: "userId", model: "User" },
-      {
-        path: "orderDetails",
-        populate: {
-          path: "product",
-          model: "Product",
-        },
+  let orders = await Order.find({}).populate([
+    { path: "userId", model: "User" },
+    {
+      path: "orderDetails",
+      populate: {
+        path: "product",
+        model: "Product",
       },
-    ])
-    .sort({ date: -1 });
+    },
+  ]);
+  // .sort({ date: -1 });
 
   let success = req.flash("success");
   let error = req.flash("error");

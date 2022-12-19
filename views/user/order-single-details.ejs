@@ -55,11 +55,13 @@
 
         
             
+        <% if(order.status !== 'cancelled'){%>}
         <div class="card text-center">
             <div class="tracking">
                 <div class="track-title text-center">Tracking Order</div>
             </div>
             <div class="progress-track text-center">
+
                 <div class="bar">
                     <%if(order.status == 'placed'){%>
                     <div class="color" style="width: 1.5%;">
@@ -87,6 +89,7 @@
                 </div>
             </div>
         </div>
+        <%}%>
         </div>
 
 
@@ -116,7 +119,7 @@
                     <h2 class="pt-3"><%=order.status%></h2>
 
                         <%}else if (order.status=='cancelled'){%>
-                    <h2 class="pt-3 text-danger"><%=o.status%></h2>
+                    <h2 class="pt-3 text-danger"><%=order.status%></h2>
                     <%}else{%>
                         <h2 class="pt-3 text-success"><%=order.status%></h2>
 
@@ -177,7 +180,7 @@
             <div class="order-details">
 
             <table class="h3">
-                <tbody >
+                <tbody class="">
                     <tr>
                         <th>
                             Status

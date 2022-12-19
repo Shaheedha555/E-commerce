@@ -7,11 +7,11 @@
         <h1 class="title"> My Wishlist </h1>
         <%if( list!==null){%>
             <%if (list.wishlist.length> 0){ %>
-                <div class="box-container">
-                    <div class="wish-box">
+                <div class="box-container w-100">
+                    <div class="wish-box row">
                         <% list.wishlist.forEach(function(w){%>
 
-                            <div class="box">
+                            <div class="box col-md-5 col-lg-3 ">
                                 <img src="/public/images/product-img/<%=w.product.image%>" alt="">
                                 <h3>
                                     <%=w.product.title%>
